@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seguridad Privada Chile</title>
+    <!-- Favicon de ejemplo para evitar errores 404 -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='50%25' font-size='90' text-anchor='middle' dominant-baseline='central'%3E%F0%9F%9B%A1%3C/text%3E%3C/svg%3E" type="image/svg+xml">
     <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 CSS -->
@@ -481,7 +483,7 @@
         }
 
         .ai-clarifier-modal-content {
-            background-color: rgba(255, 255, 255, 0.9); /* Blanco semi-transparente para el contenido del modal */
+            background-color: rgba(179, 229, 252, 0.9); /* Azul muy claro semi-transparente */
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
@@ -535,7 +537,7 @@
         }
 
         .ai-clarifier-modal-content button {
-            background-color: #515ba6; /* Azul para el botón de IA */
+            background-color: #dc3545; /* Rojo para el botón de IA */
             color: white;
             border: none;
             border-radius: 8px;
@@ -546,18 +548,18 @@
         }
 
         .ai-clarifier-modal-content button:hover {
-            background-color: #3f478a;
+            background-color: #c82333; /* Rojo más oscuro para hover */
             transform: translateY(-2px);
         }
 
         .ai-clarifier-modal-content #ai-clarifier-response {
-            background-color: rgba(81, 91, 166, 0.2); /* Fondo azul semi-transparente para la respuesta */
+            background-color: rgba(255, 205, 210, 0.6); /* Rojo rosado semi-transparente */
             padding: 15px;
             border-radius: 10px;
             margin-top: 20px;
-            border: 1px solid rgba(81,91,166,0.5);
+            border: 1px solid rgba(198,40,40,0.5); /* Borde rojo oscuro */
             white-space: pre-wrap;
-            color: #283593; /* Texto azul oscuro */
+            color: #c62828; /* Texto rojo oscuro */
         }
         
         /* Spinner de carga */
@@ -571,7 +573,7 @@
             border-radius: 50%;
             -webkit-animation: .75s linear infinite spinner-border;
             animation: .75s linear infinite spinner-border;
-            color: #515ba6; /* Color del spinner */
+            color: #dc3545; /* Rojo para el spinner */
         }
 
         @-webkit-keyframes spinner-border {
@@ -587,7 +589,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #515ba6; /* Azul medio */
+            background-color: #00bcd4; /* Celeste */
             color: white;
             width: 60px;
             height: 60px;
@@ -604,7 +606,7 @@
         }
 
         #floating-ai-button:hover {
-            background-color: #3f478a; /* Azul más oscuro al pasar el cursor */
+            background-color: #0097a7; /* Celeste más oscuro al pasar el cursor */
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(0,0,0,0.5);
         }
@@ -763,7 +765,7 @@
             <h2 class="text-center">Clarificador Legal con IA (Pregúntale a Gemini)</h2>
             <p class="text-center">¿Tienes dudas sobre algún artículo de la Ley de Seguridad Privada o una normativa específica? Escribe tu pregunta a continuación y nuestra inteligencia artificial te proporcionará una explicación clara.</p>
             <div class="d-flex justify-content-end mb-3">
-                <img src="https://placehold.co/80x80/f8f8f8/515ba6?text=Gemini" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
+                <img src="https://placehold.co/80x80/f8f8f8/dc3545?text=Gemini" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
             </div>
             <textarea id="ai-question-input" placeholder="Ej: ¿Qué dice la Ley 21.659 sobre el uso de elementos defensivos para guardias?"></textarea>
             <button id="ask-ai-btn">Preguntar a la IA</button>
@@ -830,7 +832,7 @@
             <p>Es importante mencionar que la Ley N° 21.659 derogó el Decreto Ley 3607 (Ley de vigilantes privados) y la Ley N° 19.303 (Determina entidades que deben contar con sistema de seguridad) y sus reglamentos complementarios. Aunque ya no están vigentes, sentaron las bases para la regulación actual y su conocimiento histórico es útil para comprender la evolución de la normativa.</p>
             
             <div class="text-center my-4">
-                <a href="https://www.bcn.cl/leychile/" target="_blank" class="btn btn-primary btn-lg" style="background-color: #dc3545; border-color: #dc3545;">Explorar LeyChile (Biblioteca del Congreso Nacional)</a>
+                <a href="https://www.bcn.cl/leychile/" target="_blank" class="btn btn-primary btn-lg" style="background-color: #283593; border-color: #283593; color: white;">Explorar LeyChile (Biblioteca del Congreso Nacional)</a>
             </div>
 
             <blockquote>
@@ -906,51 +908,80 @@
             console.log("DOM Content Loaded. Initializing app logic.");
 
             // Inicializar Firebase
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-            const app = initializeApp(firebaseConfig);
+            // Asegúrate de que __firebase_config es una cadena JSON válida con projectId
+            let firebaseConfig = {};
+            try {
+                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                    firebaseConfig = JSON.parse(__firebase_config);
+                    // Agrega un projectId por defecto si no está presente para evitar errores de inicialización
+                    if (!firebaseConfig.projectId) {
+                        console.warn("firebaseConfig missing projectId. Using a default placeholder.");
+                        firebaseConfig.projectId = 'your-default-project-id'; 
+                    }
+                } else {
+                    console.warn("__firebase_config is undefined or empty. Using an empty config with default projectId.");
+                    firebaseConfig.projectId = 'your-default-project-id';
+                }
+            } catch (e) {
+                console.error("Error parsing __firebase_config:", e);
+                console.warn("Using an empty config with default projectId due to parsing error.");
+                firebaseConfig = { projectId: 'your-default-project-id' }; // Fallback completo si el parseo falla
+            }
+            
+            console.log("Parsed firebaseConfig:", firebaseConfig);
+
+            let app;
+            try {
+                app = initializeApp(firebaseConfig);
+                console.log("Firebase app initialized successfully.");
+            } catch (initError) {
+                console.error("Failed to initialize Firebase app:", initError);
+                // Si la inicialización falla aquí, no podemos proceder con Firestore/Auth.
+                // Podrías mostrar un mensaje al usuario o deshabilitar funcionalidades.
+                return; 
+            }
+
             const db = getFirestore(app);
             const auth = getAuth(app);
 
             // Autenticación anónima para acceder a Firestore
             try {
-                if (typeof __initial_auth_token !== 'undefined') {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
                     await signInWithCustomToken(auth, __initial_auth_token);
+                    console.log("Signed in with custom token.");
                 } else {
                     await signInAnonymously(auth);
+                    console.log("Signed in anonymously.");
                 }
-                console.log("Firebase Authenticated");
+                console.log("Firebase Authenticated successfully.");
             } catch (error) {
                 console.error("Error signing in to Firebase:", error);
                 // Manejar el error de autenticación si es crítico
+                // Por ejemplo, deshabilitar características que requieren autenticación
             }
 
 
             // --- Contador de Visitas ---
             const visitCounterElement = document.getElementById('visit-counter');
-            // Definir la referencia del documento para el contador de visitas
-            // Usando el appId para que sea único para cada instancia de la app
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
             const counterDocRef = doc(db, `artifacts/${appId}/public/data/visits/globalCounter`);
 
             try {
-                // Obtener el documento actual del contador
                 const docSnap = await getDoc(counterDocRef);
 
                 if (docSnap.exists()) {
-                    // Si el documento existe, incrementar el contador
                     await updateDoc(counterDocRef, { count: increment(1) });
                     const newCount = docSnap.data().count + 1;
                     visitCounterElement.textContent = `Visitas: ${newCount}`;
                     console.log("Visit counter updated:", newCount);
                 } else {
-                    // Si el documento no existe, crearlo e inicializarlo en 1
                     await setDoc(counterDocRef, { count: 1 });
                     visitCounterElement.textContent = `Visitas: 1`;
                     console.log("Visit counter initialized to 1.");
                 }
             } catch (error) {
                 console.error("Error al actualizar el contador de visitas:", error);
-                visitCounterElement.textContent = `Visitas: N/A`; // Mostrar N/A en caso de error
+                visitCounterElement.textContent = `Visitas: N/A`;
             }
 
             // Navbar Shrink on Scroll
@@ -1253,7 +1284,7 @@
                             displayQuiz();
                         }
                     } else {
-                        console.warn("Gemini API response structure is unexpected (missing content parts). Using fallback questions.");
+                        console.warn("La estructura de la respuesta de la API de Gemini es inesperada (faltan partes del contenido). Usando fallback questions.");
                         quizContainer.innerHTML = '<p class="text-danger text-center">Estructura de respuesta de IA inesperada. Usando preguntas de respaldo.</p>';
                         questions = defaultQuestions;
                         console.log("Using default questions due to unexpected API response structure.");
