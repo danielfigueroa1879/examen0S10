@@ -36,7 +36,7 @@
 
         /* Personalización de la barra de navegación */
         .navbar-custom {
-            background-color: rgba(0, 77, 64, 0.7); /* Verde oscuro semi-transparente */
+            background-color: rgba(23, 27, 74, 0.9); /* Azul oscuro (#171b4a) menos transparente */
             backdrop-filter: blur(5px); /* Desenfoque para el banner */
             -webkit-backdrop-filter: blur(5px);
             transition: all 0.3s ease-in-out;
@@ -50,6 +50,7 @@
             font-weight: 700;
             color: #ffffff; /* Blanco para el logo */
             transition: font-size 0.3s ease-in-out;
+            margin-right: 15px; /* Espacio para el contador de visitas */
         }
 
         .navbar-custom .nav-link {
@@ -64,7 +65,7 @@
         }
 
         .navbar-custom .nav-link:hover {
-            color: #4db6ac !important; /* Verde más claro al pasar el cursor */
+            color: #b2b6dc !important; /* Tono más claro del azul oscuro al pasar el cursor */
         }
 
         .navbar-custom .nav-link::after {
@@ -75,7 +76,7 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #4db6ac; /* Verde más claro para el subrayado */
+            background-color: #b2b6dc; /* Tono más claro para el subrayado */
             transition: width 0.3s ease-in-out;
         }
 
@@ -87,7 +88,7 @@
         .navbar-shrink {
             padding: 0.5rem 3%;
             box-shadow: 0 0 15px rgba(0,0,0,0.4);
-            background-color: rgba(0, 77, 64, 0.9); /* Verde oscuro más opaco al encogerse */
+            background-color: rgba(23, 27, 74, 0.95); /* Azul oscuro aún más opaco al encogerse */
             backdrop-filter: blur(8px); /* Más desenfoque al encogerse */
             -webkit-backdrop-filter: blur(8px);
         }
@@ -122,7 +123,7 @@
             top: 100%;
             left: 0;
             width: 100%;
-            background-color: #004d40; /* Verde oscuro */
+            background-color: #171b4a; /* Azul oscuro (#171b4a) */
             padding: 10px 3%;
             box-shadow: 0 5px 10px rgba(0,0,0,0.3);
             display: none;
@@ -203,7 +204,7 @@
             margin-top: 1.5em;
             margin-bottom: 0.8em;
             text-align: center;
-            color: #00897b; /* Verde medio para los encabezados */
+            color: #283593; /* Azul oscuro (#283593) para los encabezados de sección */
         }
 
         .main-content p {
@@ -212,14 +213,14 @@
 
         .main-content a {
             font-weight: bold;
-            color: #00897b; /* Verde medio para los enlaces */
+            color: #283593; /* Azul oscuro (#283593) para los enlaces */
             text-decoration: none;
             position: relative;
             transition: color 0.3s ease-in-out;
         }
 
         .main-content a:hover {
-            color: #4db6ac; /* Verde más claro al pasar el cursor */
+            color: #515ba6; /* Azul medio al pasar el cursor */
             text-decoration: underline;
         }
 
@@ -256,7 +257,7 @@
         .main-content ul li::before {
             content: "\2023";
             font-size: 1em;
-            color: #00897b; /* Verde medio para las viñetas */
+            color: #283593; /* Azul oscuro (#283593) para las viñetas */
             position: absolute;
             left: 0;
             top: 0.1em;
@@ -264,13 +265,13 @@
 
         /* Citas en bloque */
         .main-content blockquote {
-            background-color: rgba(0, 137, 123, 0.1); /* Verde medio semi-transparente */
-            border-left: 5px solid #00897b; /* Borde verde medio */
+            background-color: rgba(40, 53, 147, 0.1); /* Azul oscuro semi-transparente */
+            border-left: 5px solid #283593; /* Borde azul oscuro */
             margin: 20px 0;
             padding: 15px 20px;
             border-radius: 8px;
             font-style: italic;
-            color: #4db6ac; /* Verde más claro para el texto */
+            color: #515ba6; /* Azul medio para el texto */
         }
 
         /* Videos */
@@ -301,7 +302,7 @@
             font-size: 0.9em;
             vertical-align: middle;
             margin-right: 5px;
-            color: #00897b; /* Verde medio para los íconos pequeños */
+            color: #283593; /* Azul oscuro (#283593) para los íconos pequeños */
         }
 
         /* Estilo para el banner de instalación de PWA (creado dinámicamente) */
@@ -310,7 +311,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #004d40; /* Verde oscuro para el banner */
+            background-color: #283593; /* Azul oscuro para el banner */
             color: white;
             font-weight: bold;
             padding: 20px;
@@ -325,8 +326,8 @@
         #dynamic-install-banner button {
             margin-left: 10px;
             padding: 8px 16px;
-            background: #e0f2f1; /* Verde muy claro para el botón */
-            color: #004d40; /* Texto verde oscuro */
+            background: #e8eaf6; /* Azul muy claro para el botón */
+            color: #283593; /* Texto azul oscuro */
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -335,7 +336,7 @@
         }
 
         #dynamic-install-banner button:hover {
-            background-color: #b2dfdb; /* Verde más oscuro al pasar el cursor */
+            background-color: #c5cae9; /* Azul más oscuro al pasar el cursor */
             transform: translateY(-1px);
         }
 
@@ -343,7 +344,7 @@
         .footer {
             text-align: center;
             padding: 20px;
-            background-color: #004d40; /* Verde oscuro para el pie de página */
+            background-color: #171b4a; /* Azul oscuro del banner principal */
             color: #f8f8f8;
             font-size: 0.9em;
             margin-top: 50px;
@@ -364,7 +365,7 @@
         }
 
         #start-exam-btn {
-            background-color: #00897b; /* Verde medio */
+            background-color: #dc3545; /* Rojo */
             color: white;
             border: none;
             border-radius: 12px;
@@ -377,7 +378,7 @@
         }
 
         #start-exam-btn:hover {
-            background-color: #00695c; /* Verde más oscuro al pasar el cursor */
+            background-color: #c82333; /* Rojo más oscuro para hover */
             transform: translateY(-3px);
         }
 
@@ -410,7 +411,7 @@
         }
         .question-card .form-check-input:checked + .form-check-label {
             font-weight: bold;
-            color: #00897b; /* Verde medio para la opción seleccionada */
+            color: #283593; /* Azul oscuro (#283593) para la opción seleccionada */
         }
 
         .exam-controls {
@@ -419,7 +420,7 @@
         }
 
         .exam-controls button {
-            background-color: #00897b;
+            background-color: #283593;
             color: white;
             border: none;
             border-radius: 8px;
@@ -430,30 +431,30 @@
         }
 
         .exam-controls button:hover {
-            background-color: #00695c;
+            background-color: #1a237e;
             transform: translateY(-2px);
         }
 
         #exam-results {
-            background-color: rgba(0, 137, 123, 0.3); /* Fondo verde semi-transparente para resultados */
+            background-color: rgba(40, 53, 147, 0.3); /* Fondo azul oscuro semi-transparente para resultados */
             padding: 25px;
             border-radius: 15px;
             margin-top: 30px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             display: none;
-            border: 1px solid rgba(0,137,123,0.5);
-            color: #e0f2f1; /* Texto claro */
+            border: 1px solid rgba(40,53,147,0.5);
+            color: #e8eaf6; /* Texto claro */
         }
 
         #exam-results h3 {
-            color: #e0f2f1; /* Verde muy claro */
+            color: #e8eaf6; /* Azul muy claro */
         }
 
         #exam-results p {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #e0f2f1;
+            color: #e8eaf6;
         }
 
         /* Sección Clarificador IA (ahora en modal) */
@@ -533,7 +534,7 @@
         }
 
         .ai-clarifier-modal-content button {
-            background-color: #00897b; /* Verde para el botón de IA */
+            background-color: #515ba6; /* Azul para el botón de IA */
             color: white;
             border: none;
             border-radius: 8px;
@@ -544,18 +545,18 @@
         }
 
         .ai-clarifier-modal-content button:hover {
-            background-color: #00695c;
+            background-color: #3f478a;
             transform: translateY(-2px);
         }
 
         .ai-clarifier-modal-content #ai-clarifier-response {
-            background-color: rgba(0, 137, 123, 0.2); /* Fondo verde semi-transparente para la respuesta */
+            background-color: rgba(81, 91, 166, 0.2); /* Fondo azul semi-transparente para la respuesta */
             padding: 15px;
             border-radius: 10px;
             margin-top: 20px;
-            border: 1px solid rgba(0,137,123,0.5);
+            border: 1px solid rgba(81,91,166,0.5);
             white-space: pre-wrap;
-            color: #004d40; /* Texto verde oscuro */
+            color: #283593; /* Texto azul oscuro */
         }
         
         /* Spinner de carga */
@@ -569,6 +570,7 @@
             border-radius: 50%;
             -webkit-animation: .75s linear infinite spinner-border;
             animation: .75s linear infinite spinner-border;
+            color: #515ba6; /* Color del spinner */
         }
 
         @-webkit-keyframes spinner-border {
@@ -584,7 +586,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #00897b; /* Verde medio */
+            background-color: #515ba6; /* Azul medio */
             color: white;
             width: 60px;
             height: 60px;
@@ -601,9 +603,26 @@
         }
 
         #floating-ai-button:hover {
-            background-color: #00695c; /* Verde más oscuro al pasar el cursor */
+            background-color: #3f478a; /* Azul más oscuro al pasar el cursor */
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Contador de visitas */
+        .visit-counter {
+            display: none; /* Oculto por defecto en todos los tamaños */
+            color: white; /* Asegura que el texto sea blanco */
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 15px; /* Espacio a la derecha del brand */
+        }
+
+        /* Mostrar solo en pantallas grandes */
+        @media (min-width: 769px) {
+            .visit-counter {
+                display: inline-block; /* Mostrar como inline-block en desktop */
+            }
         }
 
         /* Ajustes responsivos */
@@ -618,9 +637,11 @@
             }
             .navbar-custom .navbar-brand {
                 font-size: 1.5rem;
+                /* Eliminar margin-right para no afectar layout móvil */
+                margin-right: 0;
             }
             .navbar-custom .navbar-collapse {
-                background-color: #004d40; /* Verde oscuro para el menú colapsado */
+                background-color: #171b4a; /* Azul oscuro para el menú colapsado */
                 padding: 10px;
                 border-radius: 8px;
                 margin-top: 10px;
@@ -648,7 +669,7 @@
                 margin-bottom: 10px;
             }
             #install-button {
-                padding: 8px 15px;
+                padding: 8px 16px;
             }
             .install-modal-content {
                 padding: 20px;
@@ -692,6 +713,10 @@
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container-fluid px-3">
             <a class="navbar-brand" href="#">Seguridad Privada</a>
+            <!-- Contador de visitas visible solo en PC -->
+            <span id="visit-counter" class="visit-counter">
+                Visitas: 0
+            </span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -700,7 +725,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#exam-section">Examen OS-10</a>
                     </li>
-                    <!-- Eliminado el enlace directo al Clarificador IA de la navbar -->
                     <li class="nav-item">
                         <a class="nav-link" href="#leyes">Leyes y Normativas</a>
                     </li>
@@ -738,7 +762,7 @@
             <h2 class="text-center">Clarificador Legal con IA (Pregúntale a Gemini)</h2>
             <p class="text-center">¿Tienes dudas sobre algún artículo de la Ley de Seguridad Privada o una normativa específica? Escribe tu pregunta a continuación y nuestra inteligencia artificial te proporcionará una explicación clara.</p>
             <div class="d-flex justify-content-end mb-3">
-                <img src="https://placehold.co/80x80/f8f8f8/00897b?text=Gemini" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
+                <img src="https://placehold.co/80x80/f8f8f8/515ba6?text=Gemini" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
             </div>
             <textarea id="ai-question-input" placeholder="Ej: ¿Qué dice la Ley 21.659 sobre el uso de elementos defensivos para guardias?"></textarea>
             <button id="ask-ai-btn">Preguntar a la IA</button>
@@ -805,7 +829,7 @@
             <p>Es importante mencionar que la Ley N° 21.659 derogó el Decreto Ley 3607 (Ley de vigilantes privados) y la Ley N° 19.303 (Determina entidades que deben contar con sistema de seguridad) y sus reglamentos complementarios. Aunque ya no están vigentes, sentaron las bases para la regulación actual y su conocimiento histórico es útil para comprender la evolución de la normativa.</p>
             
             <div class="text-center my-4">
-                <a href="https://www.bcn.cl/leychile/" target="_blank" class="btn btn-primary btn-lg" style="background-color: #00897b; border-color: #00897b;">Explorar LeyChile (Biblioteca del Congreso Nacional)</a>
+                <a href="https://www.bcn.cl/leychile/" target="_blank" class="btn btn-primary btn-lg" style="background-color: #dc3545; border-color: #dc3545;">Explorar LeyChile (Biblioteca del Congreso Nacional)</a>
             </div>
 
             <blockquote>
@@ -825,7 +849,7 @@
                 // }
                 // crearProtocoloSeguridad('Medio', ['Control de acceso', 'CCTV']);
             </code></pre>
-            <p>La <mark style="background-color: #4db6ac; color: white; padding: 2px 5px; border-radius: 3px;">formación</mark> y actualización constante son clave para el desempeño eficaz de un guardia de seguridad.</p>
+            <p>La <mark style="background-color: #8c9eff; color: #171b4a; padding: 2px 5px; border-radius: 3px;">formación</mark> y actualización constante son clave para el desempeño eficaz de un guardia de seguridad.</p>
         </section>
 
         <section class="info-section">
@@ -869,11 +893,61 @@
         <p>© 2025 Todos los derechos reservados.</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+    <script type="module">
+        // Importar las funciones de Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
         let deferredInstallPrompt = null;
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Inicializar Firebase
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            const auth = getAuth(app);
+
+            // Autenticación anónima para acceder a Firestore
+            try {
+                if (typeof __initial_auth_token !== 'undefined') {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                console.log("Firebase Authenticated");
+            } catch (error) {
+                console.error("Error signing in to Firebase:", error);
+                // Manejar el error de autenticación si es crítico
+            }
+
+
+            // --- Contador de Visitas ---
+            const visitCounterElement = document.getElementById('visit-counter');
+            // Definir la referencia del documento para el contador de visitas
+            // Usando el appId para que sea único para cada instancia de la app
+            const counterDocRef = doc(db, `artifacts/${appId}/public/data/visits/globalCounter`);
+
+            try {
+                // Obtener el documento actual del contador
+                const docSnap = await getDoc(counterDocRef);
+
+                if (docSnap.exists()) {
+                    // Si el documento existe, incrementar el contador
+                    await updateDoc(counterDocRef, { count: increment(1) });
+                    const newCount = docSnap.data().count + 1;
+                    visitCounterElement.textContent = `Visitas: ${newCount}`;
+                } else {
+                    // Si el documento no existe, crearlo e inicializarlo en 1
+                    await setDoc(counterDocRef, { count: 1 });
+                    visitCounterElement.textContent = `Visitas: 1`;
+                }
+            } catch (error) {
+                console.error("Error al actualizar el contador de visitas:", error);
+                visitCounterElement.textContent = `Visitas: N/A`; // Mostrar N/A en caso de error
+            }
+
             // Navbar Shrink on Scroll
             const navbar = document.getElementById('mainNavbar');
             window.addEventListener('scroll', function() {
@@ -1126,7 +1200,7 @@
                 };
 
                 try {
-                    const apiKey = ""; 
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     console.log("Intentando generar preguntas con la API de Gemini...");
                     const response = await fetch(apiUrl, {
@@ -1296,7 +1370,7 @@
                 const payload = { contents: chatHistory };
 
                 try {
-                    const apiKey = ""; 
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     console.log("Intentando obtener aclaración de la IA con la API de Gemini para la pregunta del usuario:", userQuestion);
                     const response = await fetch(apiUrl, {
