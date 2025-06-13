@@ -529,7 +529,7 @@
         }
 
         #ai-clarifier-chat .chat-header h2 {
-            font-size: 1.2rem;
+            font-size: 1.2rem; /* Tamaño de fuente por defecto para móvil */
             margin: 0;
             color: #283593; /* Azul oscuro */
             margin-right: 10px; /* Espacio entre título y logo */
@@ -749,6 +749,9 @@
                 width: 350px; /* Ancho para PC */
                 height: 450px; /* Alto para PC */
                 display: none; /* Oculto por defecto, se muestra con el botón flotante */
+            }
+            #ai-clarifier-chat .chat-header h2 {
+                font-size: 1.0rem; /* Tamaño de fuente más pequeño para PC */
             }
 
             #floating-ai-button {
