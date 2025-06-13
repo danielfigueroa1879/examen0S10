@@ -102,15 +102,18 @@
             font-size: 1.2rem;
         }
 
-        /* Botón de búsqueda y barra */
+        /* Botón de búsqueda y barra - OCULTADO */
         .search-toggler {
-            background-color: rgba(255, 255, 255, 0.1); /* Blanco semi-transparente */
+            background-color: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             padding: 0.5rem 0.8rem;
             transition: all 0.3s ease-in-out;
             margin-left: 10px;
+            display: flex; /* Asegura que la lupa sea visible */
+            align-items: center;
+            justify-content: center;
         }
 
         .search-toggler:hover {
@@ -121,6 +124,10 @@
         .search-toggler i {
             color: #ffffff; /* Blanco para la lupa */
             font-size: 1.2rem;
+        }
+
+        .search-bar-container {
+            display: none; /* Oculta completamente el contenedor de la barra de búsqueda */
         }
 
         /* Botón de Contacto */
@@ -709,7 +716,12 @@
 
             /* Clarificador flotante en PC */
             #ai-clarifier-chat {
-                display: none; /* Oculto por defecto, se mostrará al hacer clic en el botón flotante */
+                position: fixed; /* Mantiene la posición fija */
+                bottom: 20px;
+                right: 20px;
+                width: 350px; /* Ancho para PC */
+                height: 450px; /* Alto para PC */
+                display: none; /* Oculto por defecto, se muestra con el botón flotante */
             }
 
             #floating-ai-button {
@@ -852,7 +864,7 @@
             </ul>
 
             <div style="width: 100%; height: 300px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin: 20px auto; display: flex; justify-content: center; align-items: center; background-color: rgba(0,0,0,0.05);">
-                <p style="color: #666;"></p>
+                <p style="color: #666;">[Image of Mapa de referencia]</p>
             </div>
 
             <h3>Documentos y Recursos Descargables</h3>
@@ -922,20 +934,22 @@
                 }
             });
 
-            // Search Bar Toggle
+            // Search Bar Toggle - OCULTADO
             const searchToggle = document.getElementById('searchToggle');
             const searchBar = document.getElementById('searchBar');
 
-            searchToggle.addEventListener('click', function() {
-                searchBar.classList.toggle('show');
-            });
+            // Quitar listeners si existían
+            if (searchToggle) {
+                searchToggle.removeEventListener('click', function(){});
+            }
+            if (searchBar) {
+                document.removeEventListener('click', function(event){});
+            }
+            
+            // Asegurarse de que estén ocultos por JS también
+            if (searchToggle) searchToggle.style.display = 'flex'; // Visible
+            if (searchBar) searchBar.style.display = 'none'; // Siempre oculto
 
-            // Hide search bar if clicked outside
-            document.addEventListener('click', function(event) {
-                if (!searchBar.contains(event.target) && !searchToggle.contains(event.target)) {
-                    searchBar.classList.remove('show');
-                }
-            });
 
             // --- Lógica del Banner de Instalación PWA (Creado dinámicamente) ---
             let dynamicInstallBanner = null;
@@ -1221,7 +1235,7 @@
                     }
                 } catch (error) {
                     console.error('Error de red o parseo al llamar a Gemini (generar preguntas):', error);
-                    quizContainer.innerHTML = '<p class="text-danger text-center">Error de conexión al generar las preguntas. Usando preguntas de respaldo.</p>';
+                    quizContainer.innerHTML = '<p class="text-danger text-center">Error de conexión al generar las preguntas. Usando preguntas de respaldo.!</p>';
                     questions = defaultQuestions;
                     console.log("Using default questions due to network/parsing error.");
                     displayQuiz();
@@ -1345,7 +1359,23 @@
                 const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}"`;
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = { contents: chatHistory };
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "ARRAY",
+                            items: {
+                                type: "OBJECT",
+                                properties: {
+                                    "question": { "type": "STRING" },
+                                    "correctAnswer": { "type": "STRING" }
+                                },
+                                "propertyOrdering": ["question", "correctAnswer"]
+                            }
+                        }
+                    }
+                };
 
                 try {
                     console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
