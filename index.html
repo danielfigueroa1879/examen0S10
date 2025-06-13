@@ -157,7 +157,7 @@
             height: 1.2em;
         }
 
-        /* Contenedor principal para contenido */
+        /* Área de Contenido Principal */
         .main-content {
             flex-grow: 1; /* Ocupa el espacio restante */
             padding: 20px 8%;
@@ -165,6 +165,7 @@
             line-height: 1.6;
             color: #333;
             min-width: 0; /* Permite que se encoja */
+            padding-top: 100px; /* Ajuste para el banner fijo */
         }
 
         /* Estilo de sección de información (ventanas transparentes) */
@@ -486,7 +487,7 @@
 
         #ai-clarifier-chat .chat-header {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* Alinear al inicio para texto e imagen */
             align-items: center;
             margin-bottom: 15px;
             padding-bottom: 10px;
@@ -497,6 +498,7 @@
             font-size: 1.2rem;
             margin: 0;
             color: #283593; /* Azul oscuro */
+            margin-right: 10px; /* Espacio entre título y logo */
         }
 
         #ai-clarifier-chat .chat-header .close-button {
@@ -505,6 +507,7 @@
             font-size: 1.5rem;
             color: #555;
             cursor: pointer;
+            margin-left: auto; /* Empuja el botón de cierre a la derecha */
         }
 
         #ai-clarifier-chat .chat-content {
@@ -555,8 +558,9 @@
         }
 
         #ai-clarifier-chat .gemini-logo {
-            align-self: flex-end; /* Alinear el logo al final del contenedor flex */
-            margin-bottom: 10px;
+            width: 40px; /* Tamaño más pequeño para el logo al lado del título */
+            height: auto;
+            vertical-align: middle;
         }
         
         /* Spinner de carga */
@@ -641,6 +645,7 @@
             /* Relleno de contenido principal ajustado para móvil */
             .main-content {
                 padding: 15px 2%;
+                padding-top: 90px; /* Ajuste para el banner fijo en móvil */
             }
             .main-content h1, .main-content h2, .main-content h3,
             .main-content h4, .main-content h5, .main-content h6 {
@@ -655,9 +660,6 @@
             }
             #dynamic-install-banner button {
                 padding: 8px 15px;
-            }
-            .install-modal-content {
-                padding: 20px;
             }
             /* Ajustar tamaño de fuente de pregunta de examen para pantallas pequeñas */
             .question-card h5 {
@@ -695,7 +697,6 @@
             .content-container {
                 display: block; /* No usar flexbox para el contenedor principal */
                 width: 100%;
-                padding-top: 80px;
             }
             .main-content {
                 width: auto; /* Ocupa el ancho natural */
@@ -885,13 +886,11 @@
     <div id="ai-clarifier-chat" class="ai-clarifier-chat">
         <div class="chat-header">
             <h2>Clarificador IA</h2>
+            <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo">
             <button class="close-button" id="close-ai-chat">&times;</button>
         </div>
         <div class="chat-content">
             <p>¿Tienes dudas sobre algún artículo o normativa? Escribe tu pregunta y te ayudaremos.</p>
-            <div class="d-flex justify-content-end mb-3">
-                <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
-            </div>
             <textarea id="ai-question-input" placeholder="Ej: ¿Qué dice el Decreto 93 sobre los requisitos de educación de un Guardia de Seguridad?"></textarea>
             <button id="ask-ai-btn">Preguntar a la IA</button>
             <div id="ai-clarifier-response" class="mt-3">
