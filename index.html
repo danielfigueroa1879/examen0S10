@@ -52,7 +52,7 @@
             font-weight: 700;
             color: #ffffff; /* Blanco para el logo */
             transition: font-size 0.3s ease-in-out;
-            margin-right: 15px; /* Espacio para el contador de visitas */
+            margin-right: 0; /* No se necesita margen para el contador de visitas */
         }
 
         .navbar-custom .nav-link {
@@ -611,21 +611,9 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.5);
         }
 
-        /* Contador de visitas */
+        /* Contador de visitas (display: none en todas las pantallas ya que se elimina la funcionalidad) */
         .visit-counter {
-            display: none; /* Oculto por defecto en todos los tamaños */
-            color: white; /* Asegura que el texto sea blanco */
-            font-size: 0.8rem;
-            font-weight: 600;
-            white-space: nowrap;
-            margin-left: 15px; /* Espacio a la derecha del brand */
-        }
-
-        /* Mostrar solo en pantallas grandes */
-        @media (min-width: 769px) {
-            .visit-counter {
-                display: inline-block; /* Mostrar como inline-block en desktop */
-            }
+            display: none; 
         }
 
         /* Ajustes responsivos */
@@ -716,10 +704,7 @@
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container-fluid px-3">
             <a class="navbar-brand" href="#">Seguridad Privada</a>
-            <!-- Contador de visitas visible solo en PC -->
-            <span id="visit-counter" class="visit-counter">
-                Visitas: 0
-            </span>
+            <!-- Contador de visitas eliminado de aquí -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -897,108 +882,21 @@
     </footer>
 
     <script type="module">
-        // Importar las funciones de Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // La funcionalidad del contador de visitas y Firebase relacionada ha sido eliminada para optimización.
+        // Importar las funciones de Firebase (solo si se usan para otras cosas, de lo contrario, se pueden eliminar)
+        // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        // import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        // import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         let deferredInstallPrompt = null;
 
         document.addEventListener('DOMContentLoaded', async function() {
             console.log("DOM Content Loaded. Initializing app logic.");
 
-            // Inicializar Firebase
-            let firebaseConfig = {};
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-            try {
-                if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                    firebaseConfig = JSON.parse(__firebase_config);
-                    console.log("Original __firebase_config:", __firebase_config);
-                    // Ensure essential parts are present, or add placeholders
-                    firebaseConfig.projectId = firebaseConfig.projectId || 'your-default-project-id';
-                    // Use the provided API key as fallback if Firebase's own apiKey is missing
-                    firebaseConfig.apiKey = firebaseConfig.apiKey || 'AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI'; 
-                    firebaseConfig.appId = firebaseConfig.appId || 'your-default-app-id'; 
-                    firebaseConfig.measurementId = firebaseConfig.measurementId || 'G-XXXXXXXXXX'; 
-                    console.log("Firebase config after parsing and fallback:", firebaseConfig);
-                } else {
-                    console.warn("__firebase_config is undefined or empty. Using a default Firebase config for initialization.");
-                    firebaseConfig = {
-                        apiKey: 'AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI', // Provided key as dummy for initialization
-                        authDomain: 'your-default-project-id.firebaseapp.com',
-                        projectId: 'your-default-project-id',
-                        storageBucket: 'your-default-project-id.appspot.com',
-                        messagingSenderId: '1234567890',
-                        appId: 'your-default-app-id',
-                        measurementId: 'G-XXXXXXXXXX'
-                    };
-                    console.log("Using completely default firebaseConfig:", firebaseConfig);
-                }
-            } catch (e) {
-                console.error("Error parsing __firebase_config:", e);
-                console.warn("Using a default Firebase config due to parsing error.");
-                firebaseConfig = {
-                    apiKey: 'AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI', // Provided key as dummy for initialization
-                    authDomain: 'your-default-project-id.firebaseapp.com',
-                    projectId: 'your-default-project-id',
-                    storageBucket: 'your-default-project-id.appspot.com',
-                    messagingSenderId: '1234567890',
-                    appId: 'your-default-app-id',
-                    measurementId: 'G-XXXXXXXXXX'
-                };
-                console.log("Using completely default firebaseConfig after catch block:", firebaseConfig);
-            }
-            
-            let appInstance;
-            try {
-                appInstance = initializeApp(firebaseConfig);
-                console.log("Firebase app initialized successfully.");
-            } catch (initError) {
-                console.error("Failed to initialize Firebase app:", initError);
-                return;
-            }
-
-            const db = getFirestore(appInstance); // Usar la instancia de app inicializada
-            const auth = getAuth(appInstance); // Usar la instancia de app inicializada
-
-            // Autenticación anónima para acceder a Firestore
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                    console.log("Signed in with custom token.");
-                } else {
-                    await signInAnonymously(auth);
-                    console.log("Signed in anonymously.");
-                }
-                console.log("Firebase Authenticated successfully.");
-            } catch (error) {
-                console.error("Error signing in to Firebase:", error);
-            }
-
-
-            // --- Contador de Visitas ---
-            const visitCounterElement = document.getElementById('visit-counter');
-            // 'appId' ya está definido más arriba
-            const counterDocRef = doc(db, `artifacts/${appId}/public/data/visits/globalCounter`);
-
-            try {
-                const docSnap = await getDoc(counterDocRef);
-
-                if (docSnap.exists()) {
-                    await updateDoc(counterDocRef, { count: increment(1) });
-                    const newCount = docSnap.data().count + 1;
-                    visitCounterElement.textContent = `Visitas: ${newCount}`;
-                    console.log("Visit counter updated:", newCount);
-                } else {
-                    await setDoc(counterDocRef, { count: 1 });
-                    visitCounterElement.textContent = `Visitas: 1`;
-                    console.log("Visit counter initialized to 1.");
-                }
-            } catch (error) {
-                console.error("Error al actualizar el contador de visitas:", error);
-                visitCounterElement.textContent = `Visitas: N/A`;
-            }
+            // NOTA: La lógica de inicialización de Firebase y el contador de visitas han sido eliminadas
+            // para limpiar el código y resolver problemas de carga/rendimiento, según lo solicitado.
+            // Si en el futuro necesitas funcionalidad de base de datos o autenticación, 
+            // deberás reimplementar la inicialización de Firebase aquí.
 
             // Navbar Shrink on Scroll
             const navbar = document.getElementById('mainNavbar');
