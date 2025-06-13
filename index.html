@@ -876,7 +876,7 @@
             <h3>Videos Educativos</h3>
             <p>Explora videos tutoriales y explicaciones sobre procedimientos y normativas de seguridad privada.</p>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-m_dia; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -908,41 +908,58 @@
             console.log("DOM Content Loaded. Initializing app logic.");
 
             // Inicializar Firebase
-            // Asegúrate de que __firebase_config es una cadena JSON válida con projectId
             let firebaseConfig = {};
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
             try {
                 if (typeof __firebase_config !== 'undefined' && __firebase_config) {
                     firebaseConfig = JSON.parse(__firebase_config);
-                    // Agrega un projectId por defecto si no está presente para evitar errores de inicialización
-                    if (!firebaseConfig.projectId) {
-                        console.warn("firebaseConfig missing projectId. Using a default placeholder.");
-                        firebaseConfig.projectId = 'your-default-project-id'; 
-                    }
+                    console.log("Original __firebase_config:", __firebase_config);
+                    // Ensure essential parts are present, or add placeholders
+                    firebaseConfig.projectId = firebaseConfig.projectId || 'your-default-project-id';
+                    firebaseConfig.apiKey = firebaseConfig.apiKey || 'your-default-api-key'; // Fallback API key
+                    firebaseConfig.appId = firebaseConfig.appId || 'your-default-app-id'; // Fallback App ID
+                    firebaseConfig.measurementId = firebaseConfig.measurementId || 'G-XXXXXXXXXX'; // Fallback Measurement ID
+                    console.log("Firebase config after parsing and fallback:", firebaseConfig);
                 } else {
-                    console.warn("__firebase_config is undefined or empty. Using an empty config with default projectId.");
-                    firebaseConfig.projectId = 'your-default-project-id';
+                    console.warn("__firebase_config is undefined or empty. Using a default Firebase config for initialization.");
+                    firebaseConfig = {
+                        apiKey: 'your-default-api-key', // Dummy API key for initialization
+                        authDomain: 'your-default-project-id.firebaseapp.com',
+                        projectId: 'your-default-project-id',
+                        storageBucket: 'your-default-project-id.appspot.com',
+                        messagingSenderId: '1234567890',
+                        appId: 'your-default-app-id',
+                        measurementId: 'G-XXXXXXXXXX'
+                    };
+                    console.log("Using completely default firebaseConfig:", firebaseConfig);
                 }
             } catch (e) {
                 console.error("Error parsing __firebase_config:", e);
-                console.warn("Using an empty config with default projectId due to parsing error.");
-                firebaseConfig = { projectId: 'your-default-project-id' }; // Fallback completo si el parseo falla
+                console.warn("Using a default Firebase config due to parsing error.");
+                firebaseConfig = {
+                    apiKey: 'your-default-api-key', // Dummy API key for initialization
+                    authDomain: 'your-default-project-id.firebaseapp.com',
+                    projectId: 'your-default-project-id',
+                    storageBucket: 'your-default-project-id.appspot.com',
+                    messagingSenderId: '1234567890',
+                    appId: 'your-default-app-id',
+                    measurementId: 'G-XXXXXXXXXX'
+                };
+                console.log("Using completely default firebaseConfig after catch block:", firebaseConfig);
             }
             
-            console.log("Parsed firebaseConfig:", firebaseConfig);
-
-            let app;
+            let appInstance;
             try {
-                app = initializeApp(firebaseConfig);
+                appInstance = initializeApp(firebaseConfig);
                 console.log("Firebase app initialized successfully.");
             } catch (initError) {
                 console.error("Failed to initialize Firebase app:", initError);
-                // Si la inicialización falla aquí, no podemos proceder con Firestore/Auth.
-                // Podrías mostrar un mensaje al usuario o deshabilitar funcionalidades.
-                return; 
+                return;
             }
 
-            const db = getFirestore(app);
-            const auth = getAuth(app);
+            const db = getFirestore(appInstance); // Usar la instancia de app inicializada
+            const auth = getAuth(appInstance); // Usar la instancia de app inicializada
 
             // Autenticación anónima para acceder a Firestore
             try {
@@ -956,14 +973,12 @@
                 console.log("Firebase Authenticated successfully.");
             } catch (error) {
                 console.error("Error signing in to Firebase:", error);
-                // Manejar el error de autenticación si es crítico
-                // Por ejemplo, deshabilitar características que requieren autenticación
             }
 
 
             // --- Contador de Visitas ---
             const visitCounterElement = document.getElementById('visit-counter');
-            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            // 'appId' ya está definido más arriba
             const counterDocRef = doc(db, `artifacts/${appId}/public/data/visits/globalCounter`);
 
             try {
