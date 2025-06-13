@@ -157,14 +157,7 @@
             height: 1.2em;
         }
 
-        /* Contenedor principal para contenido y chat de IA */
-        .content-container {
-            display: flex;
-            flex-grow: 1; /* Permite que este contenedor crezca y ocupe el espacio disponible */
-            padding-top: 80px; /* Espacio para la navbar fija */
-        }
-
-        /* Área de Contenido Principal (izquierda en PC) */
+        /* Contenedor principal para contenido */
         .main-content {
             flex-grow: 1; /* Ocupa el espacio restante */
             padding: 20px 8%;
@@ -467,107 +460,103 @@
             color: #e8eaf6;
         }
 
-        /* Sección Clarificador IA (ahora en modal) */
-        .ai-clarifier-modal-overlay {
+        /* Estilo del chat flotante de IA */
+        #ai-clarifier-chat {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente para el modal */
-            z-index: 1050;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .ai-clarifier-modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-            display: flex; /* Asegura que el contenedor se muestre como flex */
-        }
-
-        .ai-clarifier-modal-content {
+            bottom: 20px;
+            right: 20px;
+            width: 350px; /* Ancho predeterminado para PC */
+            height: 450px; /* Alto predeterminado para PC */
             background-color: rgba(179, 229, 252, 0.9); /* Azul muy claro semi-transparente */
-            padding: 30px;
+            padding: 20px;
             border-radius: 15px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            max-width: 90%; /* Ancho predeterminado */
-            width: 600px; /* Ancho en PC */
-            max-height: 90%;
-            overflow-y: auto;
-            transform: scale(0.9);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            position: relative; /* Para el botón de cerrar */
+            display: none; /* Oculto por defecto */
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1060; /* Por encima de todo lo demás */
+            transition: all 0.3s ease-in-out;
             border: 1px solid rgba(0,0,0,0.1);
-            color: #333; /* Color de texto predeterminado para el modal */
+            color: #333;
         }
 
-        .ai-clarifier-modal-overlay.show .ai-clarifier-modal-content {
-            transform: scale(1);
-            opacity: 1;
+        #ai-clarifier-chat.show {
+            display: flex;
         }
 
-        .ai-clarifier-modal-content .close-button {
-            position: absolute;
-            top: 15px;
-            right: 15px;
+        #ai-clarifier-chat .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        #ai-clarifier-chat .chat-header h2 {
+            font-size: 1.2rem;
+            margin: 0;
+            color: #283593; /* Azul oscuro */
+        }
+
+        #ai-clarifier-chat .chat-header .close-button {
             background: none;
             border: none;
             font-size: 1.5rem;
             color: #555;
             cursor: pointer;
-            transition: color 0.2s ease;
         }
 
-        .ai-clarifier-modal-content .close-button:hover {
-            color: #000;
+        #ai-clarifier-chat .chat-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px; /* Espacio para scrollbar */
+            margin-bottom: 15px;
         }
 
-        .ai-clarifier-modal-content textarea {
+        #ai-clarifier-chat .chat-content p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        #ai-clarifier-chat textarea {
             width: 100%;
-            height: 100px;
+            height: 80px; /* Más pequeño para el chat flotante */
             border-radius: 8px;
             border: 1px solid #ccc;
-            padding: 10px;
+            padding: 8px;
             font-family: 'Poppins', sans-serif;
             resize: vertical;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             background-color: #fff;
             color: #333;
         }
 
-        .ai-clarifier-modal-content textarea::placeholder {
+        #ai-clarifier-chat textarea::placeholder {
             color: #666;
         }
 
-        .ai-clarifier-modal-content button {
+        #ai-clarifier-chat button {
             background-color: #dc3545; /* Rojo para el botón de IA */
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 1rem;
+            padding: 10px 15px;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%; /* Ocupa todo el ancho */
         }
 
-        .ai-clarifier-modal-content button:hover {
+        #ai-clarifier-chat button:hover {
             background-color: #c82333; /* Rojo más oscuro para hover */
             transform: translateY(-2px);
         }
 
-        .ai-clarifier-modal-content #ai-clarifier-response {
-            background-color: rgba(255, 205, 210, 0.6); /* Rojo rosado semi-transparente */
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border: 1px solid rgba(198,40,40,0.5); /* Borde rojo oscuro */
-            white-space: pre-wrap;
-            color: #c62828; /* Texto rojo oscuro */
+        #ai-clarifier-chat .gemini-logo {
+            align-self: flex-end; /* Alinear el logo al final del contenedor flex */
+            margin-bottom: 10px;
         }
         
         /* Spinner de carga */
@@ -592,7 +581,7 @@
             to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
         }
 
-        /* Estilo del botón flotante de IA */
+        /* Estilo del botón flotante de IA (para abrir/cerrar el chat flotante) */
         #floating-ai-button {
             position: fixed;
             bottom: 20px;
@@ -608,9 +597,9 @@
             font-size: 1.8rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             cursor: pointer;
-            z-index: 1040; /* Por debajo del modal, pero por encima del contenido principal */
+            z-index: 1061; /* Por encima del chat flotante */
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            text-decoration: none; /* Eliminar subrayado si fuera un 'a' */
+            text-decoration: none;
         }
 
         #floating-ai-button:hover {
@@ -625,71 +614,68 @@
         }
 
         /* Ajustes responsivos */
-        @media (min-width: 769px) { /* PC: Layout de dos columnas */
-            .content-container {
-                flex-direction: row; /* Diseño en fila para PC */
-                justify-content: space-between; /* Espacio entre columnas */
-                align-items: flex-start; /* Alinear al inicio */
-            }
-
-            .main-content {
-                width: 65%; /* Ocupa 65% del ancho */
-                padding-right: 20px; /* Espacio entre el contenido principal y el chat */
-            }
-
-            /* Mostrar el clarificador de IA como una columna lateral en PC */
-            #ai-clarifier-modal-overlay {
-                position: static; /* Quitar fixed para que fluya en el layout */
-                background-color: transparent; /* Fondo transparente */
-                display: block; /* Siempre visible */
-                opacity: 1; /* Siempre visible */
-                visibility: visible; /* Siempre visible */
-                width: 35%; /* Ocupa 35% del ancho */
-                max-width: none;
-                height: auto;
-                padding-top: 80px; /* Espacio para la navbar fija */
-            }
-
-            .ai-clarifier-modal-content {
-                background-color: rgba(255, 255, 255, 0.7); /* Fondo semi-transparente como una ventana de contenido */
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                border: 1px solid rgba(0,0,0,0.05);
-                border-radius: 15px;
-                padding: 30px;
-                max-width: 100%; /* Ajusta al ancho de la columna */
-                width: auto; /* Ancho automático basado en el padre */
-                height: auto; /* Altura automática */
-                transform: none; /* Sin transformación */
-                overflow-y: visible; /* Puede scrollear si es necesario, pero no es un modal */
-            }
-
-            .ai-clarifier-modal-content .close-button {
-                display: none; /* Ocultar el botón de cerrar en PC */
-            }
-
-            #floating-ai-button {
-                display: none !important; /* Ocultar el botón flotante en PC */
-            }
-        }
-
         @media (max-width: 768px) { /* Móvil: Diseño de una columna */
-            .content-container {
-                flex-direction: column; /* Columna para móvil */
-                padding-top: 80px;
+            .navbar-custom {
+                padding: 1rem 5%;
             }
-
+            .navbar-custom .navbar-brand {
+                font-size: 1.5rem;
+                margin-right: 0;
+            }
+            .navbar-custom .navbar-collapse {
+                background-color: #171b4a; /* Azul oscuro para el menú colapsado */
+                padding: 10px;
+                border-radius: 8px;
+                margin-top: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                backdrop-filter: blur(5px); /* Desenfoque para el menú colapsado */
+                -webkit-backdrop-filter: blur(5px);
+            }
+            .navbar-custom .nav-link {
+                text-align: center;
+                margin: 5px 0;
+            }
+            .navbar-custom .nav-link::after {
+                width: 50%;
+            }
+            /* Relleno de contenido principal ajustado para móvil */
             .main-content {
-                width: 100%; /* Ocupa todo el ancho en móvil */
                 padding: 15px 2%;
             }
-
-            /* Modal del clarificador de IA en móvil (ya estilizado para ser un modal) */
-            .ai-clarifier-modal-content {
-                max-width: 95%; /* Más ancho en móvil */
-                width: 95%; /* Asegura que no se salga de la pantalla */
-                max-height: 90vh; /* Altura máxima para evitar desbordamiento */
+            .main-content h1, .main-content h2, .main-content h3,
+            .main-content h4, .main-content h5, .main-content h6 {
+                font-size: 1.5rem;
+            }
+            #dynamic-install-banner {
+                display: flex; /* Mostrar banner de instalación dinámico en móvil */
+            }
+            #dynamic-install-banner p {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+            #dynamic-install-banner button {
+                padding: 8px 15px;
+            }
+            .install-modal-content {
                 padding: 20px;
-                /* El display: flex de ai-clarifier-modal-overlay.show se encarga de mostrarlo */
+            }
+            /* Ajustar tamaño de fuente de pregunta de examen para pantallas pequeñas */
+            .question-card h5 {
+                font-size: 0.9em;
+            }
+            /* Ajustar tamaño de fuente de alternativa para pantallas pequeñas */
+            .question-card .form-check-label {
+                font-size: 0.8em;
+            }
+
+            /* Clarificador flotante reducido en móvil */
+            #ai-clarifier-chat {
+                width: 90%; /* Más ancho en móvil */
+                height: 50vh; /* La mitad de la altura de la pantalla */
+                left: 5%; /* Centrar horizontalmente */
+                right: 5%;
+                bottom: 15px;
+                padding: 15px;
             }
 
             #floating-ai-button {
@@ -700,10 +686,33 @@
                 right: 15px;
                 display: flex; /* Asegurarse de que esté visible en móvil */
             }
+        }
 
-            /* Esconder la sección original del clarificador si el modal está en uso */
-            #ai-clarifier-section {
-                display: none;
+        @media (min-width: 769px) { /* PC: Layout principal de una columna, chat flotante a la derecha */
+            body {
+                flex-direction: column; /* Restablecer a columna para PC */
+            }
+            .content-container {
+                display: block; /* No usar flexbox para el contenedor principal */
+                width: 100%;
+                padding-top: 80px;
+            }
+            .main-content {
+                width: auto; /* Ocupa el ancho natural */
+                padding-right: 8%; /* Restablecer padding normal */
+            }
+            /* Ocultar el banner de instalación dinámico en PC */
+            #dynamic-install-banner {
+                display: none !important;
+            }
+
+            /* Clarificador flotante en PC */
+            #ai-clarifier-chat {
+                display: none; /* Oculto por defecto, se mostrará al hacer clic en el botón flotante */
+            }
+
+            #floating-ai-button {
+                display: flex; /* Asegurarse de que esté visible en PC */
             }
         }
     </style>
@@ -750,157 +759,142 @@
         </div>
     </nav>
 
-    <!-- Contenedor principal que contendrá el contenido y el chat de IA -->
-    <div class="content-container">
-        <!-- Área de Contenido Principal -->
-        <div class="main-content">
-            <h1 class="text-center">¡Bienvenido a la Plataforma de Seguridad Privada en Chile!</h1>
-            <p>Esta plataforma ha sido diseñada para ofrecerte información relevante y actualizada sobre la normativa de seguridad privada en Chile, incluyendo la nueva Ley 21.659, decretos complementarios y material de estudio esencial para guardias de seguridad y vigilantes privados. Nuestro objetivo es ayudarte a comprender mejor tus responsabilidades y derechos en esta importante labor, promoviendo la excelencia y el cumplimiento normativo.</p>
+    <!-- Área de Contenido Principal -->
+    <div class="main-content">
+        <h1 class="text-center">¡Bienvenido a la Plataforma de Seguridad Privada en Chile!</h1>
+        <p>Esta plataforma ha sido diseñada para ofrecerte información relevante y actualizada sobre la normativa de seguridad privada en Chile, incluyendo la nueva Ley 21.659, decretos complementarios y material de estudio esencial para guardias de seguridad y vigilantes privados. Nuestro objetivo es ayudarte a comprender mejor tus responsabilidades y derechos en esta importante labor, promoviendo la excelencia y el cumplimiento normativo.</p>
 
-            <!-- Sección de Examen -->
-            <section id="exam-section" class="mt-5">
-                <h2 class="text-center">Examen de Preparación OS-10</h2>
-                <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
-                
-                <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
+        <!-- Sección de Examen -->
+        <section id="exam-section" class="mt-5">
+            <h2 class="text-center">Examen de Preparación OS-10</h2>
+            <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
+            
+            <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
 
-                <div id="quiz-container" class="mt-4">
-                    <!-- Las preguntas se cargarán aquí mediante JavaScript -->
-                    <p class="text-center text-info">Cargando preguntas del examen...</p>
-                </div>
-                <div class="exam-controls">
-                    <button id="submit-quiz-btn" style="display: none;">Enviar Examen</button>
-                </div>
-                <div id="exam-results" class="mt-4">
-                    <!-- Los resultados del examen se mostrarán aquí -->
-                </div>
-            </section>
-
-            <section class="info-section">
-                <h2 id="leyes">Leyes y Normativas Clave de Seguridad Privada en Chile</h2>
-                <p>La seguridad privada en Chile está regulada por un marco legal en constante actualización. Es fundamental que todo guardia y vigilante conozca las normativas que rigen su quehacer. Aquí te presentamos las leyes y decretos más importantes:</p>
-
-                <h3>Nueva Ley de Seguridad Privada (Ley N° 21.659)</h3>
-                <p>Publicada el 21 de marzo de 2024, esta ley tiene por objeto regular la seguridad privada, entendiéndose como un conjunto de actividades o medidas preventivas, coadyuvantes y complementarias de la seguridad pública. Define las actividades de seguridad privada, las obligaciones de las personas naturales y jurídicas que prestan estos servicios, y establece un nuevo sistema de autorización y fiscalización.</p>
-                <ul>
-                    <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1198539" target="_blank">Ley N° 21.659 - Sobre Seguridad Privada (BCN)</a></li>
-                </ul>
-
-                <h3>Reglamento de Seguridad Privada (Decreto N° 209 EXENTO)</h3>
-                <p>Aprobado el 27 de mayo de 2025, este decreto complementa la Ley N° 21.659, precisando las obligaciones y aspectos técnicos y operativos para su adecuada implementación. Define los niveles de riesgo, procedimientos de autorización para entidades y personal, y detalla el uso de recursos tecnológicos y materiales.</p>
-                <ul>
-                    <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1211116" target="_blank">Decreto N° 209 EXENTO - Aprueba Reglamento de Seguridad Privada (BCN)</a></li>
-                </ul>
-
-                <h3>Manual Operativo en Materias de Seguridad Privada (Decreto N° 32 EXENTO)</h3>
-                <p>Este decreto, publicado el 31 de enero de 2024, modifica el Decreto N° 261 EXENTO de 2020 y aprueba el Manual Operativo de Seguridad Privada. Detalla requisitos para personas naturales (guardias, nocheros, porteros, rondines, vigilantes), sus uniformes, medidas adicionales de seguridad y procesos de capacitación.</p>
-                <ul>
-                    <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1203673" target="_blank">Decreto N° 32 EXENTO - Modifica y Aprueba Manual Operativo (BCN)</a></li>
-                </ul>
-
-                <h3>Decreto Supremo N° 867 (2017)</h3>
-                <p>Dicta el Reglamento sobre Nuevos Estándares para Personas, Personal y Empresas que Reciben Servicios o Realizan Actividades de Seguridad Privada. Si bien ha sido modificado y complementado por normativas más recientes, sienta bases importantes sobre los requisitos generales y la fiscalización.</p>
-                <ul>
-                    <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1107567" target="_blank">Decreto N° 867 - Dicta Reglamento sobre Nuevos Estándares (BCN)</a></li>
-                </ul>
-
-                <h3>Decreto Ley 3607 y Ley 19.303 (Derogadas por Ley 21.659)</h3>
-                <p>Es importante mencionar que la Ley N° 21.659 derogó el Decreto Ley 3607 (Ley de vigilantes privados) y la Ley N° 19.303 (Determina entidades que deben contar con sistema de seguridad) y sus reglamentos complementarios. Aunque ya no están vigentes, sentaron las bases para la regulación actual y su conocimiento histórico es útil para comprender la evolución de la normativa.</p>
-                
-                <div class="text-center my-4">
-                    <a href="https://www.bcn.cl/leychile/" target="_blank" class="btn btn-primary btn-lg" style="background-color: #283593; border-color: #283593; color: white;">Explorar LeyChile (Biblioteca del Congreso Nacional)</a>
-                </div>
-
-                <blockquote>
-                    <p>El Artículo 1 de la Ley N° 21.659 establece: "La presente ley tiene por objeto regular la seguridad privada, entendiéndose por tal el conjunto de actividades o medidas de carácter preventivas, coadyuvantes y complementarias de la seguridad pública, destinadas a la protección de personas, bienes y procesos productivos..."</p>
-                    <p class="text-end fst-italic">Ley N° 21.659, Título I, Artículo 1</p>
-                </blockquote>
-
-                <pre><code>
-                    // Ejemplo de estructura para un protocolo de seguridad (ilustrativo)
-                    // function crearProtocoloSeguridad(riesgo, medidas) {
-                    //     console.log(`Evaluando riesgo: ${riesgo}`);
-                    //     if (riesgo === 'Alto') {
-                    //         console.log('Implementando medidas de seguridad avanzadas:', medidas);
-                    //     } else {
-                    //         console.log('Aplicando medidas estándar:', medidas);
-                    //     }
-                    // }
-                    // crearProtocoloSeguridad('Medio', ['Control de acceso', 'CCTV']);
-                </code></pre>
-                <p>La <mark style="background-color: #8c9eff; color: #171b4a; padding: 2px 5px; border-radius: 3px;">formación</mark> y actualización constante son clave para el desempeño eficaz de un guardia de seguridad.</p>
-            </section>
-
-            <section class="info-section">
-                <h2 id="interes">Links de Interés</h2>
-                <p>Aquí encontrarás enlaces a recursos útiles para complementar tu conocimiento y formación en seguridad privada.</p>
-                <ul>
-                    <li><i class="icon-small bi bi-link"></i> <a href="https://www.dt.gob.cl/" target="_blank">Dirección del Trabajo</a></li>
-                    <li><i class="icon-small bi bi-link"></i> <a href="https://www.zosepcar.cl/OS10.php" target="_blank">Zosepcar OS-10</a></li>
-                    <li><i class="icon-small bi bi-link"></i> <a href="https://dal5.short.gy/CFil" target="_blank">Cerofilas</a></li>
-                    <li><i class="icon-small bi bi-link"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1200633" target="_blank">Ley N° 20.965 - Modifica Código Penal</a></li>
-                    <li><i class="icon-small bi bi-link"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=9081" target="_blank">Ley N° 18.290 - Ley de Tránsito</a></li>
-                    <li><i class="icon-small bi bi-link"></i> <a href="https://dal5.short.gy/LeySeg" target="_blank">LEY 21.659 - Ministerio del Interior y Seguridad Pública</a></li>
-                </ul>
-
-                <div style="width: 100%; height: 300px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin: 20px auto; display: flex; justify-content: center; align-items: center; background-color: rgba(0,0,0,0.05);">
-                    <p style="color: #666;"></p>
-                </div>
-
-                <h3>Documentos y Recursos Descargables</h3>
-                <p>Próximamente, podrás descargar documentos importantes relacionados con la seguridad privada.</p>
-                <!-- Puedes añadir aquí enlaces a PDF u otros documentos una vez disponibles -->
-
-                <h3>Videos Educativos</h3>
-                <p>Explora videos tutoriales y explicaciones sobre procedimientos y normativas de seguridad privada.</p>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/rfJQ1bVuTKk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-            </section>
-
-            <section class="info-section">
-                <h2 id="contacto">Contacto</h2>
-                <p>Si tienes preguntas o necesitas más información, no dudes en contactarnos. Estamos aquí para ayudarte a ser un profesional de seguridad mejor informado y capacitado.</p>
-                <address class="text-center">
-                    <strong>Daniel Elías Figueroa Chacama</strong><br>
-                    Ingeniero en Informática<br>
-                    Chile
-                </address>
-            </section>
-        </div>
-
-        <!-- Chat con Gemini (sección lateral en PC, modal en móvil) -->
-        <div id="ai-clarifier-sidebar" class="ai-clarifier-sidebar">
-            <h2 class="text-center">Clarificador Legal con IA (Pregúntale a Gemini)</h2>
-            <p class="text-center">¿Tienes dudas sobre algún artículo o normativa? Escribe tu pregunta y te ayudaremos.</p>
-            <div class="d-flex justify-content-end mb-3">
-                <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
+            <div id="quiz-container" class="mt-4">
+                <!-- Las preguntas se cargarán aquí mediante JavaScript -->
+                <p class="text-center text-info">Cargando preguntas del examen...</p>
             </div>
-            <textarea id="ai-question-input-sidebar" placeholder="Ej: ¿Qué dice el Decreto 93 sobre los requisitos de educación de un Guardia de Seguridad?"></textarea>
-            <button id="ask-ai-btn-sidebar">Preguntar a la IA</button>
-            <div id="ai-clarifier-response-sidebar" class="mt-3">
-                <p>Tu respuesta aparecerá aquí.</p>
+            <div class="exam-controls">
+                <button id="submit-quiz-btn" style="display: none;">Enviar Examen</button>
             </div>
-        </div>
+            <div id="exam-results" class="mt-4">
+                <!-- Los resultados del examen se mostrarán aquí -->
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2 id="leyes">Leyes y Normativas Clave de Seguridad Privada en Chile</h2>
+            <p>La seguridad privada en Chile está regulada por un marco legal en constante actualización. Es fundamental que todo guardia y vigilante conozca las normativas que rigen su quehacer. Aquí te presentamos las leyes y decretos más importantes:</p>
+
+            <h3>Nueva Ley de Seguridad Privada (Ley N° 21.659)</h3>
+            <p>Publicada el 21 de marzo de 2024, esta ley tiene por objeto regular la seguridad privada, entendiéndose como un conjunto de actividades o medidas preventivas, coadyuvantes y complementarias de la seguridad pública. Define las actividades de seguridad privada, las obligaciones de las personas naturales y jurídicas que prestan estos servicios, y establece un nuevo sistema de autorización y fiscalización.</p>
+            <ul>
+                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1198539" target="_blank">Ley N° 21.659 - Sobre Seguridad Privada (BCN)</a></li>
+            </ul>
+
+            <h3>Reglamento de Seguridad Privada (Decreto N° 209 EXENTO)</h3>
+            <p>Aprobado el 27 de mayo de 2025, este decreto complementa la Ley N° 21.659, precisando las obligaciones y aspectos técnicos y operativos para su adecuada implementación. Define los niveles de riesgo, procedimientos de autorización para entidades y personal, y detalla el uso de recursos tecnológicos y materiales.</p>
+            <ul>
+                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1211116" target="_blank">Decreto N° 209 EXENTO - Aprueba Reglamento de Seguridad Privada (BCN)</a></li>
+            </ul>
+
+            <h3>Manual Operativo en Materias de Seguridad Privada (Decreto N° 32 EXENTO)</h3>
+            <p>Este decreto, publicado el 31 de enero de 2024, modifica el Decreto N° 261 EXENTO de 2020 y aprueba el Manual Operativo de Seguridad Privada. Detalla requisitos para personas naturales (guardias, nocheros, porteros, rondines, vigilantes), sus uniformes, medidas adicionales de seguridad y procesos de capacitación.</p>
+            <ul>
+                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1203673" target="_blank">Decreto N° 32 EXENTO - Modifica y Aprueba Manual Operativo (BCN)</a></li>
+            </ul>
+
+            <h3>Decreto Supremo N° 867 (2017)</h3>
+            <p>Dicta el Reglamento sobre Nuevos Estándares para Personas, Personal y Empresas que Reciben Servicios o Realizan Actividades de Seguridad Privada. Si bien ha sido modificado y complementado por normativas más recientes, sienta bases importantes sobre los requisitos generales y la fiscalización.</p>
+            <ul>
+                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1107567" target="_blank">Decreto N° 867 - Dicta Reglamento sobre Nuevos Estándares (BCN)</a></li>
+            </ul>
+
+            <h3>Decreto Ley 3607 y Ley 19.303 (Derogadas por Ley 21.659)</h3>
+            <p>Es importante mencionar que la Ley N° 21.659 derogó el Decreto Ley 3607 (Ley de vigilantes privados) y la Ley N° 19.303 (Determina entidades que deben contar con sistema de seguridad) y sus reglamentos complementarios. Aunque ya no están vigentes, sentaron las bases para la regulación actual y su conocimiento histórico es útil para comprender la evolución de la normativa.</p>
+            
+            <div class="text-center my-4">
+                <a href="https://www.bcn.cl/leychile/" target="_blank" class="btn btn-primary btn-lg" style="background-color: #283593; border-color: #283593; color: white;">Explorar LeyChile (Biblioteca del Congreso Nacional)</a>
+            </div>
+
+            <blockquote>
+                <p>El Artículo 1 de la Ley N° 21.659 establece: "La presente ley tiene por objeto regular la seguridad privada, entendiéndose por tal el conjunto de actividades o medidas de carácter preventivas, coadyuvantes y complementarias de la seguridad pública, destinadas a la protección de personas, bienes y procesos productivos..."</p>
+                <p class="text-end fst-italic">Ley N° 21.659, Título I, Artículo 1</p>
+            </blockquote>
+
+            <pre><code>
+                // Ejemplo de estructura para un protocolo de seguridad (ilustrativo)
+                // function crearProtocoloSeguridad(riesgo, medidas) {
+                //     console.log(`Evaluando riesgo: ${riesgo}`);
+                //     if (riesgo === 'Alto') {
+                //         console.log('Implementando medidas de seguridad avanzadas:', medidas);
+                //     } else {
+                //         console.log('Aplicando medidas estándar:', medidas);
+                //     }
+                // }
+                // crearProtocoloSeguridad('Medio', ['Control de acceso', 'CCTV']);
+            </code></pre>
+            <p>La <mark style="background-color: #8c9eff; color: #171b4a; padding: 2px 5px; border-radius: 3px;">formación</mark> y actualización constante son clave para el desempeño eficaz de un guardia de seguridad.</p>
+        </section>
+
+        <section class="info-section">
+            <h2 id="interes">Links de Interés</h2>
+            <p>Aquí encontrarás enlaces a recursos útiles para complementar tu conocimiento y formación en seguridad privada.</p>
+            <ul>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.dt.gob.cl/" target="_blank">Dirección del Trabajo</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.zosepcar.cl/OS10.php" target="_blank">Zosepcar OS-10</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://dal5.short.gy/CFil" target="_blank">Cerofilas</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1200633" target="_blank">Ley N° 20.965 - Modifica Código Penal</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=9081" target="_blank">Ley N° 18.290 - Ley de Tránsito</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://dal5.short.gy/LeySeg" target="_blank">LEY 21.659 - Ministerio del Interior y Seguridad Pública</a></li>
+            </ul>
+
+            <div style="width: 100%; height: 300px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin: 20px auto; display: flex; justify-content: center; align-items: center; background-color: rgba(0,0,0,0.05);">
+                <p style="color: #666;"></p>
+            </div>
+
+            <h3>Documentos y Recursos Descargables</h3>
+            <p>Próximamente, podrás descargar documentos importantes relacionados con la seguridad privada.</p>
+            <!-- Puedes añadir aquí enlaces a PDF u otros documentos una vez disponibles -->
+
+            <h3>Videos Educativos</h3>
+            <p>Explora videos tutoriales y explicaciones sobre procedimientos y normativas de seguridad privada.</p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/rfJQ1bVuTKk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2 id="contacto">Contacto</h2>
+            <p>Si tienes preguntas o necesitas más información, no dudes en contactarnos. Estamos aquí para ayudarte a ser un profesional de seguridad mejor informado y capacitado.</p>
+            <address class="text-center">
+                <strong>Daniel Elías Figueroa Chacama</strong><br>
+                Ingeniero en Informática<br>
+                Chile
+            </address>
+        </section>
     </div>
 
-    <!-- Botón Flotante del Clarificador IA (Solo visible en móvil) -->
+    <!-- Botón Flotante del Clarificador IA -->
     <div id="floating-ai-button" aria-label="Abrir Clarificador de Inteligencia Artificial">
         <i class="bi bi-robot"></i> <!-- Icono de robot o chat -->
     </div>
 
-    <!-- Modal del Clarificador IA (Solo visible en móvil) -->
-    <div id="ai-clarifier-modal-overlay" class="ai-clarifier-modal-overlay">
-        <div class="ai-clarifier-modal-content">
-            <button class="close-button" id="close-ai-modal">&times;</button>
-            <h2 class="text-center">Clarificador Legal con IA (Pregúntale a Gemini)</h2>
-            <p class="text-center">¿Tienes dudas sobre algún artículo de la Ley de Seguridad Privada o una normativa específica? Escribe tu pregunta a continuación y nuestra inteligencia artificial te proporcionará una explicación clara.</p>
+    <!-- Chat Flotante del Clarificador IA (visible en PC y móvil, se superpone) -->
+    <div id="ai-clarifier-chat" class="ai-clarifier-chat">
+        <div class="chat-header">
+            <h2>Clarificador IA</h2>
+            <button class="close-button" id="close-ai-chat">&times;</button>
+        </div>
+        <div class="chat-content">
+            <p>¿Tienes dudas sobre algún artículo o normativa? Escribe tu pregunta y te ayudaremos.</p>
             <div class="d-flex justify-content-end mb-3">
                 <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
             </div>
-            <textarea id="ai-question-input-modal" placeholder="Ej: ¿Qué dice el Decreto 93 sobre los requisitos de educación de un Guardia de Seguridad?"></textarea>
-            <button id="ask-ai-btn-modal">Preguntar a la IA</button>
-            <div id="ai-clarifier-response-modal" class="mt-3">
+            <textarea id="ai-question-input" placeholder="Ej: ¿Qué dice el Decreto 93 sobre los requisitos de educación de un Guardia de Seguridad?"></textarea>
+            <button id="ask-ai-btn">Preguntar a la IA</button>
+            <div id="ai-clarifier-response" class="mt-3">
                 <p>Tu respuesta aparecerá aquí.</p>
             </div>
         </div>
@@ -1317,75 +1311,35 @@
 
             submitQuizBtn.addEventListener('click', submitQuiz);
 
-            // --- Lógica del Clarificador IA (Modal en móvil, Sidebar en PC) ---
+            // --- Lógica del Clarificador IA (Flotante) ---
             const floatingAiButton = document.getElementById('floating-ai-button');
-            const aiClarifierModalOverlay = document.getElementById('ai-clarifier-modal-overlay');
-            const closeAiModalBtn = document.getElementById('close-ai-modal');
+            const aiClarifierChat = document.getElementById('ai-clarifier-chat');
+            const closeAiChatBtn = document.getElementById('close-ai-chat');
+            const aiQuestionInput = document.getElementById('ai-question-input');
+            const askAiBtn = document.getElementById('ask-ai-btn');
+            const aiClarifierResponse = document.getElementById('ai-clarifier-response');
 
-            // Inputs y respuestas para el modal (móvil)
-            const aiQuestionInputModal = document.getElementById('ai-question-input-modal');
-            const askAiBtnModal = document.getElementById('ask-ai-btn-modal');
-            const aiClarifierResponseModal = document.getElementById('ai-clarifier-response-modal');
+            floatingAiButton.addEventListener('click', () => {
+                console.log("Floating AI button clicked. Toggling chat visibility.");
+                aiClarifierChat.classList.toggle('show');
+            });
 
-            // Inputs y respuestas para el sidebar (PC)
-            const aiQuestionInputSidebar = document.getElementById('ai-question-input-sidebar');
-            const askAiBtnSidebar = document.getElementById('ask-ai-btn-sidebar');
-            const aiClarifierResponseSidebar = document.getElementById('ai-clarifier-response-sidebar');
+            closeAiChatBtn.addEventListener('click', () => {
+                console.log("Close chat button clicked. Hiding chat.");
+                aiClarifierChat.classList.remove('show');
+                aiQuestionInput.value = ''; // Limpiar input al cerrar
+                aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>'; // Resetear respuesta
+            });
 
-
-            // Lógica para abrir/cerrar modal en móvil
-            if (window.matchMedia('(max-width: 768px)').matches) {
-                floatingAiButton.addEventListener('click', () => {
-                    console.log("Floating AI button clicked. Attempting to show modal.");
-                    aiClarifierModalOverlay.classList.add('show');
-                    aiClarifierModalOverlay.style.display = 'flex'; // Asegura que se vea
-                });
-
-                closeAiModalBtn.addEventListener('click', () => {
-                    console.log("Close modal button clicked. Attempting to hide modal.");
-                    aiClarifierModalOverlay.classList.remove('show');
-                    aiClarifierModalOverlay.style.display = 'none'; // Asegura que esté oculto
-                    aiQuestionInputModal.value = ''; // Limpiar input
-                    aiClarifierResponseModal.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>'; // Resetear respuesta
-                });
-
-                aiClarifierModalOverlay.addEventListener('click', (event) => {
-                    if (event.target === aiClarifierModalOverlay) {
-                        console.log("Clicked outside modal content. Attempting to hide modal.");
-                        aiClarifierModalOverlay.classList.remove('show');
-                        aiClarifierModalOverlay.style.display = 'none';
-                        aiQuestionInputModal.value = '';
-                        aiClarifierResponseModal.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>';
-                    }
-                });
-
-                // Asignar listeners del clarificador a los elementos del MODAL
-                askAiBtnModal.addEventListener('click', async function() {
-                    await handleAskAi(aiQuestionInputModal, askAiBtnModal, aiClarifierResponseModal);
-                });
-
-            } else { // Lógica para sidebar en PC
-                // Asegurarse de que el modal esté oculto en PC
-                aiClarifierModalOverlay.style.display = 'none';
-                floatingAiButton.style.display = 'none';
-
-                // Asignar listeners del clarificador a los elementos del SIDEBAR
-                askAiBtnSidebar.addEventListener('click', async function() {
-                    await handleAskAi(aiQuestionInputSidebar, askAiBtnSidebar, aiClarifierResponseSidebar);
-                });
-            }
-
-
-            // Función genérica para manejar la consulta a la IA (usada por modal y sidebar)
-            async function handleAskAi(inputElement, buttonElement, responseElement) {
-                const userQuestion = inputElement.value.trim();
+            askAiBtn.addEventListener('click', async function() {
+                const userQuestion = aiQuestionInput.value.trim();
                 if (userQuestion === "") {
-                    responseElement.innerHTML = '<p class="text-danger">Por favor, escribe tu pregunta.</p>';
+                    aiClarifierResponse.innerHTML = '<p class="text-danger">Por favor, escribe tu pregunta.</p>';
                     return;
                 }
 
-                responseElement.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Cargando respuesta de la IA... Esto puede tardar unos segundos.</p>';
-                buttonElement.disabled = true;
+                aiClarifierResponse.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Cargando respuesta de la IA... Esto puede tardar unos segundos.</p>';
+                askAiBtn.disabled = true;
                 console.log("Ask AI button clicked. Sending prompt to Gemini for clarification.");
 
                 // Actualizar el prompt para basarse en el Decreto 93 y el Decreto Ley 3607 para Guardias de Seguridad.
@@ -1407,7 +1361,7 @@
                     if (!response.ok) {
                         const errorData = await response.json();
                         console.error('Error al obtener datos de la API de Gemini para aclaración:', response.status, response.statusText, errorData);
-                        responseElement.innerHTML = `<p class="text-danger">Hubo un error (${response.status}) al obtener la respuesta de la IA. Por favor, inténtalo de nuevo.</p>`;
+                        aiClarifierResponse.innerHTML = `<p class="text-danger">Hubo un error (${response.status}) al obtener la respuesta de la IA. Por favor, inténtalo de nuevo.</p>`;
                         return;
                     }
 
@@ -1416,20 +1370,20 @@
                         result.candidates[0].content && result.candidates[0].content.parts &&
                         result.candidates[0].content.parts.length > 0) {
                         const text = result.candidates[0].content.parts[0].text;
-                        responseElement.innerHTML = `<p>${text}</p>`;
+                        aiClarifierResponse.innerHTML = `<p>${text}</p>`;
                         console.log("AI clarification received and displayed.");
                     } else {
                         console.warn("La estructura de la respuesta de la API de Gemini para aclaración es inesperada o está vacía.");
-                        responseElement.innerHTML = '<p class="text-warning">No se pudo obtener una respuesta clara de la IA. Intenta reformular tu pregunta.</p>';
+                        aiClarifierResponse.innerHTML = '<p class="text-warning">No se pudo obtener una respuesta clara de la IA. Intenta reformular tu pregunta.</p>';
                     }
                 } catch (error) {
                     console.error('Network error or parsing issue in Gemini API call for clarification:', error);
-                    responseElement.innerHTML = '<p class="text-danger">Error de conexión al Clarificador IA. Asegúrate de tener acceso a internet y que el servicio esté disponible.</p>';
+                    aiClarifierResponse.innerHTML = '<p class="text-danger">Error de conexión al Clarificador IA. Asegúrate de tener acceso a internet y que el servicio esté disponible.</p>';
                 } finally {
-                    buttonElement.disabled = false;
+                    askAiBtn.disabled = false;
                     console.log("AI Clarifier request finished.");
                 }
-            }
+            });
         });
     </script>
 </body>
