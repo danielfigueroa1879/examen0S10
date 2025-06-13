@@ -102,7 +102,7 @@
             font-size: 1.2rem;
         }
 
-        /* Botón de búsqueda y barra - OCULTADO */
+        /* Botón de búsqueda (lupa) */
         .search-toggler {
             background-color: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.2);
@@ -126,8 +126,35 @@
             font-size: 1.2rem;
         }
 
+        /* Contenedor de la barra de búsqueda (el input) */
         .search-bar-container {
-            display: none; /* Oculta completamente el contenedor de la barra de búsqueda */
+            position: absolute;
+            top: 100%; /* Justo debajo de la navbar */
+            left: 0;
+            width: 100%;
+            background-color: #171b4a; /* Azul oscuro (#171b4a) */
+            padding: 10px 3%;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            display: none; /* Oculto por defecto */
+            z-index: 1000;
+        }
+
+        .search-bar-container.show {
+            display: block; /* Muestra el input cuando se añade la clase .show */
+        }
+
+        .search-bar-container input {
+            width: 100%;
+            border-radius: 20px; /* Puntas más redondeadas */
+            border: 1px solid #333;
+            padding: 8px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f0f0; /* Gris claro */
+            color: #333;
+        }
+
+        .search-bar-container input::placeholder {
+            color: #666;
         }
 
         /* Botón de Contacto */
@@ -934,21 +961,22 @@
                 }
             });
 
-            // Search Bar Toggle - OCULTADO
+            // Search Bar Toggle
             const searchToggle = document.getElementById('searchToggle');
             const searchBar = document.getElementById('searchBar');
 
-            // Quitar listeners si existían
-            if (searchToggle) {
-                searchToggle.removeEventListener('click', function(){});
-            }
-            if (searchBar) {
-                document.removeEventListener('click', function(event){});
-            }
-            
-            // Asegurarse de que estén ocultos por JS también
-            if (searchToggle) searchToggle.style.display = 'flex'; // Visible
-            if (searchBar) searchBar.style.display = 'none'; // Siempre oculto
+            // Add event listener for search toggle
+            searchToggle.addEventListener('click', function() {
+                searchBar.classList.toggle('show');
+            });
+
+            // Hide search bar if clicked outside
+            document.addEventListener('click', function(event) {
+                // Check if the click is outside the search bar and the toggle button
+                if (!searchBar.contains(event.target) && !searchToggle.contains(event.target)) {
+                    searchBar.classList.remove('show');
+                }
+            });
 
 
             // --- Lógica del Banner de Instalación PWA (Creado dinámicamente) ---
