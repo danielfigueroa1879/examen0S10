@@ -477,6 +477,7 @@
         .ai-clarifier-modal-overlay.show {
             opacity: 1;
             visibility: visible;
+            display: flex; /* Asegura que el contenedor se muestre como flex */
         }
 
         .ai-clarifier-modal-content {
@@ -902,6 +903,8 @@
         let deferredInstallPrompt = null;
 
         document.addEventListener('DOMContentLoaded', async function() {
+            console.log("DOM Content Loaded. Initializing app logic.");
+
             // Inicializar Firebase
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
             const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
@@ -938,10 +941,12 @@
                     await updateDoc(counterDocRef, { count: increment(1) });
                     const newCount = docSnap.data().count + 1;
                     visitCounterElement.textContent = `Visitas: ${newCount}`;
+                    console.log("Visit counter updated:", newCount);
                 } else {
                     // Si el documento no existe, crearlo e inicializarlo en 1
                     await setDoc(counterDocRef, { count: 1 });
                     visitCounterElement.textContent = `Visitas: 1`;
+                    console.log("Visit counter initialized to 1.");
                 }
             } catch (error) {
                 console.error("Error al actualizar el contador de visitas:", error);
@@ -1174,6 +1179,7 @@
 
             // Función para generar preguntas usando la API de Gemini
             async function generateQuestions() {
+                console.log("generateQuestions function called.");
                 quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas con IA... Esto puede tardar unos segundos.</p>';
                 quizContainer.style.display = 'block';
                 startExamBtn.style.display = 'none';
@@ -1200,9 +1206,9 @@
                 };
 
                 try {
+                    console.log("Attempting to generate questions with Gemini API...");
                     const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    console.log("Intentando generar preguntas con la API de Gemini...");
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1211,9 +1217,10 @@
 
                     if (!response.ok) {
                         const errorData = await response.json();
-                        console.error('Error al generar preguntas con la API de Gemini:', response.status, response.statusText, errorData);
+                        console.error('Error al generar preguntas con Gemini API:', response.status, response.statusText, errorData);
                         quizContainer.innerHTML = '<p class="text-danger text-center">Error al cargar las preguntas de la IA. Usando preguntas de respaldo. (Código de estado: ' + response.status + ')</p>';
                         questions = defaultQuestions;
+                        console.log("Using default questions due to API error.");
                         displayQuiz();
                         return;
                     }
@@ -1223,7 +1230,7 @@
                         result.candidates[0].content && result.candidates[0].content.parts &&
                         result.candidates[0].content.parts.length > 0) {
                         const jsonText = result.candidates[0].content.parts[0].text;
-                        console.log("Respuesta de la API de Gemini (texto sin procesar):", jsonText);
+                        console.log("Gemini API response (raw text):", jsonText);
                         
                         try {
                             questions = JSON.parse(jsonText);
@@ -1231,27 +1238,32 @@
                                 console.warn("La API de Gemini devolvió un arreglo de preguntas inválido o vacío. Usando preguntas de respaldo.");
                                 quizContainer.innerHTML = '<p class="text-danger text-center">La IA no generó preguntas válidas. Usando preguntas de respaldo.</p>';
                                 questions = defaultQuestions;
+                                console.log("Using default questions due to invalid/empty JSON.");
                             } else if (questions.length < 30) {
                                 console.warn(`Gemini generó ${questions.length} preguntas. Volviendo a las preguntas predeterminadas para asegurar 30 disponibles.`);
                                 questions = defaultQuestions;
+                                console.log("Using default questions because not enough were generated.");
                             }
                             displayQuiz();
                         } catch (parseError) {
                             console.error('Error al parsear la respuesta JSON de Gemini:', parseError);
                             quizContainer.innerHTML = '<p class="text-danger text-center">Error al procesar preguntas de la IA. Usando preguntas de respaldo.</p>';
                             questions = defaultQuestions;
+                            console.log("Using default questions due to JSON parsing error.");
                             displayQuiz();
                         }
                     } else {
-                        console.warn("La estructura de la respuesta de la API de Gemini es inesperada (faltan partes del contenido). Usando preguntas de respaldo.");
+                        console.warn("Gemini API response structure is unexpected (missing content parts). Using fallback questions.");
                         quizContainer.innerHTML = '<p class="text-danger text-center">Estructura de respuesta de IA inesperada. Usando preguntas de respaldo.</p>';
                         questions = defaultQuestions;
+                        console.log("Using default questions due to unexpected API response structure.");
                         displayQuiz();
                     }
                 } catch (error) {
                     console.error('Error de red o parseo al llamar a Gemini (generar preguntas):', error);
                     quizContainer.innerHTML = '<p class="text-danger text-center">Error de conexión al generar las preguntas. Usando preguntas de respaldo.</p>';
                     questions = defaultQuestions;
+                    console.log("Using default questions due to network/parsing error.");
                     displayQuiz();
                 }
             }
@@ -1283,6 +1295,7 @@
                 });
                 quizContainer.style.display = 'block'; // Mostrar contenedor del examen
                 submitQuizBtn.style.display = 'block'; // Mostrar botón de enviar
+                console.log("Quiz questions displayed.");
             }
 
             // Función para enviar el examen y calcular la puntuación
@@ -1309,6 +1322,7 @@
                 examResults.style.display = 'block';
                 submitQuizBtn.style.display = 'none'; // Ocultar botón de enviar después del envío
                 quizContainer.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true); // Desactivar opciones después del envío
+                console.log("Quiz submitted and results displayed. Score:", score);
             }
 
             // Función para calcular la calificación de 1 a 7
@@ -1336,19 +1350,28 @@
             const aiClarifierResponse = document.getElementById('ai-clarifier-response');
 
             floatingAiButton.addEventListener('click', () => {
+                console.log("Floating AI button clicked. Attempting to show modal.");
                 aiClarifierModalOverlay.classList.add('show');
+                // Ensure display: flex is applied if not already, to ensure visibility
+                aiClarifierModalOverlay.style.display = 'flex';
+                console.log("Modal overlay classList after click:", aiClarifierModalOverlay.classList);
             });
 
             closeAiModalBtn.addEventListener('click', () => {
+                console.log("Close modal button clicked. Attempting to hide modal.");
                 aiClarifierModalOverlay.classList.remove('show');
+                aiClarifierModalOverlay.style.display = 'none'; // Ensure it's hidden
                 aiQuestionInput.value = ''; // Limpiar input al cerrar
                 aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>'; // Resetear respuesta
+                console.log("Modal overlay classList after close:", aiClarifierModalOverlay.classList);
             });
 
             // Cerrar modal haciendo clic fuera de su contenido
             aiClarifierModalOverlay.addEventListener('click', (event) => {
                 if (event.target === aiClarifierModalOverlay) {
+                    console.log("Clicked outside modal content. Attempting to hide modal.");
                     aiClarifierModalOverlay.classList.remove('show');
+                    aiClarifierModalOverlay.style.display = 'none'; // Ensure it's hidden
                     aiQuestionInput.value = '';
                     aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>';
                 }
@@ -1363,6 +1386,7 @@
 
                 aiClarifierResponse.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Cargando respuesta de la IA... Esto puede tardar unos segundos.</p>';
                 askAiBtn.disabled = true;
+                console.log("Ask AI button clicked. Sending prompt to Gemini for clarification.");
 
                 const prompt = `Como un experto en la Ley de Seguridad Privada de Chile, incluyendo la Ley 21.659, el Decreto 209 EXENTO y el Decreto 32 EXENTO, explica lo siguiente de manera clara, concisa y enfocada en la normativa para Guardias de Seguridad y Vigilantes Privados: "${userQuestion}"`;
                 let chatHistory = [];
@@ -1370,9 +1394,9 @@
                 const payload = { contents: chatHistory };
 
                 try {
+                    console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
                     const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    console.log("Intentando obtener aclaración de la IA con la API de Gemini para la pregunta del usuario:", userQuestion);
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -1392,6 +1416,7 @@
                         result.candidates[0].content.parts.length > 0) {
                         const text = result.candidates[0].content.parts[0].text;
                         aiClarifierResponse.innerHTML = `<p>${text}</p>`;
+                        console.log("AI clarification received and displayed.");
                     } else {
                         console.warn("La estructura de la respuesta de la API de Gemini para aclaración es inesperada o está vacía.");
                         aiClarifierResponse.innerHTML = '<p class="text-warning">No se pudo obtener una respuesta clara de la IA. Intenta reformular tu pregunta.</p>';
@@ -1401,6 +1426,7 @@
                     aiClarifierResponse.innerHTML = '<p class="text-danger">Error de conexión al Clarificador IA. Asegúrate de tener acceso a internet y que el servicio esté disponible.</p>';
                 } finally {
                     askAiBtn.disabled = false;
+                    console.log("AI Clarifier request finished.");
                 }
             });
         });
