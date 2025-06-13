@@ -250,12 +250,6 @@
             padding-left: 0;
         }
 
-        .main-content ul li {
-            position: relative;
-            padding-left: 25px;
-            margin-bottom: 0.5em;
-        }
-
         .main-content ul li::before {
             content: "\2023";
             font-size: 1em;
@@ -750,9 +744,9 @@
             <h2 class="text-center">Clarificador Legal con IA (Pregúntale a Gemini)</h2>
             <p class="text-center">¿Tienes dudas sobre algún artículo de la Ley de Seguridad Privada o una normativa específica? Escribe tu pregunta a continuación y nuestra inteligencia artificial te proporcionará una explicación clara.</p>
             <div class="d-flex justify-content-end mb-3">
-                <img src="https://placehold.co/80x80/f8f8f8/dc3545?text=Gemini" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
+                <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
             </div>
-            <textarea id="ai-question-input" placeholder="Ej: ¿Qué dice la Ley 21.659 sobre el uso de elementos defensivos para guardias?"></textarea>
+            <textarea id="ai-question-input" placeholder="Ej: ¿Qué dice el Decreto 93 sobre los requisitos de educación de un Guardia de Seguridad?"></textarea>
             <button id="ask-ai-btn">Preguntar a la IA</button>
             <div id="ai-clarifier-response" class="mt-3">
                 <p>Tu respuesta aparecerá aquí.</p>
@@ -844,10 +838,12 @@
             <h2 id="interes">Links de Interés</h2>
             <p>Aquí encontrarás enlaces a recursos útiles para complementar tu conocimiento y formación en seguridad privada.</p>
             <ul>
-                <li><i class="icon-small bi bi-link"></i> <a href="https://www.carabineros.cl/portal/seguridadPrivada.html" target="_blank">Carabineros de Chile - OS-10 Seguridad Privada</a></li>
-                <li><i class="icon-small bi bi-link"></i> <a href="https://www.prevenciondelito.gob.cl/" target="_blank">Subsecretaría de Prevención del Delito</a></li>
                 <li><i class="icon-small bi bi-link"></i> <a href="https://www.dt.gob.cl/" target="_blank">Dirección del Trabajo</a></li>
-                <li><i class="icon-small bi bi-link"></i> <a href="https://www.goconqr.com/es/p/7288866/question/4354254" target="_blank">Preguntas Curso OS 10 (GoConqr - Referencia)</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.zosepcar.cl/OS10.php" target="_blank">Zosepcar OS-10</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://dal5.short.gy/CFil" target="_blank">Cerofilas</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1200633" target="_blank">Ley N° 20.965 - Modifica Código Penal</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=9081" target="_blank">Ley N° 18.290 - Ley de Tránsito</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://dal5.short.gy/LeySeg" target="_blank">LEY 21.659 - Ministerio del Interior y Seguridad Pública</a></li>
             </ul>
 
             <div style="width: 100%; height: 300px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin: 20px auto; display: flex; justify-content: center; align-items: center; background-color: rgba(0,0,0,0.05);">
@@ -861,7 +857,7 @@
             <h3>Videos Educativos</h3>
             <p>Explora videos tutoriales y explicaciones sobre procedimientos y normativas de seguridad privada.</p>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/rfJQ1bVuTKk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -882,8 +878,7 @@
     </footer>
 
     <script type="module">
-        // La funcionalidad del contador de visitas y Firebase relacionada ha sido eliminada para optimización.
-        // Importar las funciones de Firebase (solo si se usan para otras cosas, de lo contrario, se pueden eliminar)
+        // Importar las funciones de Firebase (ya no se utilizan para el contador de visitas, pero se mantienen si se necesitan para otras funcionalidades futuras)
         // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         // import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         // import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -893,10 +888,9 @@
         document.addEventListener('DOMContentLoaded', async function() {
             console.log("DOM Content Loaded. Initializing app logic.");
 
-            // NOTA: La lógica de inicialización de Firebase y el contador de visitas han sido eliminadas
-            // para limpiar el código y resolver problemas de carga/rendimiento, según lo solicitado.
-            // Si en el futuro necesitas funcionalidad de base de datos o autenticación, 
-            // deberás reimplementar la inicialización de Firebase aquí.
+            // **NOTA: La inicialización de Firebase y la lógica del contador de visitas han sido eliminadas**
+            // **para limpiar el código y resolver los problemas reportados, según lo solicitado.**
+            // **Las importaciones de Firebase se mantienen comentadas en caso de que se necesiten en el futuro.**
 
             // Navbar Shrink on Scroll
             const navbar = document.getElementById('mainNavbar');
@@ -997,126 +991,128 @@
             quizContainer.style.display = 'none';
 
             // Preguntas predeterminadas para respaldo (Verdadero/Falso)
+            // Estas preguntas se basan en el Decreto Ley 3607 y el Decreto 93,
+            // enfocadas en Guardias de Seguridad (pre-Ley 21.659 y Decreto 209).
             const defaultQuestions = [
                 {
-                    question: "La Autoridad Fiscalizadora de la Seguridad Privada en Chile es la Subsecretaría de Prevención del Delito.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "La Ley N° 21.659, publicada en marzo de 2024, derogó el Decreto Ley 3607 y la Ley N° 19.303.",
+                    question: "La Autoridad Fiscalizadora de la Seguridad Privada en Chile es la Prefectura de Carabineros de Chile del sector.",
                     correctAnswer: "Verdadero"
                 },
                 {
-                    question: "La seguridad privada, según la Ley 21.659, busca reemplazar a la seguridad pública.",
+                    question: "La Ley N° 21.659, publicada en marzo de 2024, es la única ley que regula la seguridad privada en Chile actualmente.",
+                    correctAnswer: "Falso" // Porque el Decreto 93 aún es relevante para ciertas interpretaciones hasta la plena vigencia de la nueva ley.
+                },
+                {
+                    question: "La seguridad privada, según las normativas vigentes antes de la Ley 21.659, busca reemplazar a la seguridad pública.",
                     correctAnswer: "Falso"
                 },
                 {
-                    question: "La edad mínima para ser Guardia de Seguridad en Chile es de 21 años.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "Un Guardia de Seguridad está autorizado para portar armas de fuego en el ejercicio de sus funciones.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "Para acreditar su capacitación inicial, un Guardia de Seguridad debe aprobar un Curso de Formación.",
+                    question: "Uno de los requisitos para ser Guardia de Seguridad según el Decreto 93 es tener 18 años.",
                     correctAnswer: "Verdadero"
                 },
                 {
-                    question: "Un Guardia de Seguridad debe aprobar un curso de perfeccionamiento o especialización cada dos años.",
+                    question: "Los Guardias de Seguridad están autorizados para portar armas de fuego en el ejercicio de sus funciones según el Decreto 93.",
                     correctAnswer: "Falso"
                 },
                 {
-                    question: "El chaleco antibalas es el elemento defensivo mínimo obligatorio para un Guardia de Seguridad.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "El empleador debe proporcionar el uniforme del Guardia de Seguridad gratuitamente.",
+                    question: "El curso de formación para Guardia de Seguridad, según el Decreto 93, tiene una duración de 90 horas.",
                     correctAnswer: "Verdadero"
                 },
                 {
-                    question: "El Jefe de Seguridad es el responsable de la ejecución del estudio de seguridad en una entidad obligada a tener un sistema de vigilancia privada.",
+                    question: "El seguro de vida para Guardias de Seguridad, según el Decreto 93, tiene una cifra asegurada de 75 UTM.",
                     correctAnswer: "Verdadero"
                 },
                 {
-                    question: "La duración de la vigencia de la autorización para un Vigilante Privado es de cuatro años.",
-                    correctAnswer: "Falso"
+                    question: "El uniforme de un Guardia de Seguridad, según el Decreto 93, es libre y sin especificaciones de color.",
+                    correctAnswer: "Falso" // Tenía especificaciones, aunque menos estrictas que el vigilante.
                 },
                 {
-                    question: "La Ley 21.659 permite que el personal de seguridad privada investigue hechos que revistan carácter de delito.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "El plazo para denunciar un hecho que revista caracteres de delito, una vez que el personal de seguridad privada toma conocimiento de él, es de 48 horas.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "El personal de seguridad privada debe mantener bajo reserva toda información de seguridad pública o privada de la que disponga.",
+                    question: "Un Guardia de Seguridad está facultado para detener a alguien solo en caso de sorprenderlo en delito flagrante.",
                     correctAnswer: "Verdadero"
                 },
                 {
-                    question: "El personal de seguridad privada puede intervenir en conflictos laborales si lo solicitan ambas partes.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "Según el Decreto 32 EXENTO, el requisito de educación mínima para Guardias de Seguridad, Conserjes, Nocheros, Porteros y Rondines, para quienes soliciten ser acreditados por primera vez, es Educación básica completa.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "Un ex miembro de las FF.AA. egresado de sus respectivas escuelas puede ser capacitador en 'Uso de implementos de seguridad y técnicas de reducción de detenidos'.",
+                    question: "Delito es toda acción u omisión VOLUNTARIA penada por la Ley.",
                     correctAnswer: "Verdadero"
                 },
                 {
-                    question: "La vigencia de una Directiva de Funcionamiento para servicios de seguridad privada es de dos años.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "La PDI tiene a su cargo el control y tuición del sistema de vigilancia privada y actividades de seguridad privada en Chile.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "La sanción por presentar antecedentes falsos ante la Subsecretaría de Prevención del Delito o la autoridad fiscalizadora es una infracción grave.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "El 'sitio del suceso' se refiere a un lugar de entrenamiento para el personal de seguridad.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "La diferencia entre robo y hurto radica en que el robo se comete con violencia, intimidación o fuerza en las cosas, mientras que el hurto no.",
+                    question: "Cuasidelito es toda acción u omisión INVOLUNTARIA, penada por la ley.",
                     correctAnswer: "Verdadero"
                 },
                 {
-                    question: "Los tres poderes del Estado en Chile son el Gobierno, el Congreso y las Cortes.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "La libertad provisional se otorga a un condenado según antecedentes que ha resuelto el Juez.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "Para aplicar la legítima defensa, es necesario que la agresión sea ilegítima, actual, no provocada, que no exista policía en el lugar y que el medio empleado sea racional o proporcional.",
+                    question: "La diferencia entre robo y hurto es que el robo se comete con violencia, intimidación o fuerza en las cosas, mientras que el hurto no.",
                     correctAnswer: "Verdadero"
                 },
                 {
-                    question: "Los tipos de artefactos explosivos en cuanto a su forma son de tiempo, control remoto y de presión.",
+                    question: "La legítima defensa es aplicable solo si existe presencia policial en el momento de la agresión.",
                     correctAnswer: "Falso"
                 },
                 {
-                    question: "Ante el hallazgo de un artefacto explosivo, se debe moverlo a un lugar seguro para su análisis.",
-                    correctAnswer: "Falso"
-                },
-                {
-                    question: "La función de una antena en un transceptor portátil (radio) es propagar la señal de radiofrecuencia.",
+                    question: "El sitio del suceso debe ser preservado y no alterado para la investigación.",
                     correctAnswer: "Verdadero"
                 },
                 {
-                    question: "Los sensores de movimiento son el sistema de alarmas más comúnmente utilizado en puertas y ventanas.",
+                    question: "Una ronda fija se caracteriza por tener la hora y el trayecto preestablecidos.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Los Guardias de Seguridad deben proteger personas y bienes, siendo la vida del guardia la más importante.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Ante el hallazgo de un artefacto explosivo, la primera acción debe ser intentar desactivarlo si se tienen conocimientos.",
                     correctAnswer: "Falso"
+                },
+                {
+                    question: "Una evacuación es el traslado ordenado de personas hacia una zona de seguridad designada.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Una Directiva de Funcionamiento es un documento que señala el funcionamiento íntegro de los guardias de seguridad.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El Estudio de Seguridad es aprobado por la Prefectura de Carabineros del sector.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El porte ilegal de armas es portar un arma en la vía pública sin autorización.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La Subsecretaría de Telecomunicaciones (SUBTEL) es la entidad que autoriza el uso de radiocomunicaciones en seguridad privada.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "En un supermercado, un guardia puede detener a una persona por consumir un alimento antes de pasar por caja, incluso si no ha salido del establecimiento.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El secuestro es el traslado o retención de una o más personas sin su consentimiento.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La misión de Carabineros de Chile incluye garantizar el Orden y la Seguridad Pública.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Escalamiento es ingresar a una propiedad por una vía no destinada al efecto.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La función principal de una antena en un transceptor portátil es amplificar el sonido.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El contacto magnético es un sistema de alarma utilizado en puertas y ventanas para detectar aperturas.",
+                    correctAnswer: "Verdadero"
                 },
                 {
                     question: "Los daños físicos y psíquicos sufridos por un guardia en el cumplimiento de sus funciones se consideran actos del servicio y pueden derivar en enfermedades profesionales.",
                     correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Para ser Guardia de Seguridad, se requiere haber cursado educación básica completa.",
+                    correctAnswer: "Falso" // Requiere 8º básico aprobado y curso OS-10.
                 }
             ];
             
@@ -1129,7 +1125,8 @@
                 quizContainer.style.display = 'block';
                 startExamBtn.style.display = 'none';
 
-                const prompt = "Genera 30 preguntas de Verdadero/Falso sobre la Ley de Seguridad Privada en Chile (Ley 21.659 y sus decretos complementarios como el Decreto 209 EXENTO y el Decreto 32 EXENTO, además de conceptos generales de seguridad privada y OS-10). Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').";
+                // Prompt actualizado para enfocarse en Decreto 93 y Decreto Ley 3607 para Guardias de Seguridad
+                const prompt = "Genera 30 preguntas de Verdadero/Falso sobre la normativa de seguridad privada en Chile ANTERIOR a la Ley 21.659, específicamente enfocadas en el Decreto Ley 3607 y el Decreto Supremo 93, y relativas a las funciones y requisitos de los GUARDIAS DE SEGURIDAD. Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').";
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = {
@@ -1333,7 +1330,8 @@
                 askAiBtn.disabled = true;
                 console.log("Ask AI button clicked. Sending prompt to Gemini for clarification.");
 
-                const prompt = `Como un experto en la Ley de Seguridad Privada de Chile, incluyendo la Ley 21.659, el Decreto 209 EXENTO y el Decreto 32 EXENTO, explica lo siguiente de manera clara, concisa y enfocada en la normativa para Guardias de Seguridad y Vigilantes Privados: "${userQuestion}"`;
+                // Actualizar el prompt para basarse en el Decreto 93 y el Decreto Ley 3607 para Guardias de Seguridad.
+                const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}"`;
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = { contents: chatHistory };
