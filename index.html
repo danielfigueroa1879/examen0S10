@@ -1,596 +1,1369 @@
-/* Estilos generales para el reinicio y el cuerpo del documento */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-/* Reseteo universal para asegurar que 100vw/vh funcionen correctamente */
-html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow-x: hidden !important; /* Previene el scroll horizontal no deseado */
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif; /* Cambiado a Poppins */
-    background-color: #f8f8f8; /* Blanco muy claro para el fondo */
-    color: #333; /* Texto oscuro */
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Evitar scroll horizontal */
-}
-
-/* Capa superpuesta para efecto de desenfoque */
-.background-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.7); /* Blanco semi-transparente */
-    backdrop-filter: blur(3px); /* Ligeramente suave */
-    -webkit-backdrop-filter: blur(3px);
-    z-index: -1;
-}
-
-/* Clase para controlar el overflow del body cuando una sección fixed está activa */
-body.body-directivas-active {
-    overflow: hidden !important;
-}
-
-/* Estilos para el contenedor principal de la aplicación */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para el encabezado de la página de inicio */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para el menú principal con diseño de cuadrícula responsivo */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para las tarjetas del menú */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores de borde superior para cada tipo de tarjeta de menú */
-/* Not relevant for this query, but included for completeness */
-
-/* Efecto hover para las tarjetas del menú */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para los iconos dentro de las tarjetas del menú */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores de icono para cada tipo de tarjeta de menú */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para los títulos y párrafos dentro de las tarjetas */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para el contador de registros en las tarjetas */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores de fondo para el contador de cada tipo de tarjeta */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para las secciones de contenido (ocultas por defecto) */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores de borde superior y degradados de fondo para cada sección */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para que la sección de directivas ocupe el ancho y alto máximo de la pantalla */
-/* Not relevant for this query, but included for completeness */
-
-
-/* Muestra la sección activa (para otras secciones que no usan fixed) */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para el encabezado de cada sección */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para el título de la sección */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores para el título de cada sección */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos generales para los botones */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores de fondo para los botones de cada sección */
-/* Not relevant for this query, but included for completeness */
-
-/* Efecto hover para los botones */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para botones secundarios y de éxito */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para la navegación de pestañas dentro de las secciones */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para los botones de pestañas */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para los botones de pestañas activas con colores de sección */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para grupos de formulario */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para campos de entrada de formulario */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos de enfoque para campos de formulario */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para áreas de texto (textareas) */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para cuadrículas de formularios responsivas */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para el contenedor de búsqueda */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para las tablas de datos */
-/* Not relevant for this query, but included for completeness */
-
-/* Ajuste de tamaño de fuente para las tablas dentro de la sección de directivas */
-/* Not relevant for this query, but included for completeness */
-
-
-/* Estilos para la primera columna (códigos/IDs/números) */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para la primera columna (códigos/IDs/números) */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para la primera columna (códigos/IDs/números) */
-/* Not relevant for this query, but included for completeness */
-
-/* Efecto hover para las filas de la tabla */
-/* Not relevant for this query, but included for completeness */
-
-/* Mensaje cuando no hay datos */
-/* Not relevant for this query, but included for completeness */
-
-/* Contenido de pestaña (oculto por defecto) */
-/* Not relevant for this query, but included for completeness */
-
-/* Muestra el contenido de la pestaña activa */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para mensajes de alerta */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores para alertas de éxito y error */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para el modal de detalles */
-/* Not relevant for this query, but included for completeness */
-
-/* Cuadrícula para los elementos de detalle dentro del modal */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para cada elemento de detalle en el modal */
-/* Not relevant for this query, but included for completeness */
-
-/* Nuevos estilos para las tarjetas de menú dentro de Directivas */
-/* Not relevant for this query, but included for completeness */
-
-/* Contenedor para los botones dentro de la sección de Medidas (ANTIGUO - AHORA OCULTO) */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos para el estado de vigencia y aprobación */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilo específico para el texto "Aprobado" y "Rechazado" en la tabla de Eventos Masivos */
-/* Not relevant for this query, but included for completeness */
-
-/* ========================================
-   ESTILOS PARA LOS 3 CUADROS DE DIRECTIVAS
-   ======================================== */
-
-/* Contenedor principal de las directivas */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos base para cada cuadro individual */
-/* Not relevant for this query, but included for completeness */
-
-/* Efecto hover para los cuadros */
-/* Not relevant for this query, but included for completeness */
-
-/* Título de cada cuadro */
-/* Not relevant for this query, but included for completeness */
-
-/* Contador de registros */
-/* Not relevant for this query, but included for completeness */
-
-/* Contenedor del contenido del cuadro */
-/* Not relevant for this query, but included for completeness */
-
-/* Botón dentro de cada cuadro */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores específicos para cada cuadro */
-/* Not relevant for this query, but included for completeness */
-
-/* ========================================
-   ESTILOS PARA LOS 2 CUADROS DE MEDIDAS DE SEGURIDAD
-   ======================================== */
-
-/* Contenedor principal de las medidas */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos base para cada cuadro individual de medidas */
-/* Not relevant for this query, but included for completeness */
-
-/* Efecto hover para los cuadros de medidas */
-/* Not relevant for this query, but included for completeness */
-
-/* Título de cada cuadro de medidas */
-/* Not relevant for this query, but included for completeness */
-
-/* Contador de registros en medidas */
-/* Not relevant for this query, but included for completeness */
-
-/* Contenedor del contenido del cuadro de medidas */
-/* Not relevant for this query, but included for completeness */
-
-/* Botón dentro de cada cuadro de medidas */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores específicos para cada cuadro de medidas */
-/* Not relevant for this query, but included for completeness */
-
-/* Media queries para responsividad en dispositivos móviles */
-/* Not relevant for this query, but included for completeness */
-
-/* ======================================
-   BOTONES DE ESTADO UNIFORMES
-   ====================================== */
-/* Not relevant for this query, but included for completeness */
-
-/* Colores individuales para cada estado */
-/* Not relevant for this query, but included for completeness */
-
-/* Nuevas clases para los colores de servicentros */
-/* Not relevant for this query, but included for completeness */
-
-/* Estilos de la sección Clarificador IA */
-/* --- MODIFICADO para posicionar a la derecha en PC y responsivo en móvil --- */
-
-/* Contenedor del modal overlay (fondo oscuro, centrado del contenido) */
-.ai-clarifier-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente para el modal */
-    z-index: 1050; /* Por encima de todo */
-    display: flex;
-    justify-content: center; /* Centrar horizontalmente por defecto */
-    align-items: center; /* Centrar verticalmente */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.ai-clarifier-modal-overlay.show {
-    opacity: 1;
-    visibility: visible;
-    display: flex; /* Asegura que el contenedor se muestre como flex */
-}
-
-/* Contenido del modal (la "ventana" del chat) */
-.ai-clarifier-modal-content {
-    background-color: rgba(179, 229, 252, 0.9); /* Azul muy claro semi-transparente */
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-    max-height: 90%;
-    overflow-y: auto;
-    transform: scale(0.9);
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    position: relative; /* Para el botón de cerrar */
-    border: 1px solid rgba(0,0,0,0.1);
-    color: #333; /* Color de texto predeterminado para el modal */
-}
-
-.ai-clarifier-modal-overlay.show .ai-clarifier-modal-content {
-    transform: scale(1);
-    opacity: 1;
-}
-
-/* Estilos específicos para PC (escritorio) */
-@media (min-width: 769px) {
-    .ai-clarifier-modal-overlay.show {
-        justify-content: flex-end; /* Empujar el modal a la derecha en PC */
-        align-items: center; /* Centrar verticalmente en PC */
-    }
-
-    .ai-clarifier-modal-content {
-        width: 450px; /* Ancho fijo para el chat en PC */
-        max-width: 35vw; /* Máximo 35% del ancho del viewport en PC */
-        margin-right: 20px; /* Margen desde el borde derecho */
-    }
-}
-
-/* Estilos específicos para móvil */
-@media (max-width: 768px) {
-    .ai-clarifier-modal-overlay.show {
-        justify-content: center; /* Centrar el modal en móvil */
-        align-items: center; /* Centrar verticalmente en móvil */
-    }
-
-    .ai-clarifier-modal-content {
-        width: 95%; /* Ocupar casi todo el ancho disponible en móvil */
-        max-width: none; /* Eliminar el max-width de PC */
-        margin: 0; /* Eliminar márgenes específicos de PC */
-    }
-}
-
-
-.ai-clarifier-modal-content .close-button {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    color: #555;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.ai-clarifier-modal-content .close-button:hover {
-    color: #000;
-}
-
-.ai-clarifier-modal-content textarea {
-    width: 100%;
-    height: 100px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-family: 'Poppins', sans-serif;
-    resize: vertical;
-    margin-bottom: 15px;
-    background-color: #fff;
-    color: #333;
-}
-
-.ai-clarifier-modal-content textarea::placeholder {
-    color: #666;
-}
-
-.ai-clarifier-modal-content button {
-    background-color: #dc3545; /* Rojo para el botón de IA */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.ai-clarifier-modal-content button:hover {
-    background-color: #c82333; /* Rojo más oscuro para hover */
-    transform: translateY(-2px);
-}
-
-.ai-clarifier-modal-content #ai-clarifier-response {
-    background-color: rgba(255, 205, 210, 0.6); /* Rojo rosado semi-transparente */
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 20px;
-    border: 1px solid rgba(198,40,40,0.5); /* Borde rojo oscuro */
-    white-space: pre-wrap;
-    color: #c62828; /* Texto rojo oscuro */
-}
-
-/* Spinner de carga */
-.spinner-border {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    vertical-align: -0.125em;
-    border: 0.25em solid currentColor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    -webkit-animation: .75s linear infinite spinner-border;
-    animation: .75s linear infinite spinner-border;
-    color: #dc3545; /* Rojo para el spinner */
-}
-
-@-webkit-keyframes spinner-border {
-    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
-}
-
-@keyframes spinner-border {
-    to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
-}
-
-/* Estilo del botón flotante de IA */
-#floating-ai-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #00bcd4; /* Celeste */
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.8rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    cursor: pointer;
-    z-index: 1040; /* Por debajo del modal, pero por encima del contenido principal */
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    text-decoration: none; /* Eliminar subrayado si fuera un 'a' */
-}
-
-#floating-ai-button:hover {
-    background-color: #0097a7; /* Celeste más oscuro al pasar el cursor */
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-}
-
-/* Contador de visitas (display: none en todas las pantallas ya que se elimina la funcionalidad) */
-.visit-counter {
-    display: none; 
-}
-
-/* Ajustes responsivos */
-@media (max-width: 768px) {
-    /* Mostrar banner de instalación dinámico en móvil */
-    #dynamic-install-banner {
-        display: flex;
-    }
-
-    .navbar-custom {
-        padding: 1rem 5%;
-    }
-    .navbar-custom .navbar-brand {
-        font-size: 1.5rem;
-        /* Eliminar margin-right para no afectar layout móvil */
-        margin-right: 0;
-    }
-    .navbar-custom .navbar-collapse {
-        background-color: #171b4a; /* Azul oscuro para el menú colapsado */
-        padding: 10px;
-        border-radius: 8px;
-        margin-top: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        backdrop-filter: blur(5px); /* Desenfoque para el menú colapsado */
-        -webkit-backdrop-filter: blur(5px);
-    }
-    .navbar-custom .nav-link {
-        text-align: center;
-        margin: 5px 0;
-    }
-    .navbar-custom .nav-link::after {
-        width: 50%;
-    }
-    /* Relleno de contenido principal ajustado para móvil */
-    .main-content {
-        padding: 15px 2%;
-    }
-    .main-content h1, .main-content h2, .main-content h3,
-    .main-content h4, .main-content h5, .main-content h6 {
-        font-size: 1.5rem;
-    }
-    #install-banner p {
-        font-size: 1rem;
-        margin-bottom: 10px;
-    }
-    #install-button {
-        padding: 8px 16px;
-    }
-    .install-modal-content {
-        padding: 20px;
-    }
-    /* Ajustar tamaño de fuente de pregunta de examen para pantallas pequeñas */
-    .question-card h5 {
-        font-size: 0.9em;
-    }
-    /* Ajustar tamaño de fuente de alternativa para pantallas pequeñas */
-    .question-card .form-check-label {
-        font-size: 0.8em;
-    }
-
-    /* Ajustes para el modal en móvil */
-    /* Estas reglas fueron movidas a la sección del modal para mejor organización */
-
-    #floating-ai-button {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-        bottom: 15px;
-        right: 15px;
-    }
-}
-
-@media (min-width: 769px) { /* Ocultar banner de instalación dinámico en PC */
-    #dynamic-install-banner {
-        display: none !important;
-    }
-}
-
-
-/* --- Estilos para las respuestas del examen como botones --- */
-.options-container {
-    display: flex;
-    gap: 10px; /* Espacio entre los botones Verdadero y Falso */
-    margin-top: 15px;
-    justify-content: center; /* Centrar los botones */
-}
-
-.option-button-wrapper {
-    flex-grow: 1; /* Permite que los botones ocupen el espacio disponible */
-    max-width: 150px; /* Limita el ancho en pantallas grandes */
-}
-
-.option-button {
-    width: 100%;
-    padding: 10px 0; /* Padding vertical para un mejor tamaño de botón */
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    text-align: center;
-}
-
-/* Estilos cuando un botón está seleccionado */
-.form-check-input:checked + .option-button {
-    /* Bootstrap ya maneja el color de fondo y el borde para btn-outline-success/danger */
-    color: white !important; /* Asegura que el texto sea blanco cuando está seleccionado */
-}
-
-/* Estilos para resaltar la respuesta correcta (verde) */
-.option-correct {
-    background-color: #28a745 !important; /* Verde */
-    border-color: #28a745 !important;
-    color: white !important;
-}
-
-/* Estilos para resaltar la respuesta incorrecta (rojo) */
-.option-incorrect {
-    background-color: #dc3545 !important; /* Rojo */
-    border-color: #dc3545 !important;
-    color: white !important;
-}
-
-/* Ocultar el input de radio visualmente para que solo se vea el botón */
-.visually-hidden {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-}
-
-/* Media query para hacer los botones de opción más grandes en móviles */
-@media (max-width: 768px) {
-    .options-container {
-        flex-direction: column; /* Apila los botones en columnas en móviles */
-        align-items: center; /* Centra los botones apilados */
-    }
-    .option-button-wrapper {
-        max-width: 250px; /* Un ancho máximo para los botones en móvil */
-        width: 100%; /* Ocupa el ancho completo del wrapper */
-    }
-    .option-button {
-        padding: 12px 0; /* Más padding para que los botones sean más fáciles de tocar */
-        font-size: 1em; /* Ajusta el tamaño de fuente en móviles */
-    }
-}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguridad Privada Chile</title>
+    <!-- Favicon de ejemplo para evitar errores 404 -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='50%25' font-size='90' text-anchor='middle' dominant-baseline='central'%3E%F0%9F%9B%A1%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons CSS (for lupa, person, document, terminal, keyboard, variable, unit icons) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        /* Estilos Base */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f8f8; /* Blanco muy claro para el fondo */
+            color: #333; /* Texto oscuro */
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Evitar scroll horizontal */
+        }
+
+        /* Capa superpuesta para efecto de desenfoque */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7); /* Blanco semi-transparente */
+            backdrop-filter: blur(3px); /* Ligeramente suave */
+            -webkit-backdrop-filter: blur(3px);
+            z-index: -1;
+        }
+
+        /* Personalización de la barra de navegación */
+        .navbar-custom {
+            background-color: rgba(23, 27, 74, 0.9); /* Azul oscuro (#171b4a) menos transparente */
+            backdrop-filter: blur(5px); /* Desenfoque para el banner */
+            -webkit-backdrop-filter: blur(5px);
+            transition: all 0.3s ease-in-out;
+            padding: 1rem 3%;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra sutil */
+        }
+
+        .navbar-custom .navbar-brand {
+            font-weight: 700;
+            color: #ffffff; /* Blanco para el logo */
+            transition: font-size 0.3s ease-in-out;
+            margin-right: 0; /* No se necesita margen para el contador de visitas */
+        }
+
+        .navbar-custom .nav-link {
+            color: #ffffff !important; /* Texto de los enlaces blanco */
+            font-weight: 600;
+            position: relative;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
+            padding: 0.5rem 1rem;
+            margin-left: 10px;
+            border-radius: 5px;
+        }
+
+        .navbar-custom .nav-link:hover {
+            color: #b2b6dc !important; /* Tono más claro del azul oscuro al pasar el cursor */
+        }
+
+        .navbar-custom .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #b2b6dc; /* Tono más claro para el subrayado */
+            transition: width 0.3s ease-in-out;
+        }
+
+        .navbar-custom .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* Reducción de la barra de navegación al hacer scroll */
+        .navbar-shrink {
+            padding: 0.5rem 3%;
+            box-shadow: 0 0 15px rgba(0,0,0,0.4);
+            background-color: rgba(23, 27, 74, 0.95); /* Azul oscuro aún más opaco al encogerse */
+            backdrop-filter: blur(8px); /* Más desenfoque al encogerse */
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .navbar-shrink .navbar-brand {
+            font-size: 1.2rem;
+        }
+
+        /* Botón de búsqueda y barra */
+        .search-toggler {
+            background-color: rgba(255, 255, 255, 0.1); /* Blanco semi-transparente */
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 0.5rem 0.8rem;
+            transition: all 0.3s ease-in-out;
+            margin-left: 10px;
+        }
+
+        .search-toggler:hover {
+            transform: scale(1.08);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .search-toggler i {
+            color: #ffffff; /* Blanco para la lupa */
+            font-size: 1.2rem;
+        }
+
+        .search-bar-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #171b4a; /* Azul oscuro (#171b4a) */
+            padding: 10px 3%;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+        }
+
+        .search-bar-container.show {
+            display: block;
+        }
+
+        .search-bar-container input {
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #333;
+            padding: 8px;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f0f0; /* Gris claro */
+            color: #333;
+        }
+
+        .search-bar-container input::placeholder {
+            color: #666;
+        }
+
+        /* Botón de Contacto */
+        .contact-btn {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 0.5rem 0.8rem;
+            transition: all 0.3s ease-in-out;
+            margin-left: 10px;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.08);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-btn i {
+            color: #ffffff;
+            font-size: 1.2rem;
+        }
+
+        /* Botón de menú móvil (Hamburguesa) */
+        .navbar-toggler {
+            border: none;
+            padding: 0;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Área de Contenido Principal */
+        .main-content {
+            padding: 20px 8%;
+            text-align: justify;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Estilo de sección de información (ventanas transparentes) */
+        .info-section {
+            background-color: rgba(255, 255, 255, 0.7); /* Blanco semi-transparente como ventanas */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            border: 1px solid rgba(0,0,0,0.05); /* Borde muy sutil */
+        }
+
+        .main-content h1, .main-content h2, .main-content h3,
+        .main-content h4, .main-content h5, .main-content h6 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+            text-align: center;
+            color: #283593; /* Azul oscuro (#283593) para los encabezados de sección */
+        }
+
+        .main-content p {
+            margin-bottom: 1.5em;
+        }
+
+        .main-content a {
+            font-weight: bold;
+            color: #283593; /* Azul oscuro (#283593) para los enlaces */
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .main-content a:hover {
+            color: #515ba6; /* Azul medio al pasar el cursor */
+            text-decoration: underline;
+        }
+
+        /* Imágenes */
+        .main-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Listas */
+        .main-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .main-content ul li::before {
+            content: "\2023";
+            font-size: 1em;
+            color: #283593; /* Azul oscuro (#283593) para las viñetas */
+            position: absolute;
+            left: 0;
+            top: 0.1em;
+        }
+
+        /* Citas en bloque */
+        .main-content blockquote {
+            background-color: rgba(40, 53, 147, 0.1); /* Azul oscuro semi-transparente */
+            border-left: 5px solid #283593; /* Borde azul oscuro */
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-style: italic;
+            color: #515ba6; /* Azul medio para el texto */
+        }
+
+        /* Videos */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+
+        .video-container iframe,
+        .video-container object,
+        .video-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        /* Íconos para elementos especiales */
+        .icon-small {
+            font-size: 0.9em;
+            vertical-align: middle;
+            margin-right: 5px;
+            color: #283593; /* Azul oscuro (#283593) para los íconos pequeños */
+        }
+
+        /* Estilo para el banner de instalación de PWA (creado dinámicamente) */
+        #dynamic-install-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #283593; /* Azul oscuro para el banner */
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #dynamic-install-banner button {
+            margin-left: 10px;
+            padding: 8px 16px;
+            background: #e8eaf6; /* Azul muy claro para el botón */
+            color: #283593; /* Texto azul oscuro */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        #dynamic-install-banner button:hover {
+            background-color: #c5cae9; /* Azul más oscuro al pasar el cursor */
+            transform: translateY(-1px);
+        }
+
+        /* Pie de página */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #171b4a; /* Azul oscuro del banner principal */
+            color: #f8f8f8;
+            font-size: 0.9em;
+            margin-top: 50px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Estilos de la sección de Examen */
+        #exam-section {
+            background-color: rgba(255, 255, 255, 0.7); /* Ventanas transparentes */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        #start-exam-btn {
+            background-color: #dc3545; /* Rojo */
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
+
+        #start-exam-btn:hover {
+            background-color: #c82333; /* Rojo más oscuro para hover */
+            transform: translateY(-3px);
+        }
+
+        #quiz-container {
+            text-align: left;
+        }
+
+        .question-card {
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo de pregunta ligeramente transparente */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .question-card h5 {
+            color: #333; /* Texto de pregunta oscuro */
+            font-weight: 700;
+            font-size: 1.1em;
+            text-align: justify;
+            margin-bottom: 15px;
+        }
+        
+        .question-card .form-check-label {
+            cursor: pointer;
+            padding-left: 5px;
+            font-weight: normal;
+            color: #333; /* Texto de alternativa oscuro */
+        }
+        .question-card .form-check-input:checked + .form-check-label {
+            font-weight: bold;
+            color: #283593; /* Azul oscuro (#283593) para la opción seleccionada */
+        }
+
+        .exam-controls {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .exam-controls button {
+            background-color: #283593;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .exam-controls button:hover {
+            background-color: #1a237e;
+            transform: translateY(-2px);
+        }
+
+        #exam-results {
+            background-color: rgba(40, 53, 147, 0.3); /* Fondo azul oscuro semi-transparente para resultados */
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+            border: 1px solid rgba(40,53,147,0.5);
+            color: #e8eaf6; /* Texto claro */
+        }
+
+        #exam-results h3 {
+            color: #e8eaf6; /* Azul muy claro */
+        }
+
+        #exam-results p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e8eaf6;
+        }
+
+        /* Sección Clarificador IA (ahora en modal) */
+        .ai-clarifier-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente para el modal */
+            z-index: 1050;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .ai-clarifier-modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+            display: flex; /* Asegura que el contenedor se muestre como flex */
+        }
+
+        .ai-clarifier-modal-content {
+            background-color: rgba(179, 229, 252, 0.9); /* Azul muy claro semi-transparente */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            max-width: 90%;
+            width: 600px;
+            max-height: 90%;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            position: relative; /* Para el botón de cerrar */
+            border: 1px solid rgba(0,0,0,0.1);
+            color: #333; /* Color de texto predeterminado para el modal */
+        }
+
+        .ai-clarifier-modal-overlay.show .ai-clarifier-modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .ai-clarifier-modal-content .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .ai-clarifier-modal-content .close-button:hover {
+            color: #000;
+        }
+
+        .ai-clarifier-modal-content textarea {
+            width: 100%;
+            height: 100px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            margin-bottom: 15px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        .ai-clarifier-modal-content textarea::placeholder {
+            color: #666;
+        }
+
+        .ai-clarifier-modal-content button {
+            background-color: #dc3545; /* Rojo para el botón de IA */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .ai-clarifier-modal-content button:hover {
+            background-color: #c82333; /* Rojo más oscuro para hover */
+            transform: translateY(-2px);
+        }
+
+        .ai-clarifier-modal-content #ai-clarifier-response {
+            background-color: rgba(255, 205, 210, 0.6); /* Rojo rosado semi-transparente */
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid rgba(198,40,40,0.5); /* Borde rojo oscuro */
+            white-space: pre-wrap;
+            color: #c62828; /* Texto rojo oscuro */
+        }
+        
+        /* Spinner de carga */
+        .spinner-border {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            vertical-align: -0.125em;
+            border: 0.25em solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+            -webkit-animation: .75s linear infinite spinner-border;
+            animation: .75s linear infinite spinner-border;
+            color: #dc3545; /* Rojo para el spinner */
+        }
+
+        @-webkit-keyframes spinner-border {
+            to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+        }
+
+        @keyframes spinner-border {
+            to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+        }
+
+        /* Estilo del botón flotante de IA */
+        #floating-ai-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #00bcd4; /* Celeste */
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            cursor: pointer;
+            z-index: 1040; /* Por debajo del modal, pero por encima del contenido principal */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            text-decoration: none; /* Eliminar subrayado si fuera un 'a' */
+        }
+
+        #floating-ai-button:hover {
+            background-color: #0097a7; /* Celeste más oscuro al pasar el cursor */
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Contador de visitas (display: none en todas las pantallas ya que se elimina la funcionalidad) */
+        .visit-counter {
+            display: none; 
+        }
+
+        /* Ajustes responsivos */
+        @media (max-width: 768px) {
+            /* Mostrar banner de instalación dinámico en móvil */
+            #dynamic-install-banner {
+                display: flex;
+            }
+
+            .navbar-custom {
+                padding: 1rem 5%;
+            }
+            .navbar-custom .navbar-brand {
+                font-size: 1.5rem;
+                /* Eliminar margin-right para no afectar layout móvil */
+                margin-right: 0;
+            }
+            .navbar-custom .navbar-collapse {
+                background-color: #171b4a; /* Azul oscuro para el menú colapsado */
+                padding: 10px;
+                border-radius: 8px;
+                margin-top: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                backdrop-filter: blur(5px); /* Desenfoque para el menú colapsado */
+                -webkit-backdrop-filter: blur(5px);
+            }
+            .navbar-custom .nav-link {
+                text-align: center;
+                margin: 5px 0;
+            }
+            .navbar-custom .nav-link::after {
+                width: 50%;
+            }
+            /* Relleno de contenido principal ajustado para móvil */
+            .main-content {
+                padding: 15px 2%;
+            }
+            .main-content h1, .main-content h2, .main-content h3,
+            .main-content h4, .main-content h5, .main-content h6 {
+                font-size: 1.5rem;
+            }
+            #install-banner p {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+            #install-button {
+                padding: 8px 16px;
+            }
+            .install-modal-content {
+                padding: 20px;
+            }
+            /* Ajustar tamaño de fuente de pregunta de examen para pantallas pequeñas */
+            .question-card h5 {
+                font-size: 0.9em;
+            }
+            /* Ajustar tamaño de fuente de alternativa para pantallas pequeñas */
+            .question-card .form-check-label {
+                font-size: 0.8em;
+            }
+
+            /* Ajustes para el modal en móvil */
+            .ai-clarifier-modal-content {
+                max-width: 95%; /* Más ancho en móvil */
+                padding: 20px;
+            }
+            #floating-ai-button {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        @media (min-width: 769px) { /* Ocultar banner de instalación dinámico en PC */
+            #dynamic-install-banner {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Capa superpuesta para efecto de desenfoque -->
+    <div class="background-overlay"></div>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand" href="#">Seguridad Privada</a>
+            <!-- Contador de visitas eliminado de aquí -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#exam-section">Examen OS-10</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#leyes">Leyes y Normativas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#interes">Links de Interés</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <button class="search-toggler" id="searchToggle">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="contact-btn" href="#contacto">
+                            <i class="bi bi-person"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Barra de búsqueda que se expande -->
+        <div class="search-bar-container" id="searchBar">
+            <input type="text" placeholder="Buscar en la página..." aria-label="Search">
+        </div>
+    </nav>
+
+    <!-- Botón Flotante del Clarificador IA -->
+    <div id="floating-ai-button" aria-label="Abrir Clarificador de Inteligencia Artificial">
+        <i class="bi bi-robot"></i> <!-- Icono de robot o chat -->
+    </div>
+
+    <!-- Modal del Clarificador IA -->
+    <div id="ai-clarifier-modal-overlay" class="ai-clarifier-modal-overlay">
+        <div class="ai-clarifier-modal-content">
+            <button class="close-button" id="close-ai-modal">&times;</button>
+            <h2 class="text-center">Clarificador Legal con IA (Pregúntale a Gemini)</h2>
+            <p class="text-center">¿Tienes dudas sobre algún artículo de la Ley de Seguridad Privada o una normativa específica? Escribe tu pregunta a continuación y nuestra inteligencia artificial te proporcionará una explicación clara.</p>
+            <div class="d-flex justify-content-end mb-3">
+                <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo" style="width: 80px; height: auto;">
+            </div>
+            <textarea id="ai-question-input" placeholder="Ej: ¿Qué dice el Decreto 93 sobre los requisitos de educación de un Guardia de Seguridad?"></textarea>
+            <button id="ask-ai-btn">Preguntar a la IA</button>
+            <div id="ai-clarifier-response" class="mt-3">
+                <p>Tu respuesta aparecerá aquí.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Área de Contenido Principal -->
+    <div class="main-content mt-5 pt-5">
+        <h1 class="text-center">¡Bienvenido a la Plataforma de Seguridad Privada en Chile!</h1>
+        <p>Esta plataforma ha sido diseñada para ofrecerte información relevante y actualizada sobre la normativa de seguridad privada en Chile, incluyendo la nueva Ley 21.659, decretos complementarios y material de estudio esencial para guardias de seguridad y vigilantes privados. Nuestro objetivo es ayudarte a comprender mejor tus responsabilidades y derechos en esta importante labor, promoviendo la excelencia y el cumplimiento normativo.</p>
+
+        <!-- Sección de Examen -->
+        <section id="exam-section" class="mt-5">
+            <h2 class="text-center">Examen de Preparación OS-10</h2>
+            <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
+            
+            <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
+
+            <div id="quiz-container" class="mt-4">
+                <!-- Las preguntas se cargarán aquí mediante JavaScript -->
+                <p class="text-center text-info">Cargando preguntas del examen...</p>
+            </div>
+            <div class="exam-controls">
+                <button id="submit-quiz-btn" style="display: none;">Enviar Examen</button>
+            </div>
+            <div id="exam-results" class="mt-4">
+                <!-- Los resultados del examen se mostrarán aquí -->
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2 id="leyes">Leyes y Normativas Clave de Seguridad Privada en Chile</h2>
+            <p>La seguridad privada en Chile está regulada por un marco legal en constante actualización. Es fundamental que todo guardia y vigilante conozca las normativas que rigen su quehacer. Aquí te presentamos las leyes y decretos más importantes:</p>
+
+            <h3>Nueva Ley de Seguridad Privada (Ley N° 21.659)</h3>
+            <p>Publicada el 21 de marzo de 2024, esta ley tiene por objeto regular la seguridad privada, entendiéndose como un conjunto de actividades o medidas preventivas, coadyuvantes y complementarias de la seguridad pública. Define las actividades de seguridad privada, las obligaciones de las personas naturales y jurídicas que prestan estos servicios, y establece un nuevo sistema de autorización y fiscalización.</p>
+            <ul>
+                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1198539" target="_blank">Ley N° 21.659 - Sobre Seguridad Privada (BCN)</a></li>
+            </ul>
+
+            <h3>Reglamento de Seguridad Privada (Decreto N° 209 EXENTO)</h3>
+            <p>Aprobado el 27 de mayo de 2025, este decreto complementa la Ley N° 21.659, precisando las obligaciones y aspectos técnicos y operativos para su adecuada implementación. Define los niveles de riesgo, procedimientos de autorización para entidades y personal, y detalla el uso de recursos tecnológicos y materiales.</p>
+            <ul>
+                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1211116" target="_blank">Decreto N° 209 EXENTO - Aprueba Reglamento de Seguridad Privada (BCN)</a></li>
+            </ul>
+
+            <h3>Manual Operativo en Materias de Seguridad Privada (Decreto N° 32 EXENTO)</h3>
+            <p>Este decreto, publicado el 31 de enero de 2024, modifica el Decreto N° 261 EXENTO de 2020 y aprueba el Manual Operativo de Seguridad Privada. Detalla requisitos para personas naturales (guardias, nocheros, porteros, rondines, vigilantes), sus uniformes, medidas adicionales de seguridad y procesos de capacitación.</p>
+            <ul>
+                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1203673" target="_blank">Decreto N° 32 EXENTO - Modifica y Aprueba Manual Operativo (BCN)</a></li>
+            </ul>
+
+            <h3>Decreto Supremo N° 867 (2017)</h3>
+            <p>Dicta el Reglamento sobre Nuevos Estándares para Personas, Personal y Empresas que Reciben Servicios o Realizan Actividades de Seguridad Privada. Si bien ha sido modificado y complementado por normativas más recientes, sienta bases importantes sobre los requisitos generales y la fiscalización.</p>
+            <ul>
+                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1107567" target="_blank">Decreto N° 867 - Dicta Reglamento sobre Nuevos Estándares (BCN)</a></li>
+            </ul>
+
+            <h3>Decreto Ley 3607 y Ley 19.303 (Derogadas por Ley 21.659)</h3>
+            <p>Es importante mencionar que la Ley N° 21.659 derogó el Decreto Ley 3607 (Ley de vigilantes privados) y la Ley N° 19.303 (Determina entidades que deben contar con sistema de seguridad) y sus reglamentos complementarios. Aunque ya no están vigentes, sentaron las bases para la regulación actual y su conocimiento histórico es útil para comprender la evolución de la normativa.</p>
+            
+            <div class="text-center my-4">
+                <a href="https://www.bcn.cl/leychile/" target="_blank" class="btn btn-primary btn-lg" style="background-color: #283593; border-color: #283593; color: white;">Explorar LeyChile (Biblioteca del Congreso Nacional)</a>
+            </div>
+
+            <blockquote>
+                <p>El Artículo 1 de la Ley N° 21.659 establece: "La presente ley tiene por objeto regular la seguridad privada, entendiéndose por tal el conjunto de actividades o medidas de carácter preventivas, coadyuvantes y complementarias de la seguridad pública, destinadas a la protección de personas, bienes y procesos productivos..."</p>
+                <p class="text-end fst-italic">Ley N° 21.659, Título I, Artículo 1</p>
+            </blockquote>
+
+            <pre><code>
+                // Ejemplo de estructura para un protocolo de seguridad (ilustrativo)
+                // function crearProtocoloSeguridad(riesgo, medidas) {
+                //     console.log(`Evaluando riesgo: ${riesgo}`);
+                //     if (riesgo === 'Alto') {
+                //         console.log('Implementando medidas de seguridad avanzadas:', medidas);
+                //     } else {
+                //         console.log('Aplicando medidas estándar:', medidas);
+                //     }
+                // }
+                // crearProtocoloSeguridad('Medio', ['Control de acceso', 'CCTV']);
+            </code></pre>
+            <p>La <mark style="background-color: #8c9eff; color: #171b4a; padding: 2px 5px; border-radius: 3px;">formación</mark> y actualización constante son clave para el desempeño eficaz de un guardia de seguridad.</p>
+        </section>
+
+        <section class="info-section">
+            <h2 id="interes">Links de Interés</h2>
+            <p>Aquí encontrarás enlaces a recursos útiles para complementar tu conocimiento y formación en seguridad privada.</p>
+            <ul>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.dt.gob.cl/" target="_blank">Dirección del Trabajo</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.zosepcar.cl/OS10.php" target="_blank">Zosepcar OS-10</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://dal5.short.gy/CFil" target="_blank">Cerofilas</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1200633" target="_blank">Ley N° 20.965 - Modifica Código Penal</a></li>
+                <li><i class="icon-small bi bi-link"></i> <a href="https://dal5.short.gy/LeySeg" target="_blank">LEY 21.659 - Ministerio del Interior y Seguridad Pública</a></li>
+            </ul>
+
+            <div style="width: 100%; height: 300px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin: 20px auto; display: flex; justify-content: center; align-items: center; background-color: rgba(0,0,0,0.05);">
+                <p style="color: #666;">[Image of Mapa de referencia]</p>
+            </div>
+
+            <h3>Documentos y Recursos Descargables</h3>
+            <p>Próximamente, podrás descargar documentos importantes relacionados con la seguridad privada.</p>
+            <!-- Puedes añadir aquí enlaces a PDF u otros documentos una vez disponibles -->
+
+            <h3>Videos Educativos</h3>
+            <p>Explora videos tutoriales y explicaciones sobre procedimientos y normativas de seguridad privada.</p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/rfJQ1bVuTKk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <h2 id="contacto">Contacto</h2>
+            <p>Si tienes preguntas o necesitas más información, no dudes en contactarnos. Estamos aquí para ayudarte a ser un profesional de seguridad mejor informado y capacitado.</p>
+            <address class="text-center">
+                <strong>Daniel Elías Figueroa Chacama</strong><br>
+                Ingeniero en Informática<br>
+                Chile
+            </address>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>Plataforma creada por Daniel Elías Figueroa Chacama, Ingeniero en Informática.</p>
+        <p>© 2025 Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let deferredInstallPrompt = null;
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log("DOM Content Loaded. Initializing app logic.");
+
+            // Navbar Shrink on Scroll
+            const navbar = document.getElementById('mainNavbar');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('navbar-shrink');
+                } else {
+                    navbar.classList.remove('navbar-shrink');
+                }
+            });
+
+            // Search Bar Toggle
+            const searchToggle = document.getElementById('searchToggle');
+            const searchBar = document.getElementById('searchBar');
+
+            searchToggle.addEventListener('click', function() {
+                searchBar.classList.toggle('show');
+            });
+
+            // Hide search bar if clicked outside
+            document.addEventListener('click', function(event) {
+                if (!searchBar.contains(event.target) && !searchToggle.contains(event.target)) {
+                    searchBar.classList.remove('show');
+                }
+            });
+
+            // --- Lógica del Banner de Instalación PWA (Creado dinámicamente) ---
+            let dynamicInstallBanner = null;
+            let bannerTimeout;
+
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredInstallPrompt = e;
+                
+                if (!dynamicInstallBanner && window.matchMedia('(max-width: 768px)').matches && !window.matchMedia('(display-mode: standalone)').matches) {
+                    dynamicInstallBanner = document.createElement('div');
+                    dynamicInstallBanner.id = 'dynamic-install-banner';
+                    dynamicInstallBanner.innerHTML = `
+                        ¿Quieres instalar esta app? 
+                        <button>Instalar</button>
+                    `;
+                    document.body.appendChild(dynamicInstallBanner);
+
+                    dynamicInstallBanner.querySelector('button').addEventListener('click', () => {
+                        clearTimeout(bannerTimeout);
+                        if (deferredInstallPrompt) {
+                            deferredInstallPrompt.prompt();
+                            deferredInstallPrompt.userChoice.then((choiceResult) => {
+                                if (choiceResult.outcome === 'accepted') {
+                                    console.log('Usuario aceptó la instalación');
+                                } else {
+                                    console.log('Usuario rechazó la instalación');
+                                }
+                                deferredInstallPrompt = null;
+                                if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
+                                    dynamicInstallBanner.remove();
+                                }
+                            });
+                        } else {
+                            console.log('deferredPrompt no disponible. El navegador no mostró el prompt de instalación.');
+                            if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
+                                dynamicInstallBanner.remove();
+                            }
+                        }
+                    });
+
+                    bannerTimeout = setTimeout(() => {
+                        if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
+                            dynamicInstallBanner.remove();
+                            console.log('Banner de instalación eliminado después de 10 segundos.');
+                        }
+                    }, 10000);
+
+                    window.addEventListener('scroll', () => {
+                        if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
+                            dynamicInstallBanner.remove();
+                            clearTimeout(bannerTimeout);
+                            console.log('Banner de instalación eliminado por scroll.');
+                        }
+                    }, { once: true });
+                }
+                console.log('beforeinstallprompt event fired. PWA is installable.');
+            });
+
+            window.addEventListener('appinstalled', () => {
+                if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
+                    dynamicInstallBanner.remove();
+                }
+                console.log('PWA fue instalada exitosamente.');
+            });
+
+            // --- Lógica del Examen ---
+            const quizContainer = document.getElementById('quiz-container');
+            const submitQuizBtn = document.getElementById('submit-quiz-btn');
+            const examResults = document.getElementById('exam-results');
+            const startExamBtn = document.getElementById('start-exam-btn');
+
+            quizContainer.style.display = 'none';
+
+            // Preguntas predeterminadas para respaldo (Verdadero/Falso)
+            // Estas preguntas se basan en el Decreto Ley 3607 y el Decreto 93,
+            // enfocadas en Guardias de Seguridad (pre-Ley 21.659 y Decreto 209).
+            const defaultQuestions = [
+                {
+                    question: "La Autoridad Fiscalizadora de la Seguridad Privada en Chile es la Prefectura de Carabineros de Chile del sector.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La Ley N° 21.659, publicada en marzo de 2024, es la única ley que regula la seguridad privada en Chile actualmente.",
+                    correctAnswer: "Falso" // Porque el Decreto 93 aún es relevante para ciertas interpretaciones hasta la plena vigencia de la nueva ley.
+                },
+                {
+                    question: "La seguridad privada, según las normativas vigentes antes de la Ley 21.659, busca reemplazar a la seguridad pública.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "Uno de los requisitos para ser Guardia de Seguridad según el Decreto 93 es tener 18 años.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Los Guardias de Seguridad están autorizados para portar armas de fuego en el ejercicio de sus funciones según el Decreto 93.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El curso de formación para Guardia de Seguridad, según el Decreto 93, tiene una duración de 90 horas.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El seguro de vida para Guardias de Seguridad, según el Decreto 93, tiene una cifra asegurada de 75 UTM.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El uniforme de un Guardia de Seguridad, según el Decreto 93, es libre y sin especificaciones de color.",
+                    correctAnswer: "Falso" // Tenía especificaciones, aunque menos estrictas que el vigilante.
+                },
+                {
+                    question: "Un Guardia de Seguridad está facultado para detener a alguien solo en caso de sorprenderlo en delito flagrante.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Delito es toda acción u omisión VOLUNTARIA penada por la Ley.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Cuasidelito es toda acción u omisión INVOLUNTARIA, penada por la ley.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La diferencia entre robo y hurto es que el robo se comete con violencia, intimidación o fuerza en las cosas, mientras que el hurto no.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La legítima defensa es aplicable solo si existe presencia policial en el momento de la agresión.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El sitio del suceso debe ser preservado y no alterado para la investigación.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Una ronda fija se caracteriza por tener la hora y el trayecto preestablecidos.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Los Guardias de Seguridad deben proteger personas y bienes, siendo la vida del guardia la más importante.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Ante el hallazgo de un artefacto explosivo, la primera acción debe ser intentar desactivarlo si se tienen conocimientos.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "Una evacuación es el traslado ordenado de personas hacia una zona de seguridad designada.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Una Directiva de Funcionamiento es un documento que señala el funcionamiento íntegro de los guardias de seguridad.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El Estudio de Seguridad es aprobado por la Prefectura de Carabineros del sector.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El porte ilegal de armas es portar un arma en la vía pública sin autorización.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La Subsecretaría de Telecomunicaciones (SUBTEL) es la entidad que autoriza el uso de radiocomunicaciones en seguridad privada.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "En un supermercado, un guardia puede detener a una persona por consumir un alimento antes de pasar por caja, incluso si no ha salido del establecimiento.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El secuestro es el traslado o retención de una o más personas sin su consentimiento.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La misión de Carabineros de Chile incluye garantizar el Orden y la Seguridad Pública.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Escalamiento es ingresar a una propiedad por una vía no destinada al efecto.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La función principal de una antena en un transceptor portátil es amplificar el sonido.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El contacto magnético es un sistema de alarma utilizado en puertas y ventanas para detectar aperturas.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Los daños físicos y psíquicos sufridos por un guardia en el cumplimiento de sus funciones se consideran actos del servicio y pueden derivar en enfermedades profesionales.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Para ser Guardia de Seguridad, se requiere haber cursado educación básica completa.",
+                    correctAnswer: "Falso" // Requiere 8º básico aprobado y curso OS-10.
+                }
+            ];
+            
+            let questions = [];
+
+            // Función para generar preguntas usando la API de Gemini
+            async function generateQuestions() {
+                console.log("generateQuestions function called.");
+                quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas con IA... Esto puede tardar unos segundos.</p>';
+                quizContainer.style.display = 'block';
+                startExamBtn.style.display = 'none';
+
+                // Prompt actualizado para enfocarse en Decreto 93 y Decreto Ley 3607 para Guardias de Seguridad.
+                const prompt = "Genera 30 preguntas de Verdadero/Falso sobre la normativa de seguridad privada en Chile ANTERIOR a la Ley 21.659, específicamente enfocadas en el Decreto Ley 3607 y el Decreto Supremo 93, y relativas a las funciones y requisitos de los GUARDIAS DE SEGURIDAD. Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').";
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "ARRAY",
+                            items: {
+                                type: "OBJECT",
+                                properties: {
+                                    "question": { "type": "STRING" },
+                                    "correctAnswer": { "type": "STRING" }
+                                },
+                                "propertyOrdering": ["question", "correctAnswer"]
+                            }
+                        }
+                    }
+                };
+
+                try {
+                    console.log("Attempting to generate questions with Gemini API...");
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Error al generar preguntas con Gemini API:', response.status, response.statusText, errorData);
+                        quizContainer.innerHTML = '<p class="text-danger text-center">Error al cargar las preguntas de la IA. Usando preguntas de respaldo. (Código de estado: ' + response.status + ')</p>';
+                        questions = defaultQuestions;
+                        console.log("Using default questions due to API error.");
+                        displayQuiz();
+                        return;
+                    }
+
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const jsonText = result.candidates[0].content.parts[0].text;
+                        console.log("Gemini API response (raw text):", jsonText);
+                        
+                        try {
+                            questions = JSON.parse(jsonText);
+                            if (!Array.isArray(questions) || questions.length === 0) {
+                                console.warn("La API de Gemini devolvió un arreglo de preguntas inválido o vacío. Usando preguntas de respaldo.");
+                                quizContainer.innerHTML = '<p class="text-danger text-center">La IA no generó preguntas válidas. Usando preguntas de respaldo.</p>';
+                                questions = defaultQuestions;
+                                console.log("Using default questions due to invalid/empty JSON.");
+                            } else if (questions.length < 30) {
+                                console.warn(`Gemini generó ${questions.length} preguntas. Volviendo a las preguntas predeterminadas para asegurar 30 disponibles.`);
+                                questions = defaultQuestions;
+                                console.log("Using default questions because not enough were generated.");
+                            }
+                            displayQuiz();
+                        } catch (parseError) {
+                            console.error('Error al parsear la respuesta JSON de Gemini:', parseError);
+                            quizContainer.innerHTML = '<p class="text-danger text-center">Error al procesar preguntas de la IA. Usando preguntas de respaldo.</p>';
+                            questions = defaultQuestions;
+                            console.log("Using default questions due to JSON parsing error.");
+                            displayQuiz();
+                        }
+                    } else {
+                        console.warn("La estructura de la respuesta de la API de Gemini es inesperada (faltan partes del contenido). Usando fallback questions.");
+                        quizContainer.innerHTML = '<p class="text-danger text-center">Estructura de respuesta de IA inesperada. Usando preguntas de respaldo.</p>';
+                        questions = defaultQuestions;
+                        console.log("Using default questions due to unexpected API response structure.");
+                        displayQuiz();
+                    }
+                } catch (error) {
+                    console.error('Error de red o parseo al llamar a Gemini (generar preguntas):', error);
+                    quizContainer.innerHTML = '<p class="text-danger text-center">Error de conexión al generar las preguntas. Usando preguntas de respaldo.</p>';
+                    questions = defaultQuestions;
+                    console.log("Using default questions due to network/parsing error.");
+                    displayQuiz();
+                }
+            }
+
+            // Función para mostrar las preguntas del examen
+            function displayQuiz() {
+                quizContainer.innerHTML = ''; // Limpiar mensaje de carga
+                questions.forEach((q, index) => {
+                    const questionCard = document.createElement('div');
+                    questionCard.classList.add('question-card');
+                    questionCard.innerHTML = `
+                        <h5>${index + 1}. ${q.question}</h5>
+                        <div class="options-container">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="question${index}" id="q${index}optV" value="Verdadero">
+                                <label class="form-check-label" for="q${index}optV">
+                                    Verdadero
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="question${index}" id="q${index}optF" value="Falso">
+                                <label class="form-check-label" for="q${index}optF">
+                                    Falso
+                                </label>
+                            </div>
+                        </div>
+                    `;
+                    quizContainer.appendChild(questionCard);
+                });
+                quizContainer.style.display = 'block'; // Mostrar contenedor del examen
+                submitQuizBtn.style.display = 'block'; // Mostrar botón de enviar
+                console.log("Quiz questions displayed.");
+            }
+
+            // Función para enviar el examen y calcular la puntuación
+            function submitQuiz() {
+                let score = 0;
+                questions.forEach((q, index) => {
+                    const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                    if (selectedOption && selectedOption.value === q.correctAnswer) {
+                        score++;
+                    }
+                });
+
+                const maxScore = questions.length;
+                const percentage = (score / maxScore) * 100;
+                const grade = calculateGrade(percentage);
+
+                examResults.innerHTML = `
+                    <h3>Resultados del Examen</h3>
+                    <p>Respuestas correctas: ${score} de ${maxScore}</p>
+                    <p>Porcentaje: ${percentage.toFixed(2)}%</p>
+                    <p>Tu nota en escala del 1 al 7: <strong>${grade.toFixed(1)}</strong></p>
+                    ${grade >= 4.0 ? '<p class="text-success">¡Felicitaciones! Has aprobado.</p>' : '<p class="text-danger">Necesitas repasar más. ¡No te desanimes!</p>'}
+                `;
+                examResults.style.display = 'block';
+                submitQuizBtn.style.display = 'none'; // Ocultar botón de enviar después del envío
+                quizContainer.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true); // Desactivar opciones después del envío
+                console.log("Quiz submitted and results displayed. Score:", score);
+            }
+
+            // Función para calcular la calificación de 1 a 7
+            function calculateGrade(percentage) {
+                if (percentage < 30) return 1.0;
+                if (percentage < 40) return 2.0;
+                if (percentage < 50) return 3.0;
+                if (percentage < 60) return 4.0;
+                if (percentage < 70) return 5.0;
+                if (percentage < 85) return 6.0;
+                return 7.0;
+            }
+
+            // Event listener para el nuevo botón "Empezar Examen Ahora"
+            startExamBtn.addEventListener('click', generateQuestions);
+
+            submitQuizBtn.addEventListener('click', submitQuiz);
+
+            // --- Lógica del Clarificador IA (Modal) ---
+            const floatingAiButton = document.getElementById('floating-ai-button');
+            const aiClarifierModalOverlay = document.getElementById('ai-clarifier-modal-overlay');
+            const closeAiModalBtn = document.getElementById('close-ai-modal');
+            const aiQuestionInput = document.getElementById('ai-question-input');
+            const askAiBtn = document.getElementById('ask-ai-btn');
+            const aiClarifierResponse = document.getElementById('ai-clarifier-response');
+
+            floatingAiButton.addEventListener('click', () => {
+                console.log("Floating AI button clicked. Attempting to show modal.");
+                aiClarifierModalOverlay.classList.add('show');
+                // Ensure display: flex is applied if not already, to ensure visibility
+                aiClarifierModalOverlay.style.display = 'flex';
+                console.log("Modal overlay classList after click:", aiClarifierModalOverlay.classList);
+            });
+
+            closeAiModalBtn.addEventListener('click', () => {
+                console.log("Close modal button clicked. Attempting to hide modal.");
+                aiClarifierModalOverlay.classList.remove('show');
+                aiClarifierModalOverlay.style.display = 'none'; // Ensure it's hidden
+                aiQuestionInput.value = ''; // Limpiar input al cerrar
+                aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>'; // Resetear respuesta
+                console.log("Modal overlay classList after close:", aiClarifierModalOverlay.classList);
+            });
+
+            // Cerrar modal haciendo clic fuera de su contenido
+            aiClarifierModalOverlay.addEventListener('click', (event) => {
+                if (event.target === aiClarifierModalOverlay) {
+                    console.log("Clicked outside modal content. Attempting to hide modal.");
+                    aiClarifierModalOverlay.classList.remove('show');
+                    aiClarifierModalOverlay.style.display = 'none'; // Ensure it's hidden
+                    aiQuestionInput.value = '';
+                    aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>';
+                }
+            });
+
+            askAiBtn.addEventListener('click', async function() {
+                const userQuestion = aiQuestionInput.value.trim();
+                if (userQuestion === "") {
+                    aiClarifierResponse.innerHTML = '<p class="text-danger">Por favor, escribe tu pregunta.</p>';
+                    return;
+                }
+
+                aiClarifierResponse.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Cargando respuesta de la IA... Esto puede tardar unos segundos.</p>';
+                askAiBtn.disabled = true;
+                console.log("Ask AI button clicked. Sending prompt to Gemini for clarification.");
+
+                // Actualizar el prompt para basarse en el Decreto 93 y el Decreto Ley 3607 para Guardias de Seguridad.
+                const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}"`;
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+
+                try {
+                    console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Error al obtener datos de la API de Gemini para aclaración:', response.status, response.statusText, errorData);
+                        aiClarifierResponse.innerHTML = `<p class="text-danger">Hubo un error (${response.status}) al obtener la respuesta de la IA. Por favor, inténtalo de nuevo.</p>`;
+                        return;
+                    }
+
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        aiClarifierResponse.innerHTML = `<p>${text}</p>`;
+                        console.log("AI clarification received and displayed.");
+                    } else {
+                        console.warn("La estructura de la respuesta de la API de Gemini para aclaración es inesperada o está vacía.");
+                        aiClarifierResponse.innerHTML = '<p class="text-warning">No se pudo obtener una respuesta clara de la IA. Intenta reformular tu pregunta.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error de red o problema de análisis en la llamada a la API de Gemini para aclaración:', error);
+                    aiClarifierResponse.innerHTML = '<p class="text-danger">Error de conexión al Clarificador IA. Asegúrate de tener acceso a internet y que el servicio esté disponible.</p>';
+                } finally {
+                    askAiBtn.disabled = false;
+                    console.log("AI Clarifier request finished.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
