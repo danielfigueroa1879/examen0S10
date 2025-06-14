@@ -275,6 +275,7 @@
         .main-content ul {
             list-style: none;
             padding-left: 0;
+            text-align: left; /* Alineación a la izquierda para las listas */
         }
 
         .main-content ul li::before {
@@ -379,6 +380,19 @@
         /* Estilos de la sección de Examen */
         /* Ya definidos arriba para el hover */
 
+        #exam-section {
+            background-color: rgba(255, 255, 255, 0.7); /* Ventanas transparentes */
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid transparent; /* Borde inicial transparente */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative; /* Para la ventana flotante roja */
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para el hover */
+            min-height: 500px; /* Hacer el container del examen más largo verticalmente */
+        }
+
         #start-exam-btn {
             background-color: #dc3545; /* Rojo */
             color: white;
@@ -390,6 +404,9 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             margin-top: 20px;
+            display: block; /* Para centrar el botón */
+            margin-left: auto; /* Para centrar el botón */
+            margin-right: auto; /* Para centrar el botón */
         }
 
         #start-exam-btn:hover {
@@ -500,12 +517,21 @@
         #exam-results h3 {
             color: #e8eaf6; /* Azul muy claro */
         }
-
+        /* Estilo para la nota final con animación */
         #exam-results p {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #e8eaf6;
+            color: #1a237e; /* Color oscuro para la nota */
+            animation: pulse-grade 4s infinite; /* Aplicar animación */
         }
+
+        /* Keyframes para la animación de la nota */
+        @keyframes pulse-grade {
+            0% { transform: scale(1); opacity: 1; text-shadow: 0 0 0px rgba(255, 255, 255, 0); }
+            50% { transform: scale(1.05); opacity: 0.9; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
+            100% { transform: scale(1); opacity: 1; text-shadow: 0 0 0px rgba(255, 255, 255, 0); }
+        }
+
 
         /* Estilo del chat flotante de IA */
         #ai-clarifier-chat {
@@ -591,7 +617,7 @@
         }
 
         #ai-clarifier-chat textarea::placeholder {
-            color: #aaa; /* Color más claro para el placeholder */
+            color: #ccc; /* Color más claro para el placeholder */
         }
 
         #ai-clarifier-chat button {
@@ -910,6 +936,32 @@
                 Ingeniero en Informática<br>
                 Chile
             </address>
+        </section>
+
+        <!-- Nueva sección para el Asistente de Redacción de Informes -->
+        <section id="report-assistant-section" class="info-section mt-5">
+            <h2 class="text-center">Asistente de Redacción de Informes y Comunicaciones ✨</h2>
+            <p class="text-center">Describe brevemente el incidente o la situación, y la IA te ayudará a redactar un borrador de informe o comunicación profesional.</p>
+            
+            <div class="mb-3 text-center">
+                <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo" style="width: 60px; height: auto;">
+            </div>
+
+            <textarea id="incident-description-input" class="form-control mb-3" rows="5" placeholder="Ej: Hubo un hurto en la tienda. Un hombre con camisa azul tomó un objeto y salió corriendo."></textarea>
+            
+            <select id="report-type-select" class="form-select mb-3">
+                <option value="informe_interno">Informe Interno de Incidente</option>
+                <option value="comunicacion_policial">Comunicación a Carabineros</option>
+                <option value="correo_supervisor">Correo a Supervisor</option>
+                <option value="reporte_general">Reporte General de Evento</option>
+            </select>
+
+            <button id="generate-report-btn" class="btn btn-primary w-100 mb-3" style="background-color: #283593; border-color: #283593; color: white;">Generar Borrador</button>
+            
+            <div id="report-output" class="p-3 bg-light rounded" style="min-height: 150px; border: 1px solid #ddd; text-align: left; white-space: pre-wrap; font-size: 0.9em; color: #333;">
+                El borrador del informe aparecerá aquí.
+            </div>
+            <button id="copy-report-btn" class="btn btn-outline-secondary mt-3" style="display: none;">Copiar a Portapapeles</button>
         </section>
     </div>
 
@@ -1360,10 +1412,10 @@
                 const grade = calculateGrade(percentage);
 
                 examResults.innerHTML = `
-                    <h3>Results del Examen</h3>
+                    <h3>Resultados del Examen</h3>
                     <p>Respuestas correctas: ${score} de ${maxScore}</p>
                     <p>Porcentaje: ${percentage.toFixed(2)}%</p>
-                    <p>Tu nota en escala del 1 al 7: <strong>${grade.toFixed(1)}</strong></p>
+                    <p>Tu nota en escala del 1 al 7: <strong style="color: #1a237e;">${grade.toFixed(1)}</strong></p>
                     ${grade >= 4.0 ? '<p class="text-success">¡Felicitaciones! Has aprobado.</p>' : '<p class="text-danger">Necesitas repasar más. ¡No te desanimes!</p>'}
                 `;
                 examResults.style.display = 'block';
