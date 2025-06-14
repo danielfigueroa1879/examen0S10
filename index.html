@@ -767,7 +767,7 @@
                 /* Removido flex-direction column aquí para permitir que se apile el texto con <br> */
             }
             .navbar-brand .navbar-logo {
-                height: 35px; /* Ajusta el tamaño del logo para móvil */
+                height: 45px; /* Ajusta el tamaño del logo para móvil, un poco más grande */
                 margin-left: 10px; 
                 margin-right: 0px; /* Asegura que no haya margen extra a la derecha */
             }
@@ -871,7 +871,7 @@
 
             /* Ajustes específicos para navbar-brand en PC */
             .navbar-custom .navbar-brand {
-                font-size: 1.6rem; /* Título más grande para PC */
+                font-size: 1.8rem; /* Título más grande para PC */
                 flex-direction: row; /* Asegura que el texto y la imagen estén en fila */
                 white-space: nowrap; /* Evita que el texto se divida */
                 align-items: center;
@@ -880,7 +880,7 @@
                 display: inline; /* Asegura que el texto "Seguridad Privada" esté en una línea */
             }
             .navbar-brand .navbar-logo {
-                height: 45px; /* Logo más grande en PC */
+                height: 55px; /* Logo más grande en PC */
                 margin-left: 15px; /* Espacio a la derecha del texto */
             }
             /* Esconder el <br> en PC */
@@ -1012,7 +1012,7 @@
     <div id="floating-ai-button" aria-label="Abrir Clarificador de Inteligencia Artificial">
         <i class="bi bi-robot"></i> </div>
 
-    <div id="ai-clarifier-chat" class="ai-clarificador-chat">
+    <div id="ai-clarifier-chat" class="ai-clarifier-chat">
         <div class="chat-header">
             <h2>Clarificador IA</h2>
             <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo">
@@ -1453,7 +1453,7 @@
                 const grade = calculateGrade(percentage);
 
                 examResults.innerHTML = `
-                    <h3>Resultados del Examen</h3>
+                    <h3>Results del Examen</h3>
                     <p>Respuestas correctas: ${score} de ${maxScore}</p>
                     <p>Porcentaje: ${percentage.toFixed(2)}%</p>
                     <p>Tu nota en escala del 1 al 7: <strong style="color: #1a237e;">${grade.toFixed(1)}</strong></p>
