@@ -579,7 +579,7 @@
         }
 
         #ai-clarifier-chat textarea::placeholder {
-            color: #ccc; /* Color más claro para el placeholder */
+            color: #aaa; /* Color más claro para el placeholder */
         }
 
         #ai-clarifier-chat button {
@@ -709,7 +709,7 @@
                 font-size: 0.9em;
             }
             /* Ajustar tamaño de fuente de alternativa para pantallas pequeñas */
-            .question-card .form-check-label {
+            .form-check-label.option-button {
                 font-size: 0.8em;
             }
 
@@ -833,6 +833,10 @@
             <div id="exam-results" class="mt-4">
                 <!-- Los resultados del examen se mostrarán aquí -->
             </div>
+            <!-- Nueva ventana de respuesta sutil -->
+            <div id="subtle-response-box" class="subtle-response-box">
+                ¡El examen está listo para comenzar!
+            </div>
         </section>
 
         <section class="info-section">
@@ -890,7 +894,7 @@
             </ul>
 
             <div style="width: 100%; height: 300px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin: 20px auto; display: flex; justify-content: center; align-items: center; background-color: rgba(0,0,0,0.05);">
-                <p style="color: #666;"></p>
+                <p style="color: #666;">[Image of Mapa de referencia]</p>
             </div>
 
             <h3>Documentos y Recursos Descargables</h3>
@@ -1048,8 +1052,10 @@
             const submitQuizBtn = document.getElementById('submit-quiz-btn');
             const examResults = document.getElementById('exam-results');
             const startExamBtn = document.getElementById('start-exam-btn');
+            const subtleResponseBox = document.getElementById('subtle-response-box');
 
             quizContainer.style.display = 'none';
+            subtleResponseBox.style.display = 'none'; // Ocultar por defecto
 
             // Preguntas predeterminadas para respaldo (Verdadero/Falso)
             const defaultQuestions = [
@@ -1183,6 +1189,7 @@
                 quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas con IA... Esto puede tardar unos segundos.</p>';
                 quizContainer.style.display = 'block';
                 startExamBtn.style.display = 'none';
+                subtleResponseBox.style.display = 'none'; // Asegurarse de que no se vea al iniciar el examen
 
                 // Prompt actualizado para enfocarse en Decreto 93 y Decreto Ley 3607 para Guardias de Seguridad.
                 const prompt = "Genera 30 preguntas de Verdadero/Falso sobre la normativa de seguridad privada en Chile ANTERIOR a la Ley 21.659, específicamente enfocadas en el Decreto Ley 3607 y el Decreto Supremo 93, y relativas a las funciones y requisitos de los GUARDIAS DE SEGURIDAD. Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').";
@@ -1386,23 +1393,9 @@
                 const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}". Proporciona solo la respuesta directa y relevante, sin incluir ningún encabezado, pie de página o formato de código (ej. \`\`\`json). Ten en cuenta que si la pregunta es sobre la entrada en vigencia de la Ley 21.659, la fecha es 28-NOV-2025.`;
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = {
-                    contents: chatHistory,
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: {
-                            type: "ARRAY",
-                            items: {
-                                type: "OBJECT",
-                                properties: {
-                                    "question": { "type": "STRING" },
-                                    "correctAnswer": { "type": "STRING" }
-                                },
-                                "propertyOrdering": ["question", "correctAnswer"]
-                            }
-                        }
-                    }
-                };
+                // NOTA: Eliminando responseMimeType y responseSchema para que la IA responda directamente el texto,
+                // sin intentar estructurarlo como JSON si no es necesario.
+                const payload = { contents: chatHistory };
 
                 try {
                     console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
@@ -1410,7 +1403,7 @@
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 'Content-Type': 'application/json' }, // Mantener application/json por si la API lo requiere, pero el prompt pedirá texto directo.
                         body: JSON.stringify(payload)
                     });
 
@@ -1426,7 +1419,7 @@
                         result.candidates[0].content && result.candidates[0].content.parts &&
                         result.candidates[0].content.parts.length > 0) {
                         let text = result.candidates[0].content.parts[0].text;
-                        // Eliminar cualquier bloque de código o texto residual si la IA lo incluyera
+                        // Limpiar cualquier bloque de código o texto residual si la IA lo incluyera, incluso si el prompt lo pide sin formato.
                         text = text.replace(/```json\n?[\s\S]*?\n?```/, '').trim();
                         text = text.replace(/```\n?[\s\S]*?\n?```/, '').trim();
                         aiClarifierResponse.innerHTML = `<p>${text}</p>`;
