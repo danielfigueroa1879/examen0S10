@@ -61,8 +61,12 @@
         }
 
         /* Estilos para el logo dentro de la marca de la barra de navegación */
+        .navbar-brand .brand-text {
+            /* No styles needed here as img is positioned after text */
+        }
+
         .navbar-brand img {
-            height: 40px; /* Tamaño del logo más grande */
+            height: 40px; /* Tamaño del logo más grande en PC */
             margin-left: 10px; /* Espacio a la izquierda del logo (para que esté a la derecha del texto) */
         }
 
@@ -753,8 +757,18 @@
                 padding: 1rem 5%;
             }
             .navbar-custom .navbar-brand {
-                font-size: 1.5rem;
+                font-size: 1.5rem; /* Texto más pequeño para móvil */
                 margin-right: 0;
+            }
+            .navbar-custom .navbar-brand .brand-text {
+                display: flex;
+                flex-direction: column; /* Apila el texto */
+                line-height: 1.2; /* Ajusta el interlineado */
+            }
+            .navbar-brand img {
+                height: 35px; /* Ajusta el tamaño del logo para móvil */
+                margin-right: 0px; /* Elimina margen a la derecha en móvil si el texto se apila */
+                margin-left: 10px; /* Mantiene margen a la izquierda */
             }
             .navbar-custom .navbar-collapse {
                 background-color: #171b4a; /* Azul oscuro para el menú colapsado */
@@ -863,8 +877,8 @@
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container-fluid px-3">
             <a class="navbar-brand" href="#">
-                <img src="logoSec.png" alt="Logo Seguridad Privada" class="me-2">
-                Seguridad Privada
+                <span class="brand-text">Seguridad<br>Privada</span>
+                <img src="logoSec.png" alt="Logo Seguridad Privada">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -977,7 +991,7 @@
     <div id="floating-ai-button" aria-label="Abrir Clarificador de Inteligencia Artificial">
         <i class="bi bi-robot"></i> </div>
 
-    <div id="ai-clarifier-chat" class="ai-clarificador-chat">
+    <div id="ai-clarifier-chat" class="ai-clarifier-chat">
         <div class="chat-header">
             <h2>Clarificador IA</h2>
             <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo">
