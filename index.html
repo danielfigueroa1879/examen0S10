@@ -502,7 +502,7 @@
             right: 20px;
             width: 350px; /* Ancho predeterminado para PC */
             height: 450px; /* Alto predeterminado para PC */
-            background-color: rgba(179, 229, 252, 0.9); /* Azul muy claro semi-transparente */
+            background-color: #b3e5fc; /* Azul claro */
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
@@ -526,6 +526,7 @@
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 1px solid rgba(0,0,0,0.1);
+            position: relative; /* Para posicionar el botón de cierre */
         }
 
         #ai-clarifier-chat .chat-header h2 {
@@ -536,12 +537,19 @@
         }
 
         #ai-clarifier-chat .chat-header .close-button {
+            position: absolute; /* Posicionamiento absoluto */
+            top: -5px; /* Mover ligeramente hacia arriba para que no quede tan pegado */
+            right: 0px; /* Mover a la orilla derecha */
             background: none;
             border: none;
             font-size: 1.5rem;
             color: #555;
             cursor: pointer;
-            margin-left: auto; /* Empuja el botón de cierre a la derecha */
+            padding: 0; /* Eliminar padding por defecto del botón */
+        }
+
+        #ai-clarifier-chat .chat-header .close-button:hover {
+            color: #000;
         }
 
         #ai-clarifier-chat .chat-content {
@@ -571,7 +579,7 @@
         }
 
         #ai-clarifier-chat textarea::placeholder {
-            color: #666;
+            color: #ccc; /* Color más claro para el placeholder */
         }
 
         #ai-clarifier-chat button {
@@ -595,6 +603,7 @@
             width: 40px; /* Tamaño más pequeño para el logo al lado del título */
             height: auto;
             vertical-align: middle;
+            margin-top: -5px; /* Ajuste para alinear con el texto */
         }
         
         /* Spinner de carga */
@@ -1374,7 +1383,7 @@
                 console.log("Ask AI button clicked. Sending prompt to Gemini for clarification.");
 
                 // Actualizar el prompt para incluir la fecha de vigencia de la Ley 21.659
-                const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}". Ten en cuenta que si la pregunta es sobre la entrada en vigencia de la Ley 21.659, la fecha es 28-NOV-2025.`;
+                const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}". Proporciona solo la respuesta directa y relevante, sin incluir ningún encabezado, pie de página o formato de código (ej. \`\`\`json). Ten en cuenta que si la pregunta es sobre la entrada en vigencia de la Ley 21.659, la fecha es 28-NOV-2025.`;
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 const payload = {
@@ -1416,7 +1425,10 @@
                     if (result.candidates && result.candidates.length > 0 &&
                         result.candidates[0].content && result.candidates[0].content.parts &&
                         result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
+                        let text = result.candidates[0].content.parts[0].text;
+                        // Eliminar cualquier bloque de código o texto residual si la IA lo incluyera
+                        text = text.replace(/```json\n?[\s\S]*?\n?```/, '').trim();
+                        text = text.replace(/```\n?[\s\S]*?\n?```/, '').trim();
                         aiClarifierResponse.innerHTML = `<p>${text}</p>`;
                         console.log("AI clarification received and displayed.");
                     } else {
