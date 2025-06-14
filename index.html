@@ -866,18 +866,6 @@
                 <p class="text-end fst-italic">Ley N° 21.659, Título I, Artículo 1</p>
             </blockquote>
 
-            <pre><code>
-                // Ejemplo de estructura para un protocolo de seguridad (ilustrativo)
-                // function crearProtocoloSeguridad(riesgo, medidas) {
-                //     console.log(`Evaluando riesgo: ${riesgo}`);
-                //     if (riesgo === 'Alto') {
-                //         console.log('Implementando medidas de seguridad avanzadas:', medidas);
-                //     } else {
-                //         console.log('Aplicando medidas estándar:', medidas);
-                //     }
-                // }
-                // crearProtocoloSeguridad('Medio', ['Control de acceso', 'CCTV']);
-            </code></pre>
             <p>La <mark style="background-color: #8c9eff; color: #171b4a; padding: 2px 5px; border-radius: 3px;">formación</mark> y actualización constante son clave para el desempeño eficaz de un guardia de seguridad.</p>
         </section>
 
@@ -1042,7 +1030,7 @@
 
             window.addEventListener('appinstalled', () => {
                 if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
-                    dynamicInstallBanner.remove();
+                    dynamicCacheBanner.remove();
                 }
                 console.log('PWA fue instalada exitosamente.');
             });
