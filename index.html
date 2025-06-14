@@ -214,8 +214,191 @@
             position: relative; /* Para la ventana flotante roja */
             transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para el hover */
         }
-        /* Borde e iluminación para todas las secciones de información al hacer hover, EXCEPTO exam-section */
-        .info-section:hover:not(#exam-section) { /* Apply to info-section but not exam-section */
+        /* Borde e iluminación para todas las secciones de información al hacer hover */
+        .info-section:hover {
+            border-color: #dc3545; /* Color del borde al hacer hover (rojo) */
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4), 0 0 15px rgba(220, 53, 69, 0.6); /* Sombra que simula el resplandor */
+        }
+        /* Estilo específico para la sección de examen al hacer hover */
+        #exam-section:hover {
+            border-color: #dc3545; /* Rojo también para el hover del examen */
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4), 0 0 15px rgba(220, 53, 69, 0.6); /* Sombra que simula el resplandor */
+        }
+        /* Estilo para la sección de examen cuando está activa */
+        #exam-section.active-red-border {
+            border-color: #dc3545; /* Rojo permanente */
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.6), 0 0 20px rgba(220, 53, 69, 0.8); /* Resplandor más fuerte */
+        }
+
+
+        .main-content h1, .main-content h2, .main-content h3,
+        .main-content h4, .main-content h5, .main-content h6 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-top: 1.5em;
+            margin-bottom: 0.8em;
+            text-align: center;
+            color: #283593; /* Azul oscuro (#283593) para los encabezados de sección */
+        }
+
+        .main-content p {
+            margin-bottom: 1.5em;
+        }
+
+        .main-content a {
+            font-weight: bold;
+            color: #283593; /* Azul oscuro (#283593) para los enlaces */
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .main-content a:hover {
+            color: #515ba6; /* Azul medio al pasar el cursor */
+            text-decoration: underline;
+        }
+
+        /* Imágenes */
+        .main-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* Listas */
+        .main-content ul {
+            list-style: none;
+            padding-left: 0;
+            text-align: left; /* Alineación a la izquierda para las listas */
+        }
+
+        .main-content ul li::before {
+            content: "\2023";
+            font-size: 1em;
+            color: #283593; /* Azul oscuro (#283593) para las viñetas */
+            position: absolute;
+            left: 0;
+            top: 0.1em;
+        }
+
+        /* Citas en bloque */
+        .main-content blockquote {
+            background-color: rgba(40, 53, 147, 0.1); /* Azul oscuro semi-transparente */
+            border-left: 5px solid #283593; /* Borde azul oscuro */
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-style: italic;
+            color: #515ba6; /* Azul medio para el texto */
+        }
+
+        /* Videos */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+
+        .video-container iframe,
+        .video-container object,
+        .video-container embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        /* Íconos para elementos especiales */
+        .icon-small {
+            font-size: 0.9em;
+            vertical-align: middle;
+            margin-right: 5px;
+            color: #283593; /* Azul oscuro (#283593) para los íconos pequeños */
+        }
+
+        /* Estilo para el banner de instalación de PWA (creado dinámicamente) */
+        #dynamic-install-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #283593; /* Azul oscuro para el banner */
+            color: white;
+            font-weight: bold;
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        #dynamic-install-banner button {
+            margin-left: 10px;
+            padding: 8px 16px;
+            background: #e8eaf6; /* Azul muy claro para el botón */
+            color: #283593; /* Texto azul oscuro */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        #dynamic-install-banner button:hover {
+            background-color: #c5cae9; /* Azul más oscuro al pasar el cursor */
+            transform: translateY(-1px);
+        }
+
+        /* Pie de página */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #171b4a; /* Azul oscuro del banner principal */
+            color: #f8f8f8;
+            font-size: 0.9em;
+            margin-top: 50px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Estilos de la sección de Examen */
+        /* Ya definidos arriba para el hover */
+
+        #exam-section {
+            background-color: rgba(255, 255, 255, 0.7); /* Ventanas transparentes */
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid transparent; /* Borde inicial transparente */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative; /* Para la ventana flotante roja */
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para el hover */
+            min-height: 500px; /* Hacer el container del examen más largo verticalmente */
+        }
+        /* Borde e iluminación para la sección de examen al hacer hover */
+        #exam-section:hover {
             border-color: #dc3545; /* Color del borde al hacer hover (rojo) */
             box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4), 0 0 15px rgba(220, 53, 69, 0.6); /* Sombra que simula el resplandor */
         }
@@ -961,7 +1144,7 @@
     <div id="floating-ai-button" aria-label="Abrir Clarificador de Inteligencia Artificial">
         <i class="bi bi-robot"></i> </div>
 
-    <div id="ai-clarifier-chat" class="ai-clarifier-chat">
+    <div id="ai-clarifier-chat" class="ai-clarificador-chat">
         <div class="chat-header">
             <h2>Clarificador IA</h2>
             <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo">
