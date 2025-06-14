@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seguridad Privada Chile</title>
-    <!-- Favicon de ejemplo para evitar errores 404 -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='50%25' y='50%25' font-size='90' text-anchor='middle' dominant-baseline='central'%3E%F0%9F%9B%A1%3C/text%3E%3C/svg%3E" type="image/svg+xml">
-    <!-- Google Fonts: Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CSS (for lupa, person, document, terminal, keyboard, variable, unit icons) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         /* Estilos Base */
@@ -215,7 +211,7 @@
             transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para el hover */
         }
         /* Borde e iluminación para todas las secciones de información al hacer hover */
-        .info-section:hover, #exam-section:hover {
+        .info-section:hover {
             border-color: #dc3545; /* Color del borde al hacer hover (rojo) */
             box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4), 0 0 15px rgba(220, 53, 69, 0.6); /* Sombra que simula el resplandor */
         }
@@ -617,7 +613,7 @@
         }
 
         #ai-clarifier-chat textarea::placeholder {
-            color: #ccc; /* Color más claro para el placeholder */
+            color: #aaa; /* Color más claro para el placeholder */
         }
 
         #ai-clarifier-chat button {
@@ -845,10 +841,8 @@
 </head>
 <body>
 
-    <!-- Capa superpuesta para efecto de desenfoque -->
     <div class="background-overlay"></div>
 
-    <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container-fluid px-3">
             <a class="navbar-brand" href="#">Seguridad Privada</a>
@@ -876,18 +870,15 @@
                 </ul>
             </div>
         </div>
-        <!-- Barra de búsqueda que se expande -->
         <div class="search-bar-container" id="searchBar">
             <input type="text" placeholder="Buscar en la página..." aria-label="Search">
         </div>
     </nav>
 
-    <!-- Área de Contenido Principal -->
     <div class="main-content">
         <h1 class="text-center">¡Bienvenido a la Plataforma de Seguridad Privada en Chile!</h1>
         <p>Esta plataforma ha sido diseñada para ofrecerte información relevante y actualizada sobre la normativa de seguridad privada en Chile, incluyendo la nueva Ley 21.659, decretos complementarios y material de estudio esencial para guardias de seguridad y vigilantes privados. Nuestro objetivo es ayudarte a comprender mejor tus responsabilidades y derechos en esta importante labor, promoviendo la excelencia y el cumplimiento normativo.</p>
 
-        <!-- Sección de Examen -->
         <section id="exam-section" class="mt-5">
             <h2 class="text-center">Examen de Preparación OS-10</h2>
             <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
@@ -895,16 +886,13 @@
             <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
 
             <div id="quiz-container" class="mt-4">
-                <!-- Las preguntas se cargarán aquí mediante JavaScript -->
                 <p class="text-center text-info">Cargando preguntas del examen...</p>
             </div>
             <div class="exam-controls">
                 <button id="submit-quiz-btn" style="display: none;">Enviar Examen</button>
             </div>
             <div id="exam-results" class="mt-4">
-                <!-- Los resultados del examen se mostrarán aquí -->
-            </div>
-            <!-- Nueva ventana de respuesta sutil -->
+                </div>
             <div id="subtle-response-box" class="subtle-response-box">
                 ¡El examen está listo para comenzar!
             </div>
@@ -938,7 +926,6 @@
             </address>
         </section>
 
-        <!-- Nueva sección para el Asistente de Redacción de Informes -->
         <section id="report-assistant-section" class="info-section mt-5">
             <h2 class="text-center">Asistente de Redacción de Informes y Comunicaciones ✨</h2>
             <p class="text-center">Describe brevemente el incidente o la situación, y la IA te ayudará a redactar un borrador de informe o comunicación profesional.</p>
@@ -965,17 +952,14 @@
         </section>
     </div>
 
-    <!-- Botón Flotante del Clarificador IA -->
     <div id="floating-ai-button" aria-label="Abrir Clarificador de Inteligencia Artificial">
-        <i class="bi bi-robot"></i> <!-- Icono de robot o chat -->
-    </div>
+        <i class="bi bi-robot"></i> </div>
 
-    <!-- Chat Flotante del Clarificador IA (visible en PC y móvil, se superpone) -->
-    <div id="ai-clarifier-chat" class="ai-clarifier-chat">
+    <div id="ai-clarifier-chat" class="ai-clarificador-chat">
         <div class="chat-header">
             <h2>Clarificador IA</h2>
             <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo">
-            <button class="close-button" id="close-ai-chat">&times;</button>
+            <button class="close-button" id="close-ai-chat">×</button>
         </div>
         <div class="chat-content">
             <p>¿Tienes dudas sobre algún artículo o normativa? Escribe tu pregunta y te ayudaremos.</p>
@@ -1518,6 +1502,95 @@
                     askAiBtn.disabled = false;
                     console.log("AI Clarifier request finished.");
                 }
+            });
+
+            // --- Lógica del Asistente de Redacción de Informes ---
+            const incidentDescriptionInput = document.getElementById('incident-description-input');
+            const reportTypeSelect = document.getElementById('report-type-select');
+            const generateReportBtn = document.getElementById('generate-report-btn');
+            const reportOutput = document.getElementById('report-output');
+            const copyReportBtn = document.getElementById('copy-report-btn');
+
+            generateReportBtn.addEventListener('click', async () => {
+                const description = incidentDescriptionInput.value.trim();
+                const selectedReportType = reportTypeSelect.value;
+
+                if (!description) {
+                    reportOutput.innerHTML = '<p class="text-danger">Por favor, describe el incidente.</p>';
+                    return;
+                }
+
+                reportOutput.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Generando borrador...</p>';
+                generateReportBtn.disabled = true;
+                copyReportBtn.style.display = 'none';
+
+                let promptText = "";
+                // Base prompt for report generation
+                const basePrompt = `Eres un asistente de IA especializado en generar borradores de comunicaciones profesionales para personal de seguridad privada en Chile, basándote en el contexto del incidente. Tu objetivo es redactar informes claros, concisos y objetivos, utilizando la normativa chilena relevante para guardias de seguridad (específicamente Decreto Ley 3607 y Decreto Supremo 93, y NO las nuevas Ley 21.659 o Decreto 209).`;
+
+                switch (selectedReportType) {
+                    case 'informe_interno':
+                        promptText = `${basePrompt} Genera un Informe Interno de Incidente. Extrae la siguiente información de la descripción del usuario y formatéala en secciones claras, sin preámbulos ni conclusiones conversacionales: Fecha y Hora (DD/MM/AAAA HH:MM, si es posible, usa la fecha actual si no se especifica), Ubicación del Incidente, Tipo de Incidente (ej. Hurto, Robo, Acto sospechoso, Accidente, Incumplimiento normativo), Descripción Detallada del Evento (narrativa cronológica de lo ocurrido, acciones del guardia), Personal de Seguridad Involucrado (nombres, cargos, acciones iniciales), Acciones Tomadas (medidas inmediatas, notificaciones a autoridades como Carabineros si aplica, retenciones, etc.), Evidencia Recolectada (cámaras, testimonios, objetos), y Recomendaciones/Observaciones. Si la información no está en la descripción, indica 'No especificado'. Descripción: "${description}"`;
+                        break;
+                    case 'comunicacion_policial':
+                        promptText = `${basePrompt} Redacta una Comunicación formal a Carabineros de Chile sobre el incidente. Incluye: Fecha, Hora, Lugar del Incidente, Tipo de Incidente, Descripción concisa del evento enfocándose en los hechos relevantes para la autoridad, y Acciones inmediatas tomadas por el guardia. Si la información no está en la descripción, indica 'No especificado'. No incluyas saludos ni despedidas, solo el cuerpo de la comunicación. Descripción: "${description}"`;
+                        break;
+                    case 'correo_supervisor':
+                        promptText = `${basePrompt} Redacta un Correo Electrónico a un supervisor. Incluye: Asunto (claro y conciso), Fecha y Hora del Incidente, Breve resumen del evento, Acciones tomadas por el guardia, y si se requiere alguna acción o decisión adicional por parte del supervisor. No uses saludos ni despedidas conversacionales, solo el cuerpo del correo. Descripción: "${description}"`;
+                        break;
+                    case 'reporte_general':
+                        promptText = `${basePrompt} Genera un Reporte General de Evento. Extrae: Fecha y Hora (usa la fecha actual si no se especifica), Ubicación, Naturaleza del Evento, Breve descripción de lo ocurrido, Personas afectadas/involucradas, y Medidas adoptadas por el guardia. Si la información no está en la descripción, indica 'No especificado'. No incluyas preámbulos ni conclusiones. Descripción: "${description}"`;
+                        break;
+                }
+
+                let chatHistory = [{ role: "user", parts: [{ text: promptText }] }];
+                const payload = { contents: chatHistory }; // No responseMimeType here, default to text
+
+                try {
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // Ya definida globalmente
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    
+                    console.log("Payload enviado a Gemini para informe:", payload); // Log para depuración
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Error al generar informe con Gemini API:', response.status, response.statusText, errorData);
+                        reportOutput.innerHTML = `<p class="text-danger">Error al generar el informe: ${errorData.error.message || 'Error desconocido'}.</p>`;
+                        return;
+                    }
+
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const generatedText = result.candidates[0].content.parts[0].text;
+                        reportOutput.innerHTML = `<pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background-color: #f8f9fa; padding: 10px; border-radius: 5px; color: #333;">${generatedText}</pre>`;
+                        copyReportBtn.style.display = 'block';
+                    } else {
+                        reportOutput.innerHTML = '<p class="text-warning">No se pudo generar un informe. Intenta con una descripción más detallada.</p>';
+                    }
+                } catch (error) {
+                    console.error('Error de red o parseo al llamar a Gemini para informe:', error);
+                    reportOutput.innerHTML = '<p class="text-danger">Error de conexión. Asegúrate de tener conexión a internet.</p>';
+                } finally {
+                    generateReportBtn.disabled = false;
+                }
+            });
+
+            copyReportBtn.addEventListener('click', () => {
+                const reportContent = reportOutput.textContent;
+                navigator.clipboard.writeText(reportContent).then(() => {
+                    alert('Borrador copiado al portapapeles.');
+                }).catch(err => {
+                    console.error('Error al copiar el borrador:', err);
+                    alert('No se pudo copiar el borrador.');
+                });
             });
         });
     </script>
