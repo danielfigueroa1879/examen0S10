@@ -367,11 +367,17 @@
             background-color: rgba(255, 255, 255, 0.7); /* Ventanas transparentes */
             padding: 30px;
             border-radius: 15px;
+            border: 2px solid transparent; /* Borde inicial transparente */
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             margin-bottom: 40px;
             text-align: center;
-            border: 1px solid rgba(0,0,0,0.05);
             position: relative; /* Para la ventana flotante roja */
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para el hover */
+        }
+
+        #exam-section:hover {
+            border-color: #dc3545; /* Color del borde al hacer hover (rojo) */
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4), 0 0 15px rgba(220, 53, 69, 0.6); /* Sombra que simula el resplandor */
         }
 
         #start-exam-btn {
@@ -884,14 +890,6 @@
                 <li><i class="icon-small bi bi-link"></i> <a href="https://dal5.short.gy/LeySeg" target="_blank">LEY 21.659 - Ministerio del Interior y Seguridad Pública</a></li>
             </ul>
 
-            <div style="width: 100%; height: 300px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin: 20px auto; display: flex; justify-content: center; align-items: center; background-color: rgba(0,0,0,0.05);">
-                <p style="color: #666;">[Image of Mapa de referencia]</p>
-            </div>
-
-            <h3>Documentos y Recursos Descargables</h3>
-            <p>Próximamente, podrás descargar documentos importantes relacionados con la seguridad privada.</p>
-            <!-- Puedes añadir aquí enlaces a PDF u otros documentos una vez disponibles -->
-
             <h3>Videos Educativos</h3>
             <p>Explora videos tutoriales y explicaciones sobre procedimientos y normativas de seguridad privada.</p>
             <div class="video-container">
@@ -1351,7 +1349,7 @@
                 const grade = calculateGrade(percentage);
 
                 examResults.innerHTML = `
-                    <h3>Resultados del Examen</h3>
+                    <h3>Results del Examen</h3>
                     <p>Respuestas correctas: ${score} de ${maxScore}</p>
                     <p>Porcentaje: ${percentage.toFixed(2)}%</p>
                     <p>Tu nota en escala del 1 al 7: <strong>${grade.toFixed(1)}</strong></p>
