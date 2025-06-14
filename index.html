@@ -580,7 +580,7 @@
         }
 
         #ai-clarifier-chat textarea::placeholder {
-            color: #ccc; /* Color más claro para el placeholder */
+            color: #aaa; /* Color más claro para el placeholder */
         }
 
         #ai-clarifier-chat button {
@@ -867,6 +867,10 @@
             <div id="exam-results" class="mt-4">
                 <!-- Los resultados del examen se mostrarán aquí -->
             </div>
+            <!-- Nueva ventana de respuesta sutil -->
+            <div id="subtle-response-box" class="subtle-response-box">
+                ¡El examen está listo para comenzar!
+            </div>
         </section>
 
         <section class="info-section">
@@ -1039,8 +1043,12 @@
             const submitQuizBtn = document.getElementById('submit-quiz-btn');
             const examResults = document.getElementById('exam-results');
             const startExamBtn = document.getElementById('start-exam-btn');
+            const subtleResponseBox = document.getElementById('subtle-response-box'); 
 
             quizContainer.style.display = 'none';
+            if (subtleResponseBox) {
+                subtleResponseBox.style.display = 'none'; // Ocultar por defecto
+            }
 
             // Preguntas predeterminadas para respaldo (Verdadero/Falso)
             const defaultQuestions = [
@@ -1176,9 +1184,11 @@
                 startExamBtn.style.display = 'none';
 
                 // Mostrar ventana sutil con mensaje de carga
-                subtleResponseBox.style.display = 'block';
-                subtleResponseBox.classList.add('show');
-                subtleResponseBox.textContent = '¡Generando preguntas, por favor espera!';
+                if (subtleResponseBox) { 
+                    subtleResponseBox.style.display = 'block';
+                    subtleResponseBox.classList.add('show');
+                    subtleResponseBox.textContent = '¡Generando preguntas, por favor espera!';
+                }
 
                 // Prompt actualizado para enfocarse en Decreto 93 y Decreto Ley 3607 para Guardias de Seguridad.
                 const prompt = "Genera 30 preguntas de Verdadero/Falso sobre la normativa de seguridad privada en Chile ANTERIOR a la Ley 21.659, específicamente enfocadas en el Decreto Ley 3607 y el Decreto Supremo 93, y relativas a las funciones y requisitos de los GUARDIAS DE SEGURIDAD. Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').";
@@ -1216,7 +1226,7 @@
                         const errorData = await response.json();
                         console.error('Error al generar preguntas con Gemini API:', response.status, response.statusText, errorData);
                         quizContainer.innerHTML = '<p class="text-danger text-center">Error al cargar las preguntas de la IA. Usando preguntas de respaldo. (Código de estado: ' + response.status + ')</p>';
-                        subtleResponseBox.textContent = 'Error al cargar preguntas. Usando respaldo.';
+                        if (subtleResponseBox) subtleResponseBox.textContent = 'Error al cargar preguntas. Usando respaldo.';
                         questions = defaultQuestions;
                         console.log("Using default questions due to API error.");
                         displayQuiz();
@@ -1235,26 +1245,28 @@
                             if (!Array.isArray(questions) || questions.length === 0) {
                                 console.warn("La API de Gemini devolvió un arreglo de preguntas inválido o vacío. Usando preguntas de respaldo.");
                                 quizContainer.innerHTML = '<p class="text-danger text-center">La IA no generó preguntas válidas. Usando preguntas de respaldo.</p>';
-                                subtleResponseBox.textContent = 'IA no generó preguntas válidas. Usando respaldo.';
+                                if (subtleResponseBox) subtleResponseBox.textContent = 'IA no generó preguntas válidas. Usando respaldo.';
                                 questions = defaultQuestions;
                                 console.log("Using default questions due to invalid/empty JSON.");
                             } else if (questions.length < 30) {
                                 console.warn(`Gemini generó ${questions.length} preguntas. Volviendo a las preguntas predeterminadas para asegurar 30 disponibles.`);
                                 quizContainer.innerHTML = '<p class="text-warning text-center">IA generó pocas preguntas. Usando respaldo.</p>';
-                                subtleResponseBox.textContent = 'IA generó pocas preguntas. Usando respaldo.';
+                                if (subtleResponseBox) subtleResponseBox.textContent = 'IA generó pocas preguntas. Usando respaldo.';
                                 questions = defaultQuestions;
                                 console.log("Using default questions because not enough were generated.");
                             }
                             displayQuiz();
-                            subtleResponseBox.textContent = '¡Preguntas cargadas! ¡Mucha suerte!';
-                            setTimeout(() => {
-                                subtleResponseBox.classList.remove('show');
-                                setTimeout(() => subtleResponseBox.style.display = 'none', 500); // Esperar que la transición termine
-                            }, 3000); // Mostrar por 3 segundos
+                            if (subtleResponseBox) {
+                                subtleResponseBox.textContent = '¡Preguntas cargadas! ¡Mucha suerte!';
+                                setTimeout(() => {
+                                    subtleResponseBox.classList.remove('show');
+                                    setTimeout(() => subtleResponseBox.style.display = 'none', 500); // Esperar que la transición termine
+                                }, 3000); // Mostrar por 3 segundos
+                            }
                         } catch (parseError) {
                             console.error('Error al parsear la respuesta JSON de Gemini:', parseError);
                             quizContainer.innerHTML = '<p class="text-danger text-center">Error al procesar preguntas de la IA. Usando preguntas de respaldo.</p>';
-                            subtleResponseBox.textContent = 'Error al procesar preguntas. Usando respaldo.';
+                            if (subtleResponseBox) subtleResponseBox.textContent = 'Error al procesar preguntas. Usando respaldo.';
                             questions = defaultQuestions;
                             console.log("Using default questions due to JSON parsing error.");
                             displayQuiz();
@@ -1262,7 +1274,7 @@
                     } else {
                         console.warn("La estructura de la respuesta de la API de Gemini es inesperada (faltan partes del contenido). Usando fallback questions.");
                         quizContainer.innerHTML = '<p class="text-danger text-center">Estructura de respuesta de IA inesperada. Usando preguntas de respaldo.</p>';
-                        subtleResponseBox.textContent = 'Respuesta IA inesperada. Usando respaldo.';
+                        if (subtleResponseBox) subtleResponseBox.textContent = 'Respuesta IA inesperada. Usando respaldo.';
                         questions = defaultQuestions;
                         console.log("Using default questions due to unexpected API response structure.");
                         displayQuiz();
@@ -1270,13 +1282,13 @@
                 } catch (error) {
                     console.error('Error de red o parseo al llamar a Gemini (generar preguntas):', error);
                     quizContainer.innerHTML = '<p class="text-danger text-center">Error de conexión al generar las preguntas. Usando preguntas de respaldo.!</p>';
-                    subtleResponseBox.textContent = 'Error de conexión. Usando respaldo.';
+                    if (subtleResponseBox) subtleResponseBox.textContent = 'Error de conexión. Usando respaldo.';
                     questions = defaultQuestions;
                     console.log("Using default questions due to network/parsing error.");
                     displayQuiz();
                 } finally {
                     // Si el mensaje no fue ocultado por éxito, ocultarlo después de un tiempo si hubo error
-                    if (subtleResponseBox.classList.contains('show')) {
+                    if (subtleResponseBox && subtleResponseBox.classList.contains('show')) {
                         setTimeout(() => {
                             subtleResponseBox.classList.remove('show');
                             setTimeout(() => subtleResponseBox.style.display = 'none', 500);
@@ -1400,7 +1412,7 @@
 
                 // Actualizar el prompt para incluir la fecha de vigencia de la Ley 21.659
                 // Y para que responda texto plano.
-                const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}". Proporciona solo la respuesta directa y relevante, sin incluir ningún encabezado, pie de página o formato de código (ej. \`\`\`json\`\`\`, \`\`\`text\`\`\`, etc.) o marcas de viñetas innecesarias si la respuesta es un solo párrafo.`;
+                const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}". Proporciona solo la respuesta directa y relevante, sin incluir ningún encabezado, pie de página o formato de código (ej. \`\`\`json\`\`\`, \`\`\`text\`\`\`, etc.) o marcas de viñetas innecesarias si la respuesta es un solo párrafo. Ten en cuenta que si la pregunta es sobre la entrada en vigencia de la Ley 21.659, la fecha es 28-NOV-2025.`;
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 
