@@ -371,6 +371,7 @@
             margin-bottom: 40px;
             text-align: center;
             border: 1px solid rgba(0,0,0,0.05);
+            position: relative; /* Para la ventana flotante roja */
         }
 
         #start-exam-btn {
@@ -599,6 +600,17 @@
             transform: translateY(-2px);
         }
 
+        #ai-clarifier-chat #ai-clarifier-response {
+            background-color: #ffffff; /* Fondo blanco para las respuestas */
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #eee; /* Borde sutil */
+            white-space: pre-wrap;
+            color: #283593; /* Texto azul oscuro */
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
         #ai-clarifier-chat .gemini-logo {
             width: 40px; /* Tamaño más pequeño para el logo al lado del título */
             height: auto;
@@ -660,6 +672,31 @@
             display: none; 
         }
 
+        /* Ventana roja sutil de aparición/desaparición */
+        .subtle-response-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(220, 53, 69, 0.2); /* Rojo suave, 20% opacidad */
+            color: #dc3545; /* Color del texto rojo */
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            z-index: 10; /* Asegurarse de que esté por encima del contenido normal */
+            pointer-events: none; /* Permite hacer clic a través de ella */
+        }
+
+        .subtle-response-box.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
         /* Ajustes responsivos */
         @media (max-width: 768px) { /* Móvil: Diseño de una columna */
             .navbar-custom {
@@ -709,7 +746,7 @@
                 font-size: 0.9em;
             }
             /* Ajustar tamaño de fuente de alternativa para pantallas pequeñas */
-            .question-card .form-check-label {
+            .form-check-label.option-button {
                 font-size: 0.8em;
             }
 
@@ -787,9 +824,6 @@
                         <a class="nav-link" href="#exam-section">Examen OS-10</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#leyes">Leyes y Normativas</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="#interes">Links de Interés</a>
                     </li>
                     <li class="nav-item d-flex align-items-center">
@@ -836,49 +870,6 @@
         </section>
 
         <section class="info-section">
-            <h2 id="leyes">Leyes y Normativas Clave de Seguridad Privada en Chile</h2>
-            <p>La seguridad privada en Chile está regulada por un marco legal en constante actualización. Es fundamental que todo guardia y vigilante conozca las normativas que rigen su quehacer. Aquí te presentamos las leyes y decretos más importantes:</p>
-
-            <h3>Nueva Ley de Seguridad Privada (Ley N° 21.659)</h3>
-            <p>Publicada el 21 de marzo de 2024, esta ley tiene por objeto regular la seguridad privada, entendiéndose como un conjunto de actividades o medidas preventivas, coadyuvantes y complementarias de la seguridad pública. Define las actividades de seguridad privada, las obligaciones de las personas naturales y jurídicas que prestan estos servicios, y establece un nuevo sistema de autorización y fiscalización.</p>
-            <ul>
-                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1198539" target="_blank">Ley N° 21.659 - Sobre Seguridad Privada (BCN)</a></li>
-            </ul>
-
-            <h3>Reglamento de Seguridad Privada (Decreto N° 209 EXENTO)</h3>
-            <p>Aprobado el 27 de mayo de 2025, este decreto complementa la Ley N° 21.659, precisando las obligaciones y aspectos técnicos y operativos para su adecuada implementación. Define los niveles de riesgo, procedimientos de autorización para entidades y personal, y detalla el uso de recursos tecnológicos y materiales.</p>
-            <ul>
-                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1211116" target="_blank">Decreto N° 209 EXENTO - Aprueba Reglamento de Seguridad Privada (BCN)</a></li>
-            </ul>
-
-            <h3>Manual Operativo en Materias de Seguridad Privada (Decreto N° 32 EXENTO)</h3>
-            <p>Este decreto, publicado el 31 de enero de 2024, modifica el Decreto N° 261 EXENTO de 2020 y aprueba el Manual Operativo de Seguridad Privada. Detalla requisitos para personas naturales (guardias, nocheros, porteros, rondines, vigilantes), sus uniformes, medidas adicionales de seguridad y procesos de capacitación.</p>
-            <ul>
-                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1203673" target="_blank">Decreto N° 32 EXENTO - Modifica y Aprueba Manual Operativo (BCN)</a></li>
-            </ul>
-
-            <h3>Decreto Supremo N° 867 (2017)</h3>
-            <p>Dicta el Reglamento sobre Nuevos Estándares para Personas, Personal y Empresas que Reciben Servicios o Realizan Actividades de Seguridad Privada. Si bien ha sido modificado y complementado por normativas más recientes, sienta bases importantes sobre los requisitos generales y la fiscalización.</p>
-            <ul>
-                <li><i class="icon-small bi bi-file-earmark-text"></i> <a href="https://www.bcn.cl/leychile/navegar?idNorma=1107567" target="_blank">Decreto N° 867 - Dicta Reglamento sobre Nuevos Estándares (BCN)</a></li>
-            </ul>
-
-            <h3>Decreto Ley 3607 y Ley 19.303 (Derogadas por Ley 21.659)</h3>
-            <p>Es importante mencionar que la Ley N° 21.659 derogó el Decreto Ley 3607 (Ley de vigilantes privados) y la Ley N° 19.303 (Determina entidades que deben contar con sistema de seguridad) y sus reglamentos complementarios. Aunque ya no están vigentes, sentaron las bases para la regulación actual y su conocimiento histórico es útil para comprender la evolución de la normativa.</p>
-            
-            <div class="text-center my-4">
-                <a href="https://www.bcn.cl/leychile/" target="_blank" class="btn btn-primary btn-lg" style="background-color: #283593; border-color: #283593; color: white;">Explorar LeyChile (Biblioteca del Congreso Nacional)</a>
-            </div>
-
-            <blockquote>
-                <p>El Artículo 1 de la Ley N° 21.659 establece: "La presente ley tiene por objeto regular la seguridad privada, entendiéndose por tal el conjunto de actividades o medidas de carácter preventivas, coadyuvantes y complementarias de la seguridad pública, destinadas a la protección de personas, bienes y procesos productivos..."</p>
-                <p class="text-end fst-italic">Ley N° 21.659, Título I, Artículo 1</p>
-            </blockquote>
-
-            <p>La <mark style="background-color: #8c9eff; color: #171b4a; padding: 2px 5px; border-radius: 3px;">formación</mark> y actualización constante son clave para el desempeño eficaz de un guardia de seguridad.</p>
-        </section>
-
-        <section class="info-section">
             <h2 id="interes">Links de Interés</h2>
             <p>Aquí encontrarás enlaces a recursos útiles para complementar tu conocimiento y formación en seguridad privada.</p>
             <ul>
@@ -890,7 +881,7 @@
             </ul>
 
             <div style="width: 100%; height: 300px; border: 1px solid rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; margin: 20px auto; display: flex; justify-content: center; align-items: center; background-color: rgba(0,0,0,0.05);">
-                <p style="color: #666;"></p>
+                <p style="color: #666;">[Image of Mapa de referencia]</p>
             </div>
 
             <h3>Documentos y Recursos Descargables</h3>
@@ -1184,6 +1175,11 @@
                 quizContainer.style.display = 'block';
                 startExamBtn.style.display = 'none';
 
+                // Mostrar ventana sutil con mensaje de carga
+                subtleResponseBox.style.display = 'block';
+                subtleResponseBox.classList.add('show');
+                subtleResponseBox.textContent = '¡Generando preguntas, por favor espera!';
+
                 // Prompt actualizado para enfocarse en Decreto 93 y Decreto Ley 3607 para Guardias de Seguridad.
                 const prompt = "Genera 30 preguntas de Verdadero/Falso sobre la normativa de seguridad privada en Chile ANTERIOR a la Ley 21.659, específicamente enfocadas en el Decreto Ley 3607 y el Decreto Supremo 93, y relativas a las funciones y requisitos de los GUARDIAS DE SEGURIDAD. Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').";
                 let chatHistory = [];
@@ -1220,6 +1216,7 @@
                         const errorData = await response.json();
                         console.error('Error al generar preguntas con Gemini API:', response.status, response.statusText, errorData);
                         quizContainer.innerHTML = '<p class="text-danger text-center">Error al cargar las preguntas de la IA. Usando preguntas de respaldo. (Código de estado: ' + response.status + ')</p>';
+                        subtleResponseBox.textContent = 'Error al cargar preguntas. Usando respaldo.';
                         questions = defaultQuestions;
                         console.log("Using default questions due to API error.");
                         displayQuiz();
@@ -1238,17 +1235,26 @@
                             if (!Array.isArray(questions) || questions.length === 0) {
                                 console.warn("La API de Gemini devolvió un arreglo de preguntas inválido o vacío. Usando preguntas de respaldo.");
                                 quizContainer.innerHTML = '<p class="text-danger text-center">La IA no generó preguntas válidas. Usando preguntas de respaldo.</p>';
+                                subtleResponseBox.textContent = 'IA no generó preguntas válidas. Usando respaldo.';
                                 questions = defaultQuestions;
                                 console.log("Using default questions due to invalid/empty JSON.");
                             } else if (questions.length < 30) {
                                 console.warn(`Gemini generó ${questions.length} preguntas. Volviendo a las preguntas predeterminadas para asegurar 30 disponibles.`);
+                                quizContainer.innerHTML = '<p class="text-warning text-center">IA generó pocas preguntas. Usando respaldo.</p>';
+                                subtleResponseBox.textContent = 'IA generó pocas preguntas. Usando respaldo.';
                                 questions = defaultQuestions;
                                 console.log("Using default questions because not enough were generated.");
                             }
                             displayQuiz();
+                            subtleResponseBox.textContent = '¡Preguntas cargadas! ¡Mucha suerte!';
+                            setTimeout(() => {
+                                subtleResponseBox.classList.remove('show');
+                                setTimeout(() => subtleResponseBox.style.display = 'none', 500); // Esperar que la transición termine
+                            }, 3000); // Mostrar por 3 segundos
                         } catch (parseError) {
                             console.error('Error al parsear la respuesta JSON de Gemini:', parseError);
                             quizContainer.innerHTML = '<p class="text-danger text-center">Error al procesar preguntas de la IA. Usando preguntas de respaldo.</p>';
+                            subtleResponseBox.textContent = 'Error al procesar preguntas. Usando respaldo.';
                             questions = defaultQuestions;
                             console.log("Using default questions due to JSON parsing error.");
                             displayQuiz();
@@ -1256,6 +1262,7 @@
                     } else {
                         console.warn("La estructura de la respuesta de la API de Gemini es inesperada (faltan partes del contenido). Usando fallback questions.");
                         quizContainer.innerHTML = '<p class="text-danger text-center">Estructura de respuesta de IA inesperada. Usando preguntas de respaldo.</p>';
+                        subtleResponseBox.textContent = 'Respuesta IA inesperada. Usando respaldo.';
                         questions = defaultQuestions;
                         console.log("Using default questions due to unexpected API response structure.");
                         displayQuiz();
@@ -1263,9 +1270,18 @@
                 } catch (error) {
                     console.error('Error de red o parseo al llamar a Gemini (generar preguntas):', error);
                     quizContainer.innerHTML = '<p class="text-danger text-center">Error de conexión al generar las preguntas. Usando preguntas de respaldo.!</p>';
+                    subtleResponseBox.textContent = 'Error de conexión. Usando respaldo.';
                     questions = defaultQuestions;
                     console.log("Using default questions due to network/parsing error.");
                     displayQuiz();
+                } finally {
+                    // Si el mensaje no fue ocultado por éxito, ocultarlo después de un tiempo si hubo error
+                    if (subtleResponseBox.classList.contains('show')) {
+                        setTimeout(() => {
+                            subtleResponseBox.classList.remove('show');
+                            setTimeout(() => subtleResponseBox.style.display = 'none', 500);
+                        }, 5000); // Mantener un poco más si hubo error
+                    }
                 }
             }
 
@@ -1383,26 +1399,13 @@
                 console.log("Ask AI button clicked. Sending prompt to Gemini for clarification.");
 
                 // Actualizar el prompt para incluir la fecha de vigencia de la Ley 21.659
-                const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}". Proporciona solo la respuesta directa y relevante, sin incluir ningún encabezado, pie de página o formato de código (ej. \`\`\`json). Ten en cuenta que si la pregunta es sobre la entrada en vigencia de la Ley 21.659, la fecha es 28-NOV-2025.`;
+                // Y para que responda texto plano.
+                const prompt = `Como un experto en la normativa de seguridad privada de Chile ANTERIOR a la Ley 21.659 (específicamente Decreto Ley 3607 y Decreto Supremo 93), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD: "${userQuestion}". Proporciona solo la respuesta directa y relevante, sin incluir ningún encabezado, pie de página o formato de código (ej. \`\`\`json\`\`\`, \`\`\`text\`\`\`, etc.) o marcas de viñetas innecesarias si la respuesta es un solo párrafo.`;
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                const payload = {
-                    contents: chatHistory,
-                    generationConfig: {
-                        responseMimeType: "application/json",
-                        responseSchema: {
-                            type: "ARRAY",
-                            items: {
-                                type: "OBJECT",
-                                properties: {
-                                    "question": { "type": "STRING" },
-                                    "correctAnswer": { "type": "STRING" }
-                                },
-                                "propertyOrdering": ["question", "correctAnswer"]
-                            }
-                        }
-                    }
-                };
+                
+                // No especificar responseMimeType: "application/json" para obtener texto plano
+                const payload = { contents: chatHistory };
 
                 try {
                     console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
@@ -1410,7 +1413,7 @@
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 'Content-Type': 'application/json' }, 
                         body: JSON.stringify(payload)
                     });
 
