@@ -60,9 +60,10 @@
             align-items: center;
         }
 
+        /* Estilos para el logo dentro de la marca de la barra de navegación */
         .navbar-brand img {
-            height: 30px; /* Adjust as needed */
-            margin-right: 10px; /* Space between logo and text */
+            height: 40px; /* Tamaño del logo más grande */
+            margin-left: 10px; /* Espacio a la izquierda del logo (para que esté a la derecha del texto) */
         }
 
         .navbar-custom .nav-link {
@@ -862,7 +863,7 @@
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container-fluid px-3">
             <a class="navbar-brand" href="#">
-                <img src="logoSec.png" alt="Logo Seguridad Privada" class="me-2" style="height: 30px;">
+                <img src="logoSec.png" alt="Logo Seguridad Privada" class="me-2">
                 Seguridad Privada
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -1417,7 +1418,7 @@
                 const grade = calculateGrade(percentage);
 
                 examResults.innerHTML = `
-                    <h3>Results del Examen</h3>
+                    <h3>Resultados del Examen</h3>
                     <p>Respuestas correctas: ${score} de ${maxScore}</p>
                     <p>Porcentaje: ${percentage.toFixed(2)}%</p>
                     <p>Tu nota en escala del 1 al 7: <strong style="color: #1a237e;">${grade.toFixed(1)}</strong></p>
