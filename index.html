@@ -58,16 +58,20 @@
             margin-right: 0;
             display: flex;
             align-items: center;
+            justify-content: flex-start; /* Alinea los ítems al inicio por defecto */
         }
 
-        /* Estilos para el logo dentro de la marca de la barra de navegación */
+        /* Estilos para el texto de la marca */
         .navbar-brand .brand-text {
-            /* No styles needed here as img is positioned after text */
+            font-size: 1.3rem; /* Tamaño predeterminado para móvil */
+            line-height: 1.2; /* Tighter line height for stacked text */
         }
 
-        .navbar-brand img {
-            height: 40px; /* Tamaño del logo más grande en PC */
-            margin-left: 10px; /* Espacio a la izquierda del logo (para que esté a la derecha del texto) */
+        /* Estilos para el logo dentro de la marca */
+        .navbar-brand .navbar-logo {
+            height: 35px; /* Tamaño predeterminado para móvil */
+            margin-left: 10px; /* Espacio entre texto y logo en móvil */
+            order: 1; /* Mover el logo a la derecha del texto en móvil */
         }
 
         .navbar-custom .nav-link {
@@ -192,15 +196,16 @@
 
         /* Botón de menú móvil (Hamburguesa) */
         .navbar-toggler {
-            border: 1px solid #ffffff; /* Círculo blanco */
-            border-radius: 50%; /* Hacerlo circular */
-            padding: 5px; /* Espacio alrededor del icono */
+            border: none; /* Eliminar el borde */
+            border-radius: 0; /* Eliminar el redondeo */
+            padding: 0; /* Eliminar padding por defecto */
+            background-color: transparent; /* Asegurarse de que no tenga fondo */
         }
 
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-            width: 1.2em; /* Tamaño del icono */
-            height: 1.2em;
+            width: 1.5em; /* Ajusta el tamaño si es necesario */
+            height: 1.5em; /* Ajusta el tamaño si es necesario */
         }
 
         /* Área de Contenido Principal */
@@ -759,16 +764,12 @@
             .navbar-custom .navbar-brand {
                 font-size: 1.5rem; /* Texto más pequeño para móvil */
                 margin-right: 0;
+                /* Removido flex-direction column aquí para permitir que se apile el texto con <br> */
             }
-            .navbar-custom .navbar-brand .brand-text {
-                display: flex;
-                flex-direction: column; /* Apila el texto */
-                line-height: 1.2; /* Ajusta el interlineado */
-            }
-            .navbar-brand img {
+            .navbar-brand .navbar-logo {
                 height: 35px; /* Ajusta el tamaño del logo para móvil */
-                margin-right: 0px; /* Elimina margen a la derecha en móvil si el texto se apila */
-                margin-left: 10px; /* Mantiene margen a la izquierda */
+                margin-left: 10px; 
+                margin-right: 0px; /* Asegura que no haya margen extra a la derecha */
             }
             .navbar-custom .navbar-collapse {
                 background-color: #171b4a; /* Azul oscuro para el menú colapsado */
@@ -867,6 +868,25 @@
             #floating-ai-button {
                 display: flex; /* Asegurarse de que esté visible en PC */
             }
+
+            /* Ajustes específicos para navbar-brand en PC */
+            .navbar-custom .navbar-brand {
+                font-size: 1.6rem; /* Título más grande para PC */
+                flex-direction: row; /* Asegura que el texto y la imagen estén en fila */
+                white-space: nowrap; /* Evita que el texto se divida */
+                align-items: center;
+            }
+            .navbar-brand .brand-text {
+                display: inline; /* Asegura que el texto "Seguridad Privada" esté en una línea */
+            }
+            .navbar-brand .navbar-logo {
+                height: 45px; /* Logo más grande en PC */
+                margin-left: 15px; /* Espacio a la derecha del texto */
+            }
+            /* Esconder el <br> en PC */
+            .mobile-only {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -877,8 +897,8 @@
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top" id="mainNavbar">
         <div class="container-fluid px-3">
             <a class="navbar-brand" href="#">
-                <span class="brand-text">Seguridad<br>Privada</span>
-                <img src="logoSec.png" alt="Logo Seguridad Privada">
+                <span class="brand-text">Seguridad<br class="mobile-only">Privada</span>
+                <img src="logoSec.png" alt="Logo Seguridad Privada" class="navbar-logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -985,13 +1005,14 @@
                 El borrador del informe aparecerá aquí.
             </div>
             <button id="copy-report-btn" class="btn btn-outline-secondary mt-3" style="display: none;">Copiar a Portapapeles</button>
+            <a id="download-acta-btn" href="https://dal5.short.gy/Act" target="_blank" download="Acta_Detencion_Particulares.pdf" class="btn btn-success mt-3" style="display: none;">Descargar Acta (PDF)</a>
         </section>
     </div>
 
     <div id="floating-ai-button" aria-label="Abrir Clarificador de Inteligencia Artificial">
         <i class="bi bi-robot"></i> </div>
 
-    <div id="ai-clarifier-chat" class="ai-clarifier-chat">
+    <div id="ai-clarifier-chat" class="ai-clarificador-chat">
         <div class="chat-header">
             <h2>Clarificador IA</h2>
             <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo">
@@ -1546,6 +1567,11 @@
             const generateReportBtn = document.getElementById('generate-report-btn');
             const reportOutput = document.getElementById('report-output');
             const copyReportBtn = document.getElementById('copy-report-btn');
+            const downloadActaBtn = document.getElementById('download-acta-btn'); // Nuevo botón de descarga
+
+            // Ocultar botones de acción de informe al inicio
+            copyReportBtn.style.display = 'none';
+            downloadActaBtn.style.display = 'none';
 
             generateReportBtn.addEventListener('click', async () => {
                 const description = incidentDescriptionInput.value.trim();
@@ -1553,13 +1579,28 @@
 
                 if (!description) {
                     reportOutput.innerHTML = '<p class="text-danger">Por favor, describe el incidente.</p>';
+                    // Ocultar botones de acción si no hay descripción
+                    copyReportBtn.style.display = 'none';
+                    downloadActaBtn.style.display = 'none';
                     return;
                 }
 
                 reportOutput.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Generando borrador...</p>';
                 generateReportBtn.disabled = true;
-                copyReportBtn.style.display = 'none';
+                copyReportBtn.style.display = 'none'; // Ocultar antes de generar
+                downloadActaBtn.style.display = 'none'; // Ocultar antes de generar
 
+
+                if (selectedReportType === 'acta_detencion_particulares') {
+                    // Para Acta de Detención, mostrar el botón de descarga directamente
+                    reportOutput.innerHTML = `<p class="text-success">Haz clic en el botón para descargar el Acta de Detención:</p>`;
+                    downloadActaBtn.style.display = 'block';
+                    generateReportBtn.disabled = false; // Habilitar el botón de generación de nuevo
+                    console.log("Mostrando botón de descarga de Acta.");
+                    return; // Terminar la función aquí, no llamar a la API
+                }
+
+                // Si no es Acta de Detención, proceder con la llamada a la API para generar texto
                 let promptText = "";
                 // Base prompt for report generation
                 const basePrompt = `Eres un asistente de IA especializado en generar borradores de comunicaciones profesionales para personal de seguridad privada en Chile, basándote en el contexto del incidente. Tu objetivo es redactar informes claros, concisos y objetivos, utilizando la normativa chilena relevante para guardias de seguridad (específicamente Decreto Ley 3607 y Decreto Supremo 93, y NO las nuevas Ley 21.659 o Decreto 209).`;
@@ -1577,19 +1618,16 @@
                     case 'reporte_general':
                         promptText = `${basePrompt} Genera un Reporte General de Evento. Extrae: Fecha y Hora (usa la fecha actual si no se especifica), Ubicación, Naturaleza del Evento, Breve descripción de lo ocurrido, Personas afectadas/involucradas, y Medidas adoptadas por el guardia. Si la información no está en la descripción, indica 'No especificado'. No incluyas preámbulos ni conclusiones. Descripción: "${description}"`;
                         break;
-                    case 'acta_detencion_particulares':
-                        promptText = `${basePrompt} Redacta un Acta de Detención por Particulares para entregar a Carabineros de Chile. Incluye: Título (ACTA DE DETENCIÓN POR PARTICULARES), Fecha y Hora de la detención, Lugar de la Detención, Identificación del Detenido (si se conoce: Nombre Completo, Rut, Características Físicas), Motivo de la Detención (descripción concisa del delito flagrante), Objeto del Delito (si aplica), Testigos (si aplica), Identificación del Detenedor (Guardia de Seguridad: Nombre, Rut, Empresa), Hora de entrega a Carabineros (si aplica). El formato debe ser un texto claro, directo y sin preámbulos. Descripción del incidente por el usuario: "${description}". Referencia para formato de acta: https://dal5.short.gy/Act`;
-                        break;
                 }
 
                 let chatHistory = [{ role: "user", parts: [{ text: promptText }] }];
-                const payload = { contents: chatHistory }; // No responseMimeType here, default to text
+                const payload = { contents: chatHistory }; 
 
                 try {
-                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // Ya definida globalmente
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     
-                    console.log("Payload enviado a Gemini para informe:", payload); // Log para depuración
+                    console.log("Payload enviado a Gemini para informe:", payload); 
 
                     const response = await fetch(apiUrl, {
                         method: 'POST',
@@ -1610,7 +1648,7 @@
                         result.candidates[0].content.parts.length > 0) {
                         const generatedText = result.candidates[0].content.parts[0].text;
                         reportOutput.innerHTML = `<pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background-color: #f8f9fa; padding: 10px; border-radius: 5px; color: #333;">${generatedText}</pre>`;
-                        copyReportBtn.style.display = 'block';
+                        copyReportBtn.style.display = 'block'; // Mostrar solo si se generó texto
                     } else {
                         reportOutput.innerHTML = '<p class="text-warning">No se pudo generar un informe. Intenta con una descripción más detallada.</p>';
                     }
@@ -1618,7 +1656,7 @@
                     console.error('Error de red o parseo al llamar a Gemini para informe:', error);
                     reportOutput.innerHTML = '<p class="text-danger">Error de conexión. Asegúrate de tener conexión a internet.</p>';
                 } finally {
-                    generateReportBtn.disabled = false;
+                    generateReportBtn.disabled = false; // Siempre habilitar al finalizar la generación
                 }
             });
 
@@ -1631,6 +1669,8 @@
                     alert('No se pudo copiar el borrador.');
                 });
             });
+            // Esto permite que el botón de descarga funcione directamente como un enlace
+            // No necesita lógica JavaScript adicional más allá de ser visible.
         });
     </script>
 </body>
