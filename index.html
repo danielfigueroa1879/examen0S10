@@ -259,11 +259,6 @@
             color: #283593; /* Azul oscuro (#283593) para los encabezados de sección */
         }
 
-        /* Nuevo estilo para el encabezado del examen si se quiere verde */
-        .main-content .exam-heading-green {
-            color: #28a745; /* Verde */
-        }
-
         .main-content p {
             margin-bottom: 1.5em;
         }
@@ -435,24 +430,11 @@
             display: block; /* Para centrar el botón */
             margin-left: auto; /* Para centrar el botón */
             margin-right: auto; /* Para centrar el botón */
-            /* Animation for jumping effect */
-            animation: jump 0.6s infinite alternate; /* Applies the jump animation */
         }
 
         #start-exam-btn:hover {
             background-color: #c82333; /* Rojo más oscuro para hover */
             transform: translateY(-3px);
-            animation: none; /* Stop animation on hover */
-        }
-
-        /* Keyframes for the jump animation */
-        @keyframes jump {
-            0% {
-                transform: translateY(0);
-            }
-            100% {
-                transform: translateY(-10px); /* Adjust height of jump */
-            }
         }
 
         #quiz-container {
@@ -788,95 +770,6 @@
             visibility: visible;
         }
 
-        /* Estilos para el modal de resultados del examen */
-        #results-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000; /* Por encima de todo lo demás */
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-        }
-
-        #results-modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #results-modal-content {
-            background-color: #fff; /* Color de fondo por defecto, se cambiará dinámicamente */
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            max-width: 90%;
-            width: 500px; /* Ancho fijo para el modal */
-            position: relative;
-            transform: translateY(-50px); /* Ligeramente elevado al aparecer */
-            transition: transform 0.3s ease-out;
-        }
-
-        #results-modal-overlay.show #results-modal-content {
-            transform: translateY(0); /* Vuelve a su posición normal */
-        }
-
-        #results-modal-content.pass {
-            background-color: rgba(40, 167, 69, 0.9); /* Verde para aprobar */
-            color: white;
-        }
-
-        #results-modal-content.fail {
-            background-color: rgba(220, 53, 69, 0.9); /* Rojo para reprobar */
-            color: white;
-        }
-
-        #results-modal-content h3 {
-            font-size: 2.5rem; /* Tamaño de fuente más grande para la nota */
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        #results-modal-content p {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        #results-modal-content #modal-grade {
-            font-size: 4rem; /* Nota más grande */
-            font-weight: 900;
-            color: inherit; /* Hereda el color del modal (blanco) */
-            animation: pulse-modal-grade 1.5s infinite alternate; /* Animación para la nota del modal */
-        }
-
-        @keyframes pulse-modal-grade {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(1.1); opacity: 0.9; }
-        }
-
-        #results-modal-content button {
-            margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.2); /* Botón transparente blanco */
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        #results-modal-content button:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-            border-color: rgba(255, 255, 255, 0.8);
-        }
-
-
         /* Ajustes responsivos */
         @media (max-width: 768px) { /* Móvil: Diseño de una columna */
             .navbar-custom {
@@ -953,21 +846,6 @@
                 bottom: 15px;
                 right: 15px;
                 display: flex; /* Asegurarse de que esté visible en móvil */
-            }
-
-            #results-modal-content {
-                max-width: 95%; /* Make modal wider on small screens */
-                width: auto;
-                padding: 20px;
-            }
-            #results-modal-content h3 {
-                font-size: 2rem;
-            }
-            #results-modal-content #modal-grade {
-                font-size: 3rem;
-            }
-            #results-modal-content p {
-                font-size: 1rem;
             }
         }
 
@@ -1071,7 +949,7 @@
         <p>Esta plataforma ha sido diseñada para ofrecerte información relevante y actualizada sobre la normativa de seguridad privada en Chile, incluyendo la nueva Ley 21.659, decretos complementarios y material de estudio esencial para guardias de seguridad y vigilantes privados. Nuestro objetivo es ayudarte a comprender mejor tus responsabilidades y derechos en esta importante labor, promoviendo la excelencia y el cumplimiento normativo.</p>
 
         <section id="exam-section" class="mt-5">
-            <h2 class="text-center exam-heading-green">Examen de Preparación OS-10</h2>
+            <h2 class="text-center">Examen de Preparación OS-10</h2>
             <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
             
             <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
@@ -1082,8 +960,8 @@
             <div class="exam-controls">
                 <button id="submit-quiz-btn" style="display: none;">Enviar Examen</button>
             </div>
-            <!-- The original exam-results div is now replaced by the modal for displaying results -->
-            <!-- <div id="exam-results" class="mt-4"></div> -->
+            <div id="exam-results" class="mt-4">
+                </div>
             <div id="subtle-response-box" class="subtle-response-box">
                 ¡El examen está listo para comenzar!
             </div>
@@ -1144,38 +1022,7 @@
             <button id="copy-report-btn" class="btn btn-outline-secondary mt-3" style="display: none;">Copiar a Portapapeles</button>
             <a id="download-acta-btn" href="https://dal5.short.gy/Act" target="_blank" download="Acta_Detencion_Particulares.pdf" class="btn btn-success mt-3" style="display: none;">Descargar Acta (PDF)</a>
         </section>
-
-        <!-- Panel de Administración Oculto para Agregar Preguntas -->
-        <!-- Para hacerlo visible, cambia 'display: none;' en la regla CSS para #admin-panel a 'display: block;' o 'display: flex;' -->
-        <section id="admin-panel" class="info-section mt-5" style="display: none;"> 
-            <h2 class="text-center">Panel de Administración de Preguntas</h2>
-            <p class="text-center">Agrega nuevas preguntas al banco de datos del examen.</p>
-            <div class="mb-3 text-center">
-                <label for="new-question-input" class="form-label">Nueva Pregunta:</label>
-                <textarea id="new-question-input" class="form-control mb-2" rows="3" placeholder="Escribe la nueva pregunta aquí."></textarea>
-                <label for="new-question-answer" class="form-label">Respuesta Correcta:</label>
-                <select id="new-question-answer" class="form-select mb-3">
-                    <option value="Verdadero">Verdadero</option>
-                    <option value="Falso">Falso</option>
-                </select>
-                <button id="add-question-btn" class="btn btn-info w-100">Guardar Pregunta</button>
-                <div id="admin-feedback" class="mt-3"></div>
-            </div>
-        </section>
     </div>
-
-    <!-- Modal de Resultados del Examen -->
-    <div id="results-modal-overlay">
-        <div id="results-modal-content">
-            <h3>Resultados del Examen</h3>
-            <p>Respuestas correctas: <span id="modal-correct-count"></span> de <span id="modal-total-questions"></span></p>
-            <p>Porcentaje: <span id="modal-percentage"></span>%</p>
-            <p>Tu nota en escala del 1 al 7: <strong id="modal-grade"></strong></p>
-            <p id="modal-message"></p>
-            <button id="close-modal-btn">Cerrar</button>
-        </div>
-    </div>
-
 
     <div id="floating-ai-button" aria-label="Abrir Clarificador de Inteligencia Artificial">
         <i class="bi bi-robot"></i> </div>
@@ -1202,107 +1049,9 @@
         <p>© 2025 Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Global Firebase variables (provided by Canvas environment)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        let firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-
-        // Ensure projectId exists in firebaseConfig, as it's critical for Firebase initialization
-        if (!firebaseConfig.projectId) {
-            console.warn("Firebase Config Warning: 'projectId' is missing in __firebase_config. Using a dummy projectId. Please ensure your Canvas environment is correctly configured with Firebase.");
-            // Provide a dummy projectId to prevent initialization error, but real functionality will require a valid one.
-            // This is a fallback for development/testing if __firebase_config is not fully populated by the environment.
-            firebaseConfig = {
-                apiKey: firebaseConfig.apiKey || "dummy-api-key", // This dummy API key will cause auth errors, but allows init
-                authDomain: firebaseConfig.authDomain || "dummy-auth-domain.firebaseapp.com",
-                projectId: "dummy-project-id", // This is the key missing based on the error
-                storageBucket: firebaseConfig.storageBucket || "dummy-storage-bucket.appspot.com",
-                messagingSenderId: firebaseConfig.messagingSenderId || "dummy-messaging-sender-id",
-                appId: firebaseConfig.appId || "dummy-app-id"
-            };
-        }
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        // Initialize Firebase
-        let app;
-        let db;
-        let auth;
-        let questionsCollectionRef;
-        let isFirebaseReady = false; // Flag to indicate if Firebase is ready
-
-        try {
-            app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            console.log("Firebase initialized.");
-
-            // Authenticate user and set up Firestore collection reference
-            auth.onAuthStateChanged(async (user) => {
-                if (user) {
-                    console.log("Auth state changed: User is signed in.", user.uid);
-                    isFirebaseReady = true;
-                    // Ensure questionsCollectionRef is defined only if Firebase is truly connected (not dummy)
-                    if (firebaseConfig.projectId !== "dummy-project-id") {
-                         questionsCollectionRef = collection(db, `artifacts/${appId}/public/data/quizQuestions`);
-                    } else {
-                        console.warn("Firebase Debug: Using dummy projectId. Firestore operations (save/load questions) will not be persistent.");
-                    }
-                    if (!window.hasAttemptedQuestionGeneration) {
-                        window.hasAttemptedQuestionGeneration = true;
-                        // No automatic call to generateQuestions here anymore, it's on button click
-                    }
-                } else {
-                    console.log("Auth state changed: No user signed in. Attempting sign-in...");
-                    isFirebaseReady = false;
-                    try {
-                        if (initialAuthToken) {
-                            await signInWithCustomToken(auth, initialAuthToken);
-                            console.log("Signed in with custom token via onAuthStateChanged.");
-                        } else {
-                            // Only attempt anonymous sign-in if Firebase config is not dummy and has a real API key for auth
-                            if (firebaseConfig.projectId !== "dummy-project-id" && firebaseConfig.apiKey && firebaseConfig.apiKey !== "dummy-api-key") {
-                                await signInAnonymously(auth);
-                                console.log("Signed in anonymously via onAuthStateChanged (no initial token).");
-                            } else {
-                                console.warn("Firebase Auth Debug: Skipping anonymous sign-in due to dummy Firebase config or missing Firebase API Key. Firestore persistence will not work.");
-                            }
-                        }
-                    } catch (error) {
-                        console.error("Error during authentication in onAuthStateChanged:", error);
-                    }
-                }
-            });
-
-            // Initial sign-in attempt if not already authenticated
-            // This logic is mostly redundant due to onAuthStateChanged but kept for clarity
-            if (!auth.currentUser) {
-                if (initialAuthToken) {
-                    signInWithCustomToken(auth, initialAuthToken)
-                        .then(() => console.log("Initial sign-in with custom token successful."))
-                        .catch((error) => {
-                            console.error("Initial sign-in with custom token failed:", error);
-                        });
-                } else {
-                    // Only attempt anonymous sign-in if Firebase config is not dummy and has a real API key for auth
-                    if (firebaseConfig.projectId !== "dummy-project-id" && firebaseConfig.apiKey && firebaseConfig.apiKey !== "dummy-api-key") {
-                        signInAnonymously(auth)
-                            .then(() => console.log("Initial anonymous sign-in successful."))
-                            .catch((error) => console.error("Initial anonymous sign-in failed:", error));
-                    } else {
-                        console.warn("Firebase Auth Debug: Skipping initial anonymous sign-in due to dummy Firebase config or missing Firebase API Key. Firestore persistence will not work.");
-                    }
-                }
-            }
-
-        } catch (error) {
-            console.error("Error initializing Firebase:", error);
-        }
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let deferredInstallPrompt = null;
 
         document.addEventListener('DOMContentLoaded', async function() {
             console.log("DOM Content Loaded. Initializing app logic.");
@@ -1335,7 +1084,7 @@
             });
 
 
-            // --- PWA Installation Banner Logic (Dynamically Created) ---
+            // --- Lógica del Banner de Instalación PWA (Creado dinámicamente) ---
             let dynamicInstallBanner = null;
             let bannerTimeout;
 
@@ -1400,296 +1149,274 @@
                 console.log('PWA fue instalada exitosamente.');
             });
 
-            // --- Quiz Logic ---
+            // --- Lógica del Examen ---
             const quizContainer = document.getElementById('quiz-container');
             const submitQuizBtn = document.getElementById('submit-quiz-btn');
+            const examResults = document.getElementById('exam-results');
             const startExamBtn = document.getElementById('start-exam-btn');
-            const examSection = document.getElementById('exam-section'); // Get exam section
+            const examSection = document.getElementById('exam-section'); // Obtener la sección del examen
             const subtleResponseBox = document.getElementById('subtle-response-box'); 
-
-            // Modal elements for results
-            const resultsModalOverlay = document.getElementById('results-modal-overlay');
-            const resultsModalContent = document.getElementById('results-modal-content');
-            const modalCorrectCount = document.getElementById('modal-correct-count');
-            const modalTotalQuestions = document.getElementById('modal-total-questions');
-            const modalPercentage = document.getElementById('modal-percentage');
-            const modalGrade = document.getElementById('modal-grade');
-            const modalMessage = document.getElementById('modal-message');
-            const closeModalBtn = document.getElementById('close-modal-btn');
-
 
             quizContainer.style.display = 'none';
             if (subtleResponseBox) {
-                subtleResponseBox.style.display = 'none'; // Hide by default
+                subtleResponseBox.style.display = 'none'; // Ocultar por defecto
             }
-            resultsModalOverlay.style.display = 'none'; // Hide modal by default
 
-            // Default questions for fallback
+            // Preguntas predeterminadas para respaldo (Verdadero/Falso)
             const defaultQuestions = [
-                { question: "La Autoridad Fiscalizadora de la Seguridad Privada en Chile es la Prefectura de Carabineros de Chile del sector.", correctAnswer: "Verdadero" },
-                { question: "La Ley N° 21.659, publicada en marzo de 2024, es la única ley que regula la seguridad privada en Chile actualmente.", correctAnswer: "Falso" },
-                { question: "La seguridad privada, según las normativas vigentes antes de la Ley 21.659, busca reemplazar a la seguridad pública.", correctAnswer: "Falso" },
-                { question: "Uno de los requisitos para ser Guardia de Seguridad según el Decreto 93 es tener 18 años.", correctAnswer: "Verdadero" },
-                { question: "Los Guardias de Seguridad están autorizados para portar armas de fuego en el ejercicio de sus funciones según el Decreto 93.", correctAnswer: "Falso" },
-                { question: "El curso de formación para Guardia de Seguridad, según el Decreto 93, tiene una duración de 90 horas.", correctAnswer: "Verdadero" },
-                { question: "El seguro de vida para Guardias de Seguridad, según el Decreto 93, tiene una cifra asegurada de 75 UTM.", correctAnswer: "Verdadero" },
-                { question: "El uniforme de un Guardia de Seguridad, según el Decreto 93, es libre y sin especificaciones de color.", correctAnswer: "Falso" },
-                { question: "Un Guardia de Seguridad está facultado para detener a alguien solo en caso de sorprenderlo en delito flagrante.", correctAnswer: "Verdadero" },
-                { question: "Delito es toda acción u omisión VOLUNTARIA penada por la Ley.", correctAnswer: "Verdadero" },
-                { question: "Cuasidelito es toda acción u omisión INVOLUNTARIA, penada por la ley.", correctAnswer: "Verdadero" },
-                { question: "La diferencia entre robo y hurto es que el robo se comete con violencia, intimidación o fuerza en las cosas, mientras que el hurto no.", correctAnswer: "Verdadero" },
-                { question: "La legítima defensa es aplicable solo si existe presencia policial en el momento de la agresión.", correctAnswer: "Falso" },
-                { question: "El sitio del suceso debe ser preservado y no alterado para la investigación.", correctAnswer: "Verdadero" },
-                { question: "Una ronda fija se caracteriza por tener la hora y el trayecto preestablecidos.", correctAnswer: "Verdadero" },
-                { question: "Los Guardias de Seguridad deben proteger personas y bienes, siendo la vida del guardia la más importante.", correctAnswer: "Verdadero" },
-                { question: "Ante el hallazgo de un artefacto explosivo, la primera acción debe ser intentar desactivarlo si se tienen conocimientos.", correctAnswer: "Falso" },
-                { question: "Una evacuación es el traslado ordenado de personas hacia una zona de seguridad designada.", correctAnswer: "Verdadero" },
-                { question: "Una Directiva de Funcionamiento es un documento que señala el funcionamiento íntegro de los guardias de seguridad.", correctAnswer: "Verdadero" },
-                { question: "El Estudio de Seguridad es aprobado por la Prefectura de Carabineros del sector.", correctAnswer: "Verdadero" },
-                { question: "El porte ilegal de armas es portar un arma en la vía pública sin autorización.", correctAnswer: "Verdadero" },
-                { question: "La Subsecretaría de Telecomunicaciones (SUBTEL) es la entidad que autoriza el uso de radiocomunicaciones en seguridad privada.", correctAnswer: "Verdadero" },
-                { question: "En un supermercado, un guardia puede detener a una persona por consumir un alimento antes de pasar por caja, incluso si no ha salido del establecimiento.", correctAnswer: "Falso" },
-                { question: "El secuestro es el traslado o retención de una o más personas sin su consentimiento.", correctAnswer: "Verdadero" },
-                { question: "La misión de Carabineros de Chile incluye garantizar el Orden y la Seguridad Pública.", correctAnswer: "Verdadero" },
-                { question: "Escalamiento es ingresar a una propiedad por una vía no destinada al efecto.", correctAnswer: "Verdadero" },
-                { question: "La función principal de una antena en un transceptor portátil es amplificar el sonido.", correctAnswer: "Falso" },
-                { question: "El contacto magnético es un sistema de alarma utilizado en puertas y ventanas para detectar aperturas.", correctAnswer: "Verdadero" },
-                { question: "Los daños físicos y psíquicos sufridos por un guardia en el cumplimiento de sus funciones se consideran actos del servicio y pueden derivar en enfermedades profesionales.", correctAnswer: "Verdadero" },
-                { question: "Para ser Guardia de Seguridad, se requiere haber cursado educación básica completa.", correctAnswer: "Falso" }
-            ];
-
-            // Additional questions provided by the user from the image
-            const userProvidedQuestions = [
-                { question: "No tiene responsabilidad penal quienes compran una cosa hurtada, ya que él no la sustrajo.", correctAnswer: "Falso" },
-                { question: "La legítima defensa solamente se hace extensiva a la propia persona y no a terceros.", correctAnswer: "Falso" },
-                { question: "Robo es la apropiación de una cosa sin que intervengan la fuerza o violencia.", correctAnswer: "Falso" },
-                { question: "Son responsables en la comisión de un delito, los autores, los cómplices y los encubridores cuando en ellos solo se utilice imprudencia y negligencia.", correctAnswer: "Falso" },
-                { question: "La policia debe eximir de responsabilidad penal al que obre en defensa de su persona o derechos, siempre que concurra, entre otras circunstancias la agresión legítima.", correctAnswer: "Verdadero" },
-                { question: "La Nación políticamente organizada es sinónimo de Estado.", correctAnswer: "Verdadero" },
-                { question: "En el sistema de vigilancia privada vigente, solo los Guardias de Seguridad, están sujetos a la fiscalización de la Autoridad Fiscalizadora de la prefectura de Carabineros de su sector jurisdiccional.", correctAnswer: "Falso" },
-                { question: "En algunos casos los Guardias de Seguridad pueden actuar de civil, si están debidamente autorizados por la Autoridad Fiscalizadora.", correctAnswer: "Verdadero" },
-                { question: "El O.S. 10 no puede fiscalizar a los Guardias de Seguridad los dias domingos y festivos.", correctAnswer: "Falso" },
-                { question: "No es obligación que los Guardias de Seguridad mantengan la Directiva de Funcionamiento en su respectiva instalación.", correctAnswer: "Falso" },
-                { question: "Las alarmas son elementos manuales o eléctricos que se utilizan para advertir peligro o intrusión o de incendio.", correctAnswer: "Verdadero" },
-                { question: "Para una adecuada detección de incendios deben existir mangueras adecuadas y grifos cercanos", correctAnswer: "Falso" },
-                { question: "Un sistema de alarmas debe tener etapas básicas, detección, control y respuesta.", correctAnswer: "Verdadero" },
-                { question: "El circuito cerrado de Televisión es un complemento al sistema electrónico de alarma.", correctAnswer: "Verdadero" }
+                {
+                    question: "La Autoridad Fiscalizadora de la Seguridad Privada en Chile es la Prefectura de Carabineros de Chile del sector.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La Ley N° 21.659, publicada en marzo de 2024, es la única ley que regula la seguridad privada en Chile actualmente.",
+                    correctAnswer: "Falso" // Porque el Decreto 93 aún es relevante para ciertas interpretaciones hasta la plena vigencia de la nueva ley.
+                },
+                {
+                    question: "La seguridad privada, según las normativas vigentes antes de la Ley 21.659, busca reemplazar a la seguridad pública.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "Uno de los requisitos para ser Guardia de Seguridad según el Decreto 93 es tener 18 años.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Los Guardias de Seguridad están autorizados para portar armas de fuego en el ejercicio de sus funciones según el Decreto 93.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El curso de formación para Guardia de Seguridad, según el Decreto 93, tiene una duración de 90 horas.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El seguro de vida para Guardias de Seguridad, según el Decreto 93, tiene una cifra asegurada de 75 UTM.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El uniforme de un Guardia de Seguridad, según el Decreto 93, es libre y sin especificaciones de color.",
+                    correctAnswer: "Falso" // Tenía especificaciones, aunque menos estrictas que el vigilante.
+                },
+                {
+                    question: "Un Guardia de Seguridad está facultado para detener a alguien solo en caso de sorprenderlo en delito flagrante.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Delito es toda acción u omisión VOLUNTARIA penada por la Ley.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Cuasidelito es toda acción u omisión INVOLUNTARIA, penada por la ley.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La diferencia entre robo y hurto es que el robo se comete con violencia, intimidación o fuerza en las cosas, mientras que el hurto no.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La legítima defensa es aplicable solo si existe presencia policial en el momento de la agresión.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El sitio del suceso debe ser preservado y no alterado para la investigación.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Una ronda fija se caracteriza por tener la hora y el trayecto preestablecidos.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Los Guardias de Seguridad deben proteger personas y bienes, siendo la vida del guardia la más importante.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Ante el hallazgo de un artefacto explosivo, la primera acción debe ser intentar desactivarlo si se tienen conocimientos.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "Una evacuación es el traslado ordenado de personas hacia una zona de seguridad designada.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Una Directiva de Funcionamiento es un documento que señala el funcionamiento íntegro de los guardias de seguridad.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El Estudio de Seguridad es aprobado por la Prefectura de Carabineros del sector.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "El porte ilegal de armas es portar un arma en la vía pública sin autorización.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La Subsecretaría de Telecomunicaciones (SUBTEL) es la entidad que autoriza el uso de radiocomunicaciones en seguridad privada.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "En un supermercado, un guardia puede detener a una persona por consumir un alimento antes de pasar por caja, incluso si no ha salido del establecimiento.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El secuestro es el traslado o retención de una o más personas sin su consentimiento.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La misión de Carabineros de Chile incluye garantizar el Orden y la Seguridad Pública.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Escalamiento es ingresar a una propiedad por una vía no destinada al efecto.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "La función principal de una antena en un transceptor portátil es amplificar el sonido.",
+                    correctAnswer: "Falso"
+                },
+                {
+                    question: "El contacto magnético es un sistema de alarma utilizado en puertas y ventanas para detectar aperturas.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Los daños físicos y psíquicos sufridos por un guardia en el cumplimiento de sus funciones se consideran actos del servicio y pueden derivar en enfermedades profesionales.",
+                    correctAnswer: "Verdadero"
+                },
+                {
+                    question: "Para ser Guardia de Seguridad, se requiere haber cursado educación básica completa.",
+                    correctAnswer: "Falso" // Requiere 8º básico aprobado y curso OS-10.
+                }
             ];
             
-            let questions = []; // This will hold the active quiz questions
+            let questions = [];
 
-            // Function to add questions to Firestore
-            async function addQuestionToFirestore(questionObj) {
-                if (!isFirebaseReady || !questionsCollectionRef) {
-                    console.error("Firebase Debug: Firestore NO está listo. No se puede añadir la pregunta. (Puede faltar projectId o clave API de Firebase válida).");
-                    showSubtleMessage('Error: Firestore no está listo para guardar preguntas. (Configuración de Firebase incompleta).', true);
-                    return;
-                }
-                try {
-                    await addDoc(questionsCollectionRef, questionObj);
-                    console.log("Firebase Debug: Pregunta añadida a Firestore:", questionObj.question);
-                } catch (e) {
-                    console.error("Firebase Debug: Error al añadir documento a Firestore: ", e);
-                    showSubtleMessage('Error al guardar la pregunta en la base de datos.', true);
-                }
-            }
-
-            // Function to fetch questions from Firestore
-            async function fetchQuestionsFromFirestore() {
-                if (!isFirebaseReady || !questionsCollectionRef) {
-                    console.warn("Firebase Debug: Firestore NO está listo o colección no definida. No se pueden obtener las preguntas. Usando preguntas de respaldo locales.");
-                    return [];
-                }
-                try {
-                    const querySnapshot = await getDocs(questionsCollectionRef);
-                    const fetchedQuestions = [];
-                    querySnapshot.forEach((doc) => {
-                        fetchedQuestions.push(doc.data());
-                    });
-                    console.log("Firebase Debug: Preguntas obtenidas de Firestore:", fetchedQuestions.length);
-                    return fetchedQuestions;
-                } catch (error) {
-                    console.error("Firebase Debug: Error al obtener preguntas de Firestore: ", error);
-                    showSubtleMessage('Error al cargar preguntas desde la base de datos.', true);
-                    return [];
-                }
-            }
-
-            // Function to shuffle an array
-            function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-                }
-                return array;
-            }
-
-            // Function to generate quiz questions (from Firestore, then AI, then default)
+            // Función para generar preguntas usando la API de Gemini
             async function generateQuestions() {
-                console.log("Quiz Debug: Función generateQuestions llamada.");
-                quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas... Esto puede tardar unos segundos.</p>';
+                console.log("generateQuestions function called.");
+                quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas con IA... Esto puede tardar unos segundos.</p>';
                 quizContainer.style.display = 'block';
                 startExamBtn.style.display = 'none';
-                submitQuizBtn.style.display = 'block'; // Ensure submit button is shown
+                examResults.style.display = 'none'; // Ocultar resultados si se empieza un nuevo examen
+                submitQuizBtn.style.display = 'block'; // Asegurarse de mostrar el botón de enviar
 
-                // Activate persistent red border for the exam section
+                // Activar el borde rojo persistente para la sección de examen
                 examSection.classList.add('active-red-border');
 
-                // Show subtle message box with loading message
+                // Mostrar ventana sutil con mensaje de carga
                 if (subtleResponseBox) { 
                     subtleResponseBox.style.display = 'block';
                     subtleResponseBox.classList.add('show');
                     subtleResponseBox.textContent = '¡Generando preguntas, por favor espera!';
                 }
 
-                // Wait for Firebase to be ready
-                console.log("Quiz Debug: Esperando a que Firebase esté listo...");
-                await new Promise(resolve => {
-                    const checkFirebase = setInterval(() => {
-                        if (isFirebaseReady) {
-                            clearInterval(checkFirebase);
-                            console.log("Quiz Debug: Firebase está listo.");
-                            resolve();
-                        } else {
-                            console.log("Quiz Debug: Firebase aún no está listo...");
+                // Prompt actualizado para enfocarse en una variedad de temas relevantes para guardias de seguridad en Chile.
+                const prompt = `Genera 30 preguntas de Verdadero/Falso sobre la normativa y funciones del guardia de seguridad en Chile, abarcando temas del Decreto Ley 3607, Decreto Supremo 93, y los roles y responsabilidades prácticas del guardia según la normativa legal vigente entre 2020 y 2025 (incluyendo contexto de la Ley 21.659, si bien las preguntas deben ser sobre la función actual o regulaciones anteriores si siguen siendo relevantes para la operación diaria). Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').`;
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = {
+                    contents: chatHistory,
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "ARRAY",
+                            items: {
+                                type: "OBJECT",
+                                properties: {
+                                    "question": { "type": "STRING" },
+                                    "correctAnswer": { "type": "STRING" }
+                                },
+                                "propertyOrdering": ["question", "correctAnswer"]
+                            }
                         }
-                    }, 100);
-                });
+                    }
+                };
 
-                let loadedQuestions = [];
+                try {
+                    console.log("Attempting to generate questions with Gemini API...");
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
 
-                // 1. Try to fetch from Firestore first if it's properly configured
-                if (firebaseConfig.projectId !== "dummy-project-id" && questionsCollectionRef) {
-                    console.log("Quiz Debug: Intentando obtener preguntas de Firestore...");
-                    loadedQuestions = await fetchQuestionsFromFirestore();
-                    if (loadedQuestions.length > 0) {
-                        console.log(`Quiz Debug: Cargadas ${loadedQuestions.length} preguntas desde Firestore.`);
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error('Error al generar preguntas con Gemini API:', response.status, response.statusText, errorData);
+                        quizContainer.innerHTML = '<p class="text-danger text-center">Error al cargar las preguntas de la IA. Usando preguntas de respaldo. (Código de estado: ' + response.status + ')</p>';
+                        if (subtleResponseBox) subtleResponseBox.textContent = 'Error al cargar preguntas. Usando respaldo.';
+                        questions = defaultQuestions;
+                        console.log("Using default questions due to API error.");
+                        displayQuiz();
+                        return;
+                    }
+
+                    const result = await response.json();
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const jsonText = result.candidates[0].content.parts[0].text;
+                        console.log("Gemini API response (raw text):", jsonText);
+                        
+                        try {
+                            questions = JSON.parse(jsonText);
+                            if (!Array.isArray(questions) || questions.length === 0) {
+                                console.warn("La API de Gemini devolvió un arreglo de preguntas inválido o vacío. Usando preguntas de respaldo.");
+                                quizContainer.innerHTML = '<p class="text-danger text-center">La IA no generó preguntas válidas. Usando preguntas de respaldo.</p>';
+                                if (subtleResponseBox) subtleResponseBox.textContent = 'IA no generó preguntas válidas. Usando respaldo.';
+                                questions = defaultQuestions;
+                                console.log("Using default questions due to invalid/empty JSON.");
+                            } else if (questions.length < 30) {
+                                console.warn(`Gemini generó ${questions.length} preguntas. Volviendo a las preguntas predeterminadas para asegurar 30 disponibles.`);
+                                quizContainer.innerHTML = '<p class="text-warning text-center">IA generó pocas preguntas. Usando respaldo.</p>';
+                                if (subtleResponseBox) subtleResponseBox.textContent = 'IA generó pocas preguntas. Usando respaldo.';
+                                questions = defaultQuestions;
+                                console.log("Using default questions because not enough were generated.");
+                            }
+                            displayQuiz();
+                            if (subtleResponseBox) {
+                                subtleResponseBox.textContent = '¡Preguntas cargadas! ¡Mucha suerte!';
+                                setTimeout(() => {
+                                    subtleResponseBox.classList.remove('show');
+                                    setTimeout(() => subtleResponseBox.style.display = 'none', 500); // Esperar que la transición termine
+                                }, 3000); // Mostrar por 3 segundos
+                            }
+                        } catch (parseError) {
+                            console.error('Error al parsear la respuesta JSON de Gemini:', parseError);
+                            quizContainer.innerHTML = '<p class="text-danger text-center">Error al procesar preguntas de la IA. Usando preguntas de respaldo.</p>';
+                            if (subtleResponseBox) subtleResponseBox.textContent = 'Error al procesar preguntas. Usando respaldo.';
+                            questions = defaultQuestions;
+                            console.log("Using default questions due to JSON parsing error.");
+                            displayQuiz();
+                        }
                     } else {
-                        console.log("Quiz Debug: Firestore accesible pero vacío. Se intentará poblar con preguntas predeterminadas/del usuario.");
+                        console.warn("La estructura de la respuesta de la API de Gemini es inesperada (faltan partes del contenido). Usando fallback questions.");
+                        quizContainer.innerHTML = '<p class="text-danger text-center">Estructura de respuesta de IA inesperada. Usando preguntas de respaldo.</p>';
+                        if (subtleResponseBox) subtleResponseBox.textContent = 'Respuesta IA inesperada. Usando respaldo.';
+                        questions = defaultQuestions;
+                        console.log("Using default questions due to unexpected API response structure.");
+                        displayQuiz();
                     }
-                } else {
-                    console.warn("Quiz Debug: Firebase no está completamente configurado (dummy projectId o questionsCollectionRef no definido). Saltando la carga desde Firestore.");
-                }
-
-
-                // Fallback mechanism: Always ensure there's a base set of questions
-                if (loadedQuestions.length === 0) {
-                    console.log("Quiz Debug: No se cargaron preguntas de Firestore o no es accesible. Combinando preguntas predeterminadas y proporcionadas por el usuario como fallback inicial.");
-                    loadedQuestions = [...defaultQuestions, ...userProvidedQuestions];
-                    
-                    // Attempt to upload these combined questions to Firestore if possible, but don't block
-                    if (isFirebaseReady && questionsCollectionRef && firebaseConfig.projectId !== "dummy-project-id") {
-                         try {
-                            console.log("Quiz Debug: Intentando subir preguntas predeterminadas y del usuario a Firestore.");
-                            for (const q of loadedQuestions) {
-                                // Simple check to avoid adding the same question multiple times on reloads
-                                // A more robust solution would involve checking for existence before adding
-                                // For now, we'll just add. Firestore might handle duplicates if document IDs are managed.
-                                await addQuestionToFirestore(q);
-                            }
-                            console.log("Quiz Debug: Preguntas predeterminadas y del usuario subidas a Firestore.");
-                        } catch (uploadError) {
-                            console.error("Quiz Debug: Error al subir preguntas a Firestore:", uploadError);
-                        }
-                    } else {
-                        console.warn("Quiz Debug: Firebase no listo para persistencia; las preguntas predeterminadas no se guardarán en la nube.");
+                } catch (error) {
+                    console.error('Error de red o parseo al llamar a Gemini (generar preguntas):', error);
+                    quizContainer.innerHTML = '<p class="text-danger text-center">Error de conexión al generar las preguntas. Usando preguntas de respaldo.!</p>';
+                    if (subtleResponseBox) subtleResponseBox.textContent = 'Error de conexión. Usando respaldo.';
+                    questions = defaultQuestions;
+                    console.log("Using default questions due to network/parsing error.");
+                    displayQuiz();
+                } finally {
+                    // Si el mensaje no fue ocultado por éxito, ocultarlo después de un tiempo si hubo error
+                    if (subtleResponseBox && subtleResponseBox.classList.contains('show')) {
+                        setTimeout(() => {
+                            subtleResponseBox.classList.remove('show');
+                            setTimeout(() => subtleResponseBox.style.display = 'none', 500);
+                        }, 5000); // Mantener un poco más si hubo error
                     }
                 }
-                
-                // Now try AI generation if we still don't have enough questions (e.g., less than 30)
-                if (loadedQuestions.length < 30) { 
-                    console.log(`Quiz Debug: Menos de 30 preguntas (${loadedQuestions.length}) cargadas. Intentando generar preguntas adicionales con IA.`);
-                    const questionsToGenerate = 30 - loadedQuestions.length;
-                    const prompt = `Genera ${questionsToGenerate} preguntas de Verdadero/Falso sobre la normativa y funciones del guardia de seguridad en Chile, abarcando temas del Decreto Ley 3607, Decreto Supremo 93, y los roles y responsabilidades prácticas del guardia según la normativa legal vigente entre 2020 y 2025 (incluyendo contexto de la Ley 21.659, si bien las preguntas deben ser sobre la función actual o regulaciones anteriores si siguen siendo relevantes para la operación diaria). Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').`;
-                    let chatHistory = [];
-                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                    const payload = {
-                        contents: chatHistory,
-                        generationConfig: {
-                            responseMimeType: "application/json",
-                            responseSchema: {
-                                type: "ARRAY",
-                                items: {
-                                    type: "OBJECT",
-                                    properties: {
-                                        "question": { "type": "STRING" },
-                                        "correctAnswer": { "type": "STRING" }
-                                    },
-                                    "propertyOrdering": ["question", "correctAnswer"]
-                                }
-                            }
-                        }
-                    };
-
-                    try {
-                        const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE API DE GEMINI
-                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                        console.log("Quiz Debug: Llamando a la API de Gemini para generar preguntas adicionales...");
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (response.ok) {
-                            const result = await response.json();
-                            if (result.candidates && result.candidates.length > 0 &&
-                                result.candidates[0].content && result.candidates[0].content.parts &&
-                                result.candidates[0].content.parts.length > 0) {
-                                const jsonText = result.candidates[0].content.parts[0].text;
-                                try {
-                                    const aiGeneratedQuestions = JSON.parse(jsonText);
-                                    if (Array.isArray(aiGeneratedQuestions) && aiGeneratedQuestions.length > 0) {
-                                        console.log(`Quiz Debug: IA generó ${aiGeneratedQuestions.length} preguntas adicionales y se añadieron al set.`);
-                                        loadedQuestions = loadedQuestions.concat(aiGeneratedQuestions);
-                                        // Also upload these new AI questions to Firestore if possible
-                                        if (isFirebaseReady && questionsCollectionRef && firebaseConfig.projectId !== "dummy-project-id") {
-                                            for (const q of aiGeneratedQuestions) {
-                                                await addQuestionToFirestore(q);
-                                            }
-                                            console.log("Quiz Debug: Preguntas generadas por IA y subidas a Firestore.");
-                                        } else {
-                                            console.warn("Quiz Debug: Firebase no listo para persistencia; las preguntas generadas por IA no se guardarán en la nube.");
-                                        }
-                                    }
-                                } catch (parseError) {
-                                    console.error('Quiz Debug: Error al parsear la respuesta JSON de Gemini (adicionales):', parseError);
-                                }
-                            }
-                        } else {
-                            const errorData = await response.json();
-                            console.error('Quiz Debug: Error al llamar a la API de Gemini para preguntas adicionales:', response.status, errorData);
-                        }
-                    } catch (error) {
-                        console.error('Quiz Debug: Error de red al llamar a la API de Gemini para preguntas adicionales:', error);
-                    }
-                }
-
-                // Final check: Ensure we have at least some questions
-                if (loadedQuestions.length === 0) {
-                    loadedQuestions = [...defaultQuestions, ...userProvidedQuestions];
-                    console.error("Quiz Debug: ¡Advertencia crítica! Ninguna pregunta cargada de ninguna fuente. Se usará el conjunto base de respaldo como último recurso.");
-                }
-
-                // Shuffle all available questions and select up to 30
-                questions = shuffleArray(loadedQuestions).slice(0, 30);
-                console.log(`Quiz Debug: Se mostrarán ${questions.length} preguntas finales.`);
-
-                displayQuiz();
-                if (subtleResponseBox) {
-                    subtleResponseBox.textContent = '¡Preguntas cargadas! ¡Mucha suerte!';
-                    setTimeout(() => {
-                        subtleResponseBox.classList.remove('show');
-                        setTimeout(() => subtleResponseBox.style.display = 'none', 500);
-                    }, 3000);
-                }
-                console.log("Quiz Debug: Proceso de generación de preguntas finalizado.");
             }
 
-            // Function to display quiz questions
+            // Función para mostrar las preguntas del examen
             function displayQuiz() {
-                console.log("Quiz Debug: Mostrando preguntas del examen.");
-                quizContainer.innerHTML = ''; // Clear loading message
+                quizContainer.innerHTML = ''; // Limpiar mensaje de carga
                 questions.forEach((q, index) => {
                     const questionCard = document.createElement('div');
                     questionCard.classList.add('question-card');
@@ -1748,14 +1475,13 @@
                         });
                     });
                 });
-                quizContainer.style.display = 'block'; // Show quiz container
-                submitQuizBtn.style.display = 'block'; // Show submit button
-                console.log("Quiz Debug: Preguntas del examen mostradas.");
+                quizContainer.style.display = 'block'; // Mostrar contenedor del examen
+                submitQuizBtn.style.display = 'block'; // Mostrar botón de enviar
+                console.log("Quiz questions displayed.");
             }
 
-            // Function to submit quiz and calculate score
+            // Función para enviar el examen y calcular la puntuación
             function submitQuiz() {
-                console.log("Quiz Debug: Enviando examen y calculando puntuación.");
                 let score = 0;
                 questions.forEach((q, index) => {
                     const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
@@ -1767,34 +1493,21 @@
                 const maxScore = questions.length;
                 const percentage = (score / maxScore) * 100;
                 const grade = calculateGrade(percentage);
-                const passed = grade >= 4.0;
 
-                // Populate modal content
-                modalCorrectCount.textContent = score;
-                modalTotalQuestions.textContent = maxScore;
-                modalPercentage.textContent = percentage.toFixed(2);
-                modalGrade.textContent = grade.toFixed(1);
-
-                // Set modal message and color
-                resultsModalContent.classList.remove('pass', 'fail'); // Clear previous classes
-                if (passed) {
-                    modalMessage.textContent = '¡Felicitaciones! Has aprobado.';
-                    resultsModalContent.classList.add('pass');
-                } else {
-                    modalMessage.textContent = 'Necesitas repasar más. ¡No te desanimes!';
-                    resultsModalContent.classList.add('fail');
-                }
-
-                // Show the modal
-                resultsModalOverlay.style.display = 'flex'; // Use flex to center
-                setTimeout(() => resultsModalOverlay.classList.add('show'), 10); // Add show class after a tiny delay for transition
-
-                submitQuizBtn.style.display = 'none'; // Hide submit button after submission
-                quizContainer.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true); // Disable options after submission
-                console.log("Quiz Debug: Examen enviado y resultados mostrados en el modal. Puntuación:", score);
+                examResults.innerHTML = `
+                    <h3>Resultados del Examen</h3>
+                    <p>Respuestas correctas: ${score} de ${maxScore}</p>
+                    <p>Porcentaje: ${percentage.toFixed(2)}%</p>
+                    <p>Tu nota en escala del 1 al 7: <strong style="color: #1a237e;">${grade.toFixed(1)}</strong></p>
+                    ${grade >= 4.0 ? '<p class="text-success">¡Felicitaciones! Has aprobado.</p>' : '<p class="text-danger">Necesitas repasar más. ¡No te desanimes!</p>'}
+                `;
+                examResults.style.display = 'block';
+                submitQuizBtn.style.display = 'none'; // Ocultar botón de enviar después del envío
+                quizContainer.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true); // Desactivar opciones después del envío
+                console.log("Quiz submitted and results displayed. Score:", score);
             }
 
-            // Function to calculate grade from 1 to 7
+            // Función para calcular la calificación de 1 a 7
             function calculateGrade(percentage) {
                 if (percentage < 30) return 1.0;
                 if (percentage < 40) return 2.0;
@@ -1805,19 +1518,12 @@
                 return 7.0;
             }
 
-            // Event listener for "Empezar Examen Ahora" button
+            // Event listener para el nuevo botón "Empezar Examen Ahora"
             startExamBtn.addEventListener('click', generateQuestions);
 
             submitQuizBtn.addEventListener('click', submitQuiz);
 
-            // Close modal button listener
-            closeModalBtn.addEventListener('click', () => {
-                resultsModalOverlay.classList.remove('show');
-                resultsModalContent.classList.remove('pass', 'fail'); // Clean up classes
-                setTimeout(() => resultsModalOverlay.style.display = 'none', 300); // Hide after transition
-            });
-
-            // --- AI Clarifier Logic (Floating) ---
+            // --- Lógica del Clarificador IA (Flotante) ---
             const floatingAiButton = document.getElementById('floating-ai-button');
             const aiClarifierChat = document.getElementById('ai-clarifier-chat');
             const closeAiChatBtn = document.getElementById('close-ai-chat');
@@ -1826,15 +1532,15 @@
             const aiClarifierResponse = document.getElementById('ai-clarifier-response');
 
             floatingAiButton.addEventListener('click', () => {
-                console.log("AI Clarifier Debug: Botón flotante de IA clickeado. Cambiando visibilidad del chat.");
+                console.log("Floating AI button clicked. Toggling chat visibility.");
                 aiClarifierChat.classList.toggle('show');
             });
 
             closeAiChatBtn.addEventListener('click', () => {
-                console.log("AI Clarifier Debug: Botón de cerrar chat clickeado. Ocultando chat.");
+                console.log("Close chat button clicked. Hiding chat.");
                 aiClarifierChat.classList.remove('show');
-                aiQuestionInput.value = ''; // Clear input on close
-                aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>'; // Reset response
+                aiQuestionInput.value = ''; // Limpiar input al cerrar
+                aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>'; // Resetear respuesta
             });
 
             askAiBtn.addEventListener('click', async function() {
@@ -1846,20 +1552,20 @@
 
                 aiClarifierResponse.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Cargando respuesta de la IA... Esto puede tardar unos segundos.</p>';
                 askAiBtn.disabled = true;
-                console.log("AI Clarifier Debug: Botón Preguntar a la IA clickeado. Enviando prompt a Gemini para aclaración.");
+                console.log("Ask AI button clicked. Sending prompt to Gemini for clarification.");
 
-                // Update prompt to include Ley 21.659 effective date
-                // And to respond in plain text.
+                // Actualizar el prompt para incluir la fecha de vigencia de la Ley 21.659
+                // Y para que responda texto plano.
                 const prompt = `Como un experto en la normativa de seguridad privada de Chile (Decreto Ley 3607, Decreto Supremo 93 y Ley 21.659, considerando que la Ley 21.659 entra en vigencia el 28-NOV-2025), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD, y cualquier normativa relevante entre 2020 y 2025: "${userQuestion}". Proporciona solo la respuesta directa y relevante, sin incluir ningún encabezado, pie de página o formato de código (ej. \`\`\`json\`\`\`, \`\`\`text\`\`\`, etc.) o marcas de viñetas innecesarias si la respuesta es un solo párrafo.`;
                 let chatHistory = [];
                 chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                 
-                // Do not specify responseMimeType: "application/json" to get plain text
+                // No especificar responseMimeType: "application/json" para obtener texto plano
                 const payload = { contents: chatHistory };
 
                 try {
-                    console.log("AI Clarifier Debug: Intentando obtener aclaración de la IA con la API de Gemini para la pregunta del usuario:", userQuestion);
-                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
+                    console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
                         method: 'POST',
@@ -1869,7 +1575,7 @@
 
                     if (!response.ok) {
                         const errorData = await response.json();
-                        console.error('AI Clarifier Debug: Error al obtener datos de la API de Gemini para aclaración:', response.status, response.statusText, errorData);
+                        console.error('Error al obtener datos de la API de Gemini para aclaración:', response.status, response.statusText, errorData);
                         aiClarifierResponse.innerHTML = `<p class="text-danger">Hubo un error (${response.status}) al obtener la respuesta de la IA. Por favor, inténtalo de nuevo.</p>`;
                         return;
                     }
@@ -1879,33 +1585,33 @@
                         result.candidates[0].content && result.candidates[0].content.parts &&
                         result.candidates[0].content.parts.length > 0) {
                         let text = result.candidates[0].content.parts[0].text;
-                        // Remove any code blocks or residual text if AI included it
+                        // Eliminar cualquier bloque de código o texto residual si la IA lo incluyera
                         text = text.replace(/```json\n?[\s\S]*?\n?```/, '').trim();
                         text = text.replace(/```\n?[\s\S]*?\n?```/, '').trim();
                         aiClarifierResponse.innerHTML = `<p>${text}</p>`;
-                        console.log("AI Clarifier Debug: Aclaración de la IA recibida y mostrada.");
+                        console.log("AI clarification received and displayed.");
                     } else {
-                        console.warn("AI Clarifier Debug: Estructura de respuesta de la API de Gemini para aclaración inesperada o vacía.");
+                        console.warn("La estructura de la respuesta de la API de Gemini para aclaración es inesperada o está vacía.");
                         aiClarifierResponse.innerHTML = '<p class="text-warning">No se pudo obtener una respuesta clara de la IA. Intenta reformular tu pregunta.</p>';
                     }
                 } catch (error) {
-                    console.error('AI Clarifier Debug: Error de red o parseo en la llamada a la API de Gemini para aclaración:', error);
+                    console.error('Network error or parsing issue in Gemini API call for clarification:', error);
                     aiClarifierResponse.innerHTML = '<p class="text-danger">Error de conexión al Clarificador IA. Asegúrate de tener acceso a internet y que el servicio esté disponible.</p>';
                 } finally {
                     askAiBtn.disabled = false;
-                    console.log("AI Clarifier Debug: Solicitud del Clarificador IA finalizada.");
+                    console.log("AI Clarifier request finished.");
                 }
             });
 
-            // --- Report Drafting Assistant Logic ---
+            // --- Lógica del Asistente de Redacción de Informes ---
             const incidentDescriptionInput = document.getElementById('incident-description-input');
             const reportTypeSelect = document.getElementById('report-type-select');
             const generateReportBtn = document.getElementById('generate-report-btn');
             const reportOutput = document.getElementById('report-output');
             const copyReportBtn = document.getElementById('copy-report-btn');
-            const downloadActaBtn = document.getElementById('download-acta-btn'); // New download button
+            const downloadActaBtn = document.getElementById('download-acta-btn'); // Nuevo botón de descarga
 
-            // Hide report action buttons on init
+            // Ocultar botones de acción de informe al inicio
             copyReportBtn.style.display = 'none';
             downloadActaBtn.style.display = 'none';
 
@@ -1915,7 +1621,7 @@
 
                 if (!description) {
                     reportOutput.innerHTML = '<p class="text-danger">Por favor, describe el incidente.</p>';
-                    // Hide action buttons if no description
+                    // Ocultar botones de acción si no hay descripción
                     copyReportBtn.style.display = 'none';
                     downloadActaBtn.style.display = 'none';
                     return;
@@ -1923,20 +1629,20 @@
 
                 reportOutput.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Generando borrador...</p>';
                 generateReportBtn.disabled = true;
-                copyReportBtn.style.display = 'none'; // Hide before generating
-                downloadActaBtn.style.display = 'none'; // Hide before generating
+                copyReportBtn.style.display = 'none'; // Ocultar antes de generar
+                downloadActaBtn.style.display = 'none'; // Ocultar antes de generar
 
 
                 if (selectedReportType === 'acta_detencion_particulares') {
-                    // For Detention Act, show download button directly
+                    // Para Acta de Detención, mostrar el botón de descarga directamente
                     reportOutput.innerHTML = `<p class="text-success">Haz clic en el botón para descargar el Acta de Detención:</p>`;
                     downloadActaBtn.style.display = 'block';
-                    generateReportBtn.disabled = false; // Enable generate button again
-                    console.log("Report Assistant Debug: Mostrando botón de descarga de Acta.");
-                    return; // End function here, do not call API
+                    generateReportBtn.disabled = false; // Habilitar el botón de generación de nuevo
+                    console.log("Mostrando botón de descarga de Acta.");
+                    return; // Terminar la función aquí, no llamar a la API
                 }
 
-                // If not Detention Act, proceed with API call to generate text
+                // Si no es Acta de Detención, proceder con la llamada a la API para generar texto
                 let promptText = "";
                 // Base prompt for report generation
                 const basePrompt = `Eres un asistente de IA especializado en generar borradores de comunicaciones profesionales para personal de seguridad privada en Chile, basándote en el contexto del incidente. Tu objetivo es redactar informes claros, concisos y objetivos, utilizando la normativa chilena relevante para guardias de seguridad (considerando Decreto Ley 3607, Decreto Supremo 93 y Ley 21.659, teniendo en cuenta que la Ley 21.659 entra en vigencia el 28-NOV-2025).`;
@@ -1960,11 +1666,10 @@
                 const payload = { contents: chatHistory }; 
 
                 try {
-                    console.log("Report Assistant Debug: Llamando a la API de Gemini para generar informe.");
                     const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     
-                    console.log("Report Assistant Debug: Payload enviado a Gemini para informe:", payload); 
+                    console.log("Payload enviado a Gemini para informe:", payload); 
 
                     const response = await fetch(apiUrl, {
                         method: 'POST',
@@ -1974,7 +1679,7 @@
 
                     if (!response.ok) {
                         const errorData = await response.json();
-                        console.error('Report Assistant Debug: Error al generar informe con Gemini API:', response.status, response.statusText, errorData);
+                        console.error('Error al generar informe con Gemini API:', response.status, response.statusText, errorData);
                         reportOutput.innerHTML = `<p class="text-danger">Error al generar el informe: ${errorData.error.message || 'Error desconocido'}.</p>`;
                         return;
                     }
@@ -1985,43 +1690,42 @@
                         result.candidates[0].content.parts.length > 0) {
                         const generatedText = result.candidates[0].content.parts[0].text;
                         reportOutput.innerHTML = `<pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background-color: #f8f9fa; padding: 10px; border-radius: 5px; color: #333;">${generatedText}</pre>`;
-                        copyReportBtn.style.display = 'block'; // Show only if text generated
-                        console.log("Report Assistant Debug: Borrador de informe generado y mostrado.");
+                        copyReportBtn.style.display = 'block'; // Mostrar solo si se generó texto
                     } else {
                         reportOutput.innerHTML = '<p class="text-warning">No se pudo generar un informe. Intenta con una descripción más detallada.</p>';
-                        console.warn("Report Assistant Debug: No se generó texto de informe. Estructura de respuesta inesperada.");
                     }
                 } catch (error) {
-                    console.error('Report Assistant Debug: Error de red o parseo al llamar a Gemini para informe:', error);
+                    console.error('Error de red o parseo al llamar a Gemini para informe:', error);
                     reportOutput.innerHTML = '<p class="text-danger">Error de conexión. Asegúrate de tener conexión a internet.</p>';
                 } finally {
-                    generateReportBtn.disabled = false; // Always enable when generation finishes
-                    console.log("Report Assistant Debug: Generación de informe finalizada.");
+                    generateReportBtn.disabled = false; // Siempre habilitar al finalizar la generación
                 }
             });
 
             copyReportBtn.addEventListener('click', () => {
                 const reportContent = reportOutput.textContent;
                 navigator.clipboard.writeText(reportContent).then(() => {
+                    // Reemplazado alert() con un mensaje sutil
                     showSubtleMessage('¡Borrador copiado al portapapeles!');
                 }).catch(err => {
-                    console.error('Report Assistant Debug: Error al copiar el borrador:', err);
-                    showSubtleMessage('No se pudo copiar el borrador.', true); // true to indicate error (red)
+                    console.error('Error al copiar el borrador:', err);
+                    // Reemplazado alert() con un mensaje sutil
+                    showSubtleMessage('No se pudo copiar el borrador.', true); // true para indicar error (rojo)
                 });
             });
 
-            // Function to show subtle messages
+            // Función para mostrar mensajes sutiles
             function showSubtleMessage(message, isError = false) {
                 const messageBox = document.createElement('div');
                 messageBox.className = 'subtle-response-box show';
                 messageBox.textContent = message;
 
                 if (isError) {
-                    messageBox.style.backgroundColor = 'rgba(220, 53, 69, 0.2)'; // Soft red
-                    messageBox.style.color = '#dc3545'; // Red
+                    messageBox.style.backgroundColor = 'rgba(220, 53, 69, 0.2)'; // Rojo suave
+                    messageBox.style.color = '#dc3545'; // Rojo
                 } else {
-                    messageBox.style.backgroundColor = 'rgba(40, 53, 147, 0.2)'; // Soft blue
-                    messageBox.style.color = '#283593'; // Blue
+                    messageBox.style.backgroundColor = 'rgba(40, 53, 147, 0.2)'; // Azul suave
+                    messageBox.style.color = '#283593'; // Azul
                 }
 
                 document.body.appendChild(messageBox);
@@ -2029,31 +1733,10 @@
                 setTimeout(() => {
                     messageBox.classList.remove('show');
                     messageBox.addEventListener('transitionend', () => messageBox.remove());
-                }, 3000); // Message disappears after 3 seconds
+                }, 3000); // El mensaje desaparece después de 3 segundos
             }
-
-            // --- Admin Panel Logic ---
-            const newQuestionInput = document.getElementById('new-question-input');
-            const newQuestionAnswer = document.getElementById('new-question-answer');
-            const addQuestionBtn = document.getElementById('add-question-btn');
-            const adminFeedback = document.getElementById('admin-feedback');
-
-            addQuestionBtn.addEventListener('click', async () => {
-                const questionText = newQuestionInput.value.trim();
-                const correctAnswer = newQuestionAnswer.value;
-
-                if (questionText === "") {
-                    adminFeedback.innerHTML = '<p class="text-danger">Por favor, escribe la pregunta.</p>';
-                    return;
-                }
-
-                const newQuestion = { question: questionText, correctAnswer: correctAnswer };
-                await addQuestionToFirestore(newQuestion);
-                adminFeedback.innerHTML = '<p class="text-success">¡Pregunta guardada exitosamente!</p>';
-                newQuestionInput.value = ''; // Clear input
-                setTimeout(() => { adminFeedback.innerHTML = ''; }, 3000);
-            });
         });
     </script>
 </body>
 </html>
+
