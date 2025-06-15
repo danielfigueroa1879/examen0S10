@@ -259,6 +259,11 @@
             color: #283593; /* Azul oscuro (#283593) para los encabezados de sección */
         }
 
+        /* Nuevo estilo para el encabezado del examen si se quiere verde */
+        .main-content .exam-heading-green {
+            color: #28a745; /* Verde */
+        }
+
         .main-content p {
             margin-bottom: 1.5em;
         }
@@ -949,7 +954,8 @@
         <p>Esta plataforma ha sido diseñada para ofrecerte información relevante y actualizada sobre la normativa de seguridad privada en Chile, incluyendo la nueva Ley 21.659, decretos complementarios y material de estudio esencial para guardias de seguridad y vigilantes privados. Nuestro objetivo es ayudarte a comprender mejor tus responsabilidades y derechos en esta importante labor, promoviendo la excelencia y el cumplimiento normativo.</p>
 
         <section id="exam-section" class="mt-5">
-            <h2 class="text-center">Examen de Preparación OS-10</h2>
+            <!-- Added a new class 'exam-heading-green' to apply the green color -->
+            <h2 class="text-center exam-heading-green">Examen de Preparación OS-10</h2>
             <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
             
             <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
@@ -1565,7 +1571,7 @@
 
                 try {
                     console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
-                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
                         method: 'POST',
@@ -1739,4 +1745,3 @@
     </script>
 </body>
 </html>
-
