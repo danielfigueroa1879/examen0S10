@@ -1210,7 +1210,22 @@
 
         // Global Firebase variables (provided by Canvas environment)
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        let firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+
+        // Ensure projectId exists in firebaseConfig, as it's critical for Firebase initialization
+        if (!firebaseConfig.projectId) {
+            console.warn("Firebase Config Warning: 'projectId' is missing in __firebase_config. Using a dummy projectId. Please ensure your Canvas environment is correctly configured with Firebase.");
+            // Provide a dummy projectId to prevent initialization error, but real functionality will require a valid one.
+            // This is a fallback for development/testing if __firebase_config is not fully populated by the environment.
+            firebaseConfig = {
+                apiKey: firebaseConfig.apiKey || "dummy-api-key",
+                authDomain: firebaseConfig.authDomain || "dummy-auth-domain.firebaseapp.com",
+                projectId: "dummy-project-id", // This is the key missing based on the error
+                storageBucket: firebaseConfig.storageBucket || "dummy-storage-bucket.appspot.com",
+                messagingSenderId: firebaseConfig.messagingSenderId || "dummy-messaging-sender-id",
+                appId: firebaseConfig.appId || "dummy-app-id"
+            };
+        }
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         // Initialize Firebase
