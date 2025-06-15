@@ -1232,10 +1232,11 @@
                     console.log("Auth state changed: User is signed in.", user.uid);
                     isFirebaseReady = true;
                     questionsCollectionRef = collection(db, `artifacts/${appId}/public/data/quizQuestions`);
-                    // If DOM is already loaded, and Firebase just became ready, try generating questions
-                    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                        // We might want to call generateQuestions here, but it's already called on DOMContentLoaded
-                        // so ensure it's not called twice or that it handles being called when Firebase is not ready yet.
+                    // Once Firebase is ready and collection ref is set, try to generate questions if needed
+                    // This is to catch cases where DOMContentLoaded fires before Firebase is fully authenticated
+                    if (!window.hasAttemptedQuestionGeneration) {
+                        window.hasAttemptedQuestionGeneration = true; // Prevent multiple calls
+                        // generateQuestions(); // This is called by the button click now, not automatically
                     }
                 } else {
                     console.log("Auth state changed: No user signed in.");
@@ -1376,7 +1377,6 @@
             // --- Quiz Logic ---
             const quizContainer = document.getElementById('quiz-container');
             const submitQuizBtn = document.getElementById('submit-quiz-btn');
-            // const examResults = document.getElementById('exam-results'); // No longer needed directly
             const startExamBtn = document.getElementById('start-exam-btn');
             const examSection = document.getElementById('exam-section'); // Get exam section
             const subtleResponseBox = document.getElementById('subtle-response-box'); 
@@ -1455,15 +1455,15 @@
             // Function to add questions to Firestore
             async function addQuestionToFirestore(questionObj) {
                 if (!isFirebaseReady || !questionsCollectionRef) {
-                    console.error("Firestore is not ready. Cannot add question.");
+                    console.error("Firebase Debug: Firestore NO está listo. No se puede añadir la pregunta.");
                     showSubtleMessage('Error: Firestore no está listo para guardar preguntas.', true);
                     return;
                 }
                 try {
                     await addDoc(questionsCollectionRef, questionObj);
-                    console.log("Question added to Firestore:", questionObj.question);
+                    console.log("Firebase Debug: Pregunta añadida a Firestore:", questionObj.question);
                 } catch (e) {
-                    console.error("Error adding document: ", e);
+                    console.error("Firebase Debug: Error al añadir documento: ", e);
                     showSubtleMessage('Error al guardar la pregunta en la base de datos.', true);
                 }
             }
@@ -1471,7 +1471,7 @@
             // Function to fetch questions from Firestore
             async function fetchQuestionsFromFirestore() {
                 if (!isFirebaseReady || !questionsCollectionRef) {
-                    console.warn("Firestore is not ready. Cannot fetch questions. Using default questions.");
+                    console.warn("Firebase Debug: Firestore NO está listo. No se pueden obtener las preguntas. Usando preguntas de respaldo.");
                     return [];
                 }
                 try {
@@ -1480,10 +1480,10 @@
                     querySnapshot.forEach((doc) => {
                         fetchedQuestions.push(doc.data());
                     });
-                    console.log("Fetched questions from Firestore:", fetchedQuestions.length);
+                    console.log("Firebase Debug: Preguntas obtenidas de Firestore:", fetchedQuestions.length);
                     return fetchedQuestions;
                 } catch (error) {
-                    console.error("Error fetching questions from Firestore: ", error);
+                    console.error("Firebase Debug: Error al obtener preguntas de Firestore: ", error);
                     showSubtleMessage('Error al cargar preguntas desde la base de datos.', true);
                     return [];
                 }
@@ -1500,11 +1500,10 @@
 
             // Function to generate quiz questions (from Firestore, then AI, then default)
             async function generateQuestions() {
-                console.log("generateQuestions function called.");
+                console.log("Quiz Debug: Función generateQuestions llamada.");
                 quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas... Esto puede tardar unos segundos.</p>';
                 quizContainer.style.display = 'block';
                 startExamBtn.style.display = 'none';
-                // examResults.style.display = 'none'; // No longer directly visible
                 submitQuizBtn.style.display = 'block'; // Ensure submit button is shown
 
                 // Activate persistent red border for the exam section
@@ -1518,10 +1517,12 @@
                 }
 
                 // Wait for Firebase to be ready
+                console.log("Quiz Debug: Esperando a que Firebase esté listo...");
                 await new Promise(resolve => {
                     const checkFirebase = setInterval(() => {
                         if (isFirebaseReady) {
                             clearInterval(checkFirebase);
+                            console.log("Quiz Debug: Firebase está listo.");
                             resolve();
                         }
                     }, 100);
@@ -1530,25 +1531,28 @@
                 let allAvailableQuestions = [];
 
                 // 1. Try to fetch from Firestore first
+                console.log("Quiz Debug: Intentando obtener preguntas de Firestore...");
                 const fetchedQuestions = await fetchQuestionsFromFirestore();
                 if (fetchedQuestions.length > 0) {
                     allAvailableQuestions = fetchedQuestions;
-                    console.log(`Loaded ${fetchedQuestions.length} questions from Firestore.`);
+                    console.log(`Quiz Debug: Cargadas ${fetchedQuestions.length} preguntas desde Firestore.`);
                 } else {
-                    console.log("Firestore empty or inaccessible. Using default and user-provided questions.");
+                    console.log("Quiz Debug: Firestore vacío o inaccesible. Usando preguntas predeterminadas y proporcionadas por el usuario.");
                     // Combine default and user-provided questions
                     const combinedQuestions = [...defaultQuestions, ...userProvidedQuestions];
                     allAvailableQuestions = combinedQuestions;
 
                     // Upload combined questions to Firestore if it was empty
+                    console.log("Quiz Debug: Subiendo preguntas predeterminadas y del usuario a Firestore...");
                     for (const q of combinedQuestions) {
                         await addQuestionToFirestore(q);
                     }
-                    console.log("Uploaded default and user-provided questions to Firestore.");
+                    console.log("Quiz Debug: Preguntas predeterminadas y del usuario subidas a Firestore.");
                 }
 
                 // If still no questions from Firestore or initial combined upload, try AI generation
                 if (allAvailableQuestions.length === 0) {
+                     console.log("Quiz Debug: No hay preguntas disponibles, intentando generar con la API de Gemini.");
                      const prompt = `Genera 30 preguntas de Verdadero/Falso sobre la normativa y funciones del guardia de seguridad en Chile, abarcando temas del Decreto Ley 3607, Decreto Supremo 93, y los roles y responsabilidades prácticas del guardia según la normativa legal vigente entre 2020 y 2025 (incluyendo contexto de la Ley 21.659, si bien las preguntas deben ser sobre la función actual o regulaciones anteriores si siguen siendo relevantes para la operación diaria). Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').`;
                     let chatHistory = [];
                     chatHistory.push({ role: "user", parts: [{ text: prompt }] });
@@ -1571,8 +1575,9 @@
                     };
 
                     try {
-                        console.log("Attempting to generate questions with Gemini API...");
-                        const apiKey = ""; // Use your actual API key
+                        console.log("Quiz Debug: Llamando a la API de Gemini para generar preguntas...");
+                        // !! IMPORTANTE: Inserta tu CLAVE API de Google Gemini aquí !!
+                        const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
                         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                         const response = await fetch(apiUrl, {
                             method: 'POST',
@@ -1582,7 +1587,7 @@
 
                         if (!response.ok) {
                             const errorData = await response.json();
-                            console.error('Error al generar preguntas con Gemini API:', response.status, response.statusText, errorData);
+                            console.error('Quiz Debug: Error al generar preguntas con Gemini API:', response.status, response.statusText, errorData);
                             quizContainer.innerHTML = '<p class="text-danger text-center">Error al cargar las preguntas de la IA. Usando preguntas de respaldo. (Código de estado: ' + response.status + ')</p>';
                             if (subtleResponseBox) subtleResponseBox.textContent = 'Error al cargar preguntas. Usando respaldo.';
                             allAvailableQuestions = defaultQuestions; // Fallback to absolute default
@@ -1596,26 +1601,27 @@
                                     const aiGeneratedQuestions = JSON.parse(jsonText);
                                     if (Array.isArray(aiGeneratedQuestions) && aiGeneratedQuestions.length > 0) {
                                         allAvailableQuestions = aiGeneratedQuestions;
+                                        console.log("Quiz Debug: IA generó preguntas. Subiendo a Firestore...");
                                         // Upload AI-generated questions to Firestore for future use
                                         for (const q of aiGeneratedQuestions) {
                                             await addQuestionToFirestore(q);
                                         }
-                                        console.log("AI generated questions and uploaded to Firestore.");
+                                        console.log("Quiz Debug: Preguntas generadas por IA y subidas a Firestore.");
                                     } else {
-                                        console.warn("AI generated invalid/empty questions. Using default questions.");
+                                        console.warn("Quiz Debug: La IA generó preguntas inválidas o vacías. Usando preguntas predeterminadas.");
                                         allAvailableQuestions = defaultQuestions;
                                     }
                                 } catch (parseError) {
-                                    console.error('Error al parsear la respuesta JSON de Gemini:', parseError);
+                                    console.error('Quiz Debug: Error al parsear la respuesta JSON de Gemini:', parseError);
                                     allAvailableQuestions = defaultQuestions;
                                 }
                             } else {
-                                console.warn("Unexpected API response structure from AI. Using default questions.");
+                                console.warn("Quiz Debug: Estructura de respuesta de la API de Gemini inesperada o vacía. Usando preguntas predeterminadas.");
                                 allAvailableQuestions = defaultQuestions;
                             }
                         }
                     } catch (error) {
-                        console.error('Network error calling Gemini API for questions:', error);
+                        console.error('Quiz Debug: Error de red al llamar a la API de Gemini para preguntas:', error);
                         allAvailableQuestions = defaultQuestions;
                     }
                 }
@@ -1623,7 +1629,7 @@
                 // If after all attempts, there are still no questions, use a hardcoded fallback
                 if (allAvailableQuestions.length === 0) {
                     allAvailableQuestions = [...defaultQuestions, ...userProvidedQuestions]; // Ensure some questions are always there
-                    console.warn("No questions loaded from any source. Using hardcoded defaults as a last resort.");
+                    console.warn("Quiz Debug: No se cargaron preguntas de ninguna fuente. Usando valores predeterminados como último recurso.");
                 }
 
                 // Shuffle all available questions and select a subset if desired
@@ -1637,10 +1643,12 @@
                         setTimeout(() => subtleResponseBox.style.display = 'none', 500); // Wait for transition to finish
                     }, 3000); // Show for 3 seconds
                 }
+                console.log("Quiz Debug: Proceso de generación de preguntas finalizado.");
             }
 
             // Function to display quiz questions
             function displayQuiz() {
+                console.log("Quiz Debug: Mostrando preguntas del examen.");
                 quizContainer.innerHTML = ''; // Clear loading message
                 questions.forEach((q, index) => {
                     const questionCard = document.createElement('div');
@@ -1702,11 +1710,12 @@
                 });
                 quizContainer.style.display = 'block'; // Show quiz container
                 submitQuizBtn.style.display = 'block'; // Show submit button
-                console.log("Quiz questions displayed.");
+                console.log("Quiz Debug: Preguntas del examen mostradas.");
             }
 
             // Function to submit quiz and calculate score
             function submitQuiz() {
+                console.log("Quiz Debug: Enviando examen y calculando puntuación.");
                 let score = 0;
                 questions.forEach((q, index) => {
                     const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
@@ -1742,7 +1751,7 @@
 
                 submitQuizBtn.style.display = 'none'; // Hide submit button after submission
                 quizContainer.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true); // Disable options after submission
-                console.log("Quiz submitted and results displayed in modal. Score:", score);
+                console.log("Quiz Debug: Examen enviado y resultados mostrados en el modal. Puntuación:", score);
             }
 
             // Function to calculate grade from 1 to 7
@@ -1777,12 +1786,12 @@
             const aiClarifierResponse = document.getElementById('ai-clarifier-response');
 
             floatingAiButton.addEventListener('click', () => {
-                console.log("Floating AI button clicked. Toggling chat visibility.");
+                console.log("AI Clarifier Debug: Botón flotante de IA clickeado. Cambiando visibilidad del chat.");
                 aiClarifierChat.classList.toggle('show');
             });
 
             closeAiChatBtn.addEventListener('click', () => {
-                console.log("Close chat button clicked. Hiding chat.");
+                console.log("AI Clarifier Debug: Botón de cerrar chat clickeado. Ocultando chat.");
                 aiClarifierChat.classList.remove('show');
                 aiQuestionInput.value = ''; // Clear input on close
                 aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>'; // Reset response
@@ -1797,7 +1806,7 @@
 
                 aiClarifierResponse.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Cargando respuesta de la IA... Esto puede tardar unos segundos.</p>';
                 askAiBtn.disabled = true;
-                console.log("Ask AI button clicked. Sending prompt to Gemini for clarification.");
+                console.log("AI Clarifier Debug: Botón Preguntar a la IA clickeado. Enviando prompt a Gemini para aclaración.");
 
                 // Update prompt to include Ley 21.659 effective date
                 // And to respond in plain text.
@@ -1809,8 +1818,9 @@
                 const payload = { contents: chatHistory };
 
                 try {
-                    console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
-                    const apiKey = ""; // Replace with your actual API key
+                    console.log("AI Clarifier Debug: Intentando obtener aclaración de la IA con la API de Gemini para la pregunta del usuario:", userQuestion);
+                    // !! IMPORTANTE: Inserta tu CLAVE API de Google Gemini aquí !!
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
                         method: 'POST',
@@ -1820,7 +1830,7 @@
 
                     if (!response.ok) {
                         const errorData = await response.json();
-                        console.error('Error al obtener datos de la API de Gemini para aclaración:', response.status, response.statusText, errorData);
+                        console.error('AI Clarifier Debug: Error al obtener datos de la API de Gemini para aclaración:', response.status, response.statusText, errorData);
                         aiClarifierResponse.innerHTML = `<p class="text-danger">Hubo un error (${response.status}) al obtener la respuesta de la IA. Por favor, inténtalo de nuevo.</p>`;
                         return;
                     }
@@ -1834,17 +1844,17 @@
                         text = text.replace(/```json\n?[\s\S]*?\n?```/, '').trim();
                         text = text.replace(/```\n?[\s\S]*?\n?```/, '').trim();
                         aiClarifierResponse.innerHTML = `<p>${text}</p>`;
-                        console.log("AI clarification received and displayed.");
+                        console.log("AI Clarifier Debug: Aclaración de la IA recibida y mostrada.");
                     } else {
-                        console.warn("Unexpected API response structure from Gemini for clarification or empty.");
+                        console.warn("AI Clarifier Debug: Estructura de respuesta de la API de Gemini para aclaración inesperada o vacía.");
                         aiClarifierResponse.innerHTML = '<p class="text-warning">No se pudo obtener una respuesta clara de la IA. Intenta reformular tu pregunta.</p>';
                     }
                 } catch (error) {
-                    console.error('Network error or parsing issue in Gemini API call for clarification:', error);
+                    console.error('AI Clarifier Debug: Error de red o parseo en la llamada a la API de Gemini para aclaración:', error);
                     aiClarifierResponse.innerHTML = '<p class="text-danger">Error de conexión al Clarificador IA. Asegúrate de tener acceso a internet y que el servicio esté disponible.</p>';
                 } finally {
                     askAiBtn.disabled = false;
-                    console.log("AI Clarifier request finished.");
+                    console.log("AI Clarifier Debug: Solicitud del Clarificador IA finalizada.");
                 }
             });
 
@@ -1883,7 +1893,7 @@
                     reportOutput.innerHTML = `<p class="text-success">Haz clic en el botón para descargar el Acta de Detención:</p>`;
                     downloadActaBtn.style.display = 'block';
                     generateReportBtn.disabled = false; // Enable generate button again
-                    console.log("Showing Detention Act download button.");
+                    console.log("Report Assistant Debug: Mostrando botón de descarga de Acta.");
                     return; // End function here, do not call API
                 }
 
@@ -1911,10 +1921,12 @@
                 const payload = { contents: chatHistory }; 
 
                 try {
-                    const apiKey = ""; // Replace with your actual API key
+                    console.log("Report Assistant Debug: Llamando a la API de Gemini para generar informe.");
+                    // !! IMPORTANTE: Inserta tu CLAVE API de Google Gemini aquí !!
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     
-                    console.log("Payload sent to Gemini for report:", payload); 
+                    console.log("Report Assistant Debug: Payload enviado a Gemini para informe:", payload); 
 
                     const response = await fetch(apiUrl, {
                         method: 'POST',
@@ -1924,7 +1936,7 @@
 
                     if (!response.ok) {
                         const errorData = await response.json();
-                        console.error('Error generating report with Gemini API:', response.status, response.statusText, errorData);
+                        console.error('Report Assistant Debug: Error al generar informe con Gemini API:', response.status, response.statusText, errorData);
                         reportOutput.innerHTML = `<p class="text-danger">Error al generar el informe: ${errorData.error.message || 'Error desconocido'}.</p>`;
                         return;
                     }
@@ -1936,25 +1948,26 @@
                         const generatedText = result.candidates[0].content.parts[0].text;
                         reportOutput.innerHTML = `<pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background-color: #f8f9fa; padding: 10px; border-radius: 5px; color: #333;">${generatedText}</pre>`;
                         copyReportBtn.style.display = 'block'; // Show only if text generated
+                        console.log("Report Assistant Debug: Borrador de informe generado y mostrado.");
                     } else {
                         reportOutput.innerHTML = '<p class="text-warning">No se pudo generar un informe. Intenta con una descripción más detallada.</p>';
+                        console.warn("Report Assistant Debug: No se generó texto de informe. Estructura de respuesta inesperada.");
                     }
                 } catch (error) {
-                    console.error('Network error or parsing issue in Gemini API call for report:', error);
+                    console.error('Report Assistant Debug: Error de red o parseo al llamar a Gemini para informe:', error);
                     reportOutput.innerHTML = '<p class="text-danger">Error de conexión. Asegúrate de tener conexión a internet.</p>';
                 } finally {
                     generateReportBtn.disabled = false; // Always enable when generation finishes
+                    console.log("Report Assistant Debug: Generación de informe finalizada.");
                 }
             });
 
             copyReportBtn.addEventListener('click', () => {
                 const reportContent = reportOutput.textContent;
                 navigator.clipboard.writeText(reportContent).then(() => {
-                    // Replaced alert() with a subtle message
                     showSubtleMessage('¡Borrador copiado al portapapeles!');
                 }).catch(err => {
-                    console.error('Error al copiar el borrador:', err);
-                    // Replaced alert() with a subtle message
+                    console.error('Report Assistant Debug: Error al copiar el borrador:', err);
                     showSubtleMessage('No se pudo copiar el borrador.', true); // true to indicate error (red)
                 });
             });
