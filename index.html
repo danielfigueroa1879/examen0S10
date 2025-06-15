@@ -1286,14 +1286,14 @@
 
                 // Simulate loading time and then generate questions
                 setTimeout(() => {
-                    // Shuffle questions and select ALL 30 questions (cambió de 20 a 30)
-                    questions = shuffleArray(defaultQuestions);
+                    // Usar exactamente las primeras 30 preguntas del banco (sin slice, ya que defaultQuestions tiene exactamente 50)
+                    questions = shuffleArray(defaultQuestions).slice(0, 30); // Asegurar exactamente 30 preguntas
                     userAnswers = {};
                     
                     displayQuiz();
                     
                     if (subtleResponseBox) {
-                        subtleResponseBox.textContent = '¡30 preguntas cargadas! Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
+                        subtleResponseBox.textContent = '¡Exactamente 30 preguntas cargadas! Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
                         setTimeout(() => {
                             subtleResponseBox.classList.remove('show');
                             setTimeout(() => subtleResponseBox.style.display = 'none', 500);
