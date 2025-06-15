@@ -1218,7 +1218,7 @@
             // Provide a dummy projectId to prevent initialization error, but real functionality will require a valid one.
             // This is a fallback for development/testing if __firebase_config is not fully populated by the environment.
             firebaseConfig = {
-                apiKey: firebaseConfig.apiKey || "dummy-api-key",
+                apiKey: firebaseConfig.apiKey || "dummy-api-key", // This dummy API key will cause auth errors, but allows init
                 authDomain: firebaseConfig.authDomain || "dummy-auth-domain.firebaseapp.com",
                 projectId: "dummy-project-id", // This is the key missing based on the error
                 storageBucket: firebaseConfig.storageBucket || "dummy-storage-bucket.appspot.com",
@@ -1246,23 +1246,31 @@
                 if (user) {
                     console.log("Auth state changed: User is signed in.", user.uid);
                     isFirebaseReady = true;
-                    questionsCollectionRef = collection(db, `artifacts/${appId}/public/data/quizQuestions`);
-                    // Once Firebase is ready and collection ref is set, try to generate questions if needed
-                    // This is to catch cases where DOMContentLoaded fires before Firebase is fully authenticated
+                    // Ensure questionsCollectionRef is defined only if Firebase is truly connected (not dummy)
+                    if (firebaseConfig.projectId !== "dummy-project-id") {
+                         questionsCollectionRef = collection(db, `artifacts/${appId}/public/data/quizQuestions`);
+                    } else {
+                        console.warn("Firebase Debug: Using dummy projectId. Firestore operations (save/load questions) will not be persistent.");
+                    }
                     if (!window.hasAttemptedQuestionGeneration) {
-                        window.hasAttemptedQuestionGeneration = true; // Prevent multiple calls
-                        // generateQuestions(); // This is called by the button click now, not automatically
+                        window.hasAttemptedQuestionGeneration = true;
+                        // No automatic call to generateQuestions here anymore, it's on button click
                     }
                 } else {
-                    console.log("Auth state changed: No user signed in.");
+                    console.log("Auth state changed: No user signed in. Attempting sign-in...");
                     isFirebaseReady = false;
                     try {
                         if (initialAuthToken) {
                             await signInWithCustomToken(auth, initialAuthToken);
                             console.log("Signed in with custom token via onAuthStateChanged.");
                         } else {
-                            await signInAnonymously(auth);
-                            console.log("Signed in anonymously via onAuthStateChanged (no initial token).");
+                            // Only attempt anonymous sign-in if Firebase config is not dummy and has a real API key for auth
+                            if (firebaseConfig.projectId !== "dummy-project-id" && firebaseConfig.apiKey && firebaseConfig.apiKey !== "dummy-api-key") {
+                                await signInAnonymously(auth);
+                                console.log("Signed in anonymously via onAuthStateChanged (no initial token).");
+                            } else {
+                                console.warn("Firebase Auth Debug: Skipping anonymous sign-in due to dummy Firebase config or missing Firebase API Key. Firestore persistence will not work.");
+                            }
                         }
                     } catch (error) {
                         console.error("Error during authentication in onAuthStateChanged:", error);
@@ -1271,20 +1279,23 @@
             });
 
             // Initial sign-in attempt if not already authenticated
+            // This logic is mostly redundant due to onAuthStateChanged but kept for clarity
             if (!auth.currentUser) {
                 if (initialAuthToken) {
                     signInWithCustomToken(auth, initialAuthToken)
                         .then(() => console.log("Initial sign-in with custom token successful."))
                         .catch((error) => {
-                            console.error("Initial sign-in with custom token failed, attempting anonymous:", error);
-                            signInAnonymously(auth)
-                                .then(() => console.log("Initial anonymous sign-in successful."))
-                                .catch((anonError) => console.error("Initial anonymous sign-in failed:", anonError));
+                            console.error("Initial sign-in with custom token failed:", error);
                         });
                 } else {
-                    signInAnonymously(auth)
-                        .then(() => console.log("Initial anonymous sign-in successful."))
-                        .catch((error) => console.error("Initial anonymous sign-in failed:", error));
+                    // Only attempt anonymous sign-in if Firebase config is not dummy and has a real API key for auth
+                    if (firebaseConfig.projectId !== "dummy-project-id" && firebaseConfig.apiKey && firebaseConfig.apiKey !== "dummy-api-key") {
+                        signInAnonymously(auth)
+                            .then(() => console.log("Initial anonymous sign-in successful."))
+                            .catch((error) => console.error("Initial anonymous sign-in failed:", error));
+                    } else {
+                        console.warn("Firebase Auth Debug: Skipping initial anonymous sign-in due to dummy Firebase config or missing Firebase API Key. Firestore persistence will not work.");
+                    }
                 }
             }
 
@@ -1470,15 +1481,15 @@
             // Function to add questions to Firestore
             async function addQuestionToFirestore(questionObj) {
                 if (!isFirebaseReady || !questionsCollectionRef) {
-                    console.error("Firebase Debug: Firestore NO está listo. No se puede añadir la pregunta.");
-                    showSubtleMessage('Error: Firestore no está listo para guardar preguntas.', true);
+                    console.error("Firebase Debug: Firestore NO está listo. No se puede añadir la pregunta. (Puede faltar projectId o clave API de Firebase válida).");
+                    showSubtleMessage('Error: Firestore no está listo para guardar preguntas. (Configuración de Firebase incompleta).', true);
                     return;
                 }
                 try {
                     await addDoc(questionsCollectionRef, questionObj);
                     console.log("Firebase Debug: Pregunta añadida a Firestore:", questionObj.question);
                 } catch (e) {
-                    console.error("Firebase Debug: Error al añadir documento: ", e);
+                    console.error("Firebase Debug: Error al añadir documento a Firestore: ", e);
                     showSubtleMessage('Error al guardar la pregunta en la base de datos.', true);
                 }
             }
@@ -1486,7 +1497,7 @@
             // Function to fetch questions from Firestore
             async function fetchQuestionsFromFirestore() {
                 if (!isFirebaseReady || !questionsCollectionRef) {
-                    console.warn("Firebase Debug: Firestore NO está listo. No se pueden obtener las preguntas. Usando preguntas de respaldo.");
+                    console.warn("Firebase Debug: Firestore NO está listo o colección no definida. No se pueden obtener las preguntas. Usando preguntas de respaldo locales.");
                     return [];
                 }
                 try {
@@ -1539,30 +1550,41 @@
                             clearInterval(checkFirebase);
                             console.log("Quiz Debug: Firebase está listo.");
                             resolve();
+                        } else {
+                            console.log("Quiz Debug: Firebase aún no está listo...");
                         }
                     }, 100);
                 });
 
                 let loadedQuestions = [];
 
-                // 1. Try to fetch from Firestore first
-                console.log("Quiz Debug: Intentando obtener preguntas de Firestore...");
-                const fetchedQuestions = await fetchQuestionsFromFirestore();
-
-                if (fetchedQuestions.length > 0) {
-                    loadedQuestions = fetchedQuestions;
-                    console.log(`Quiz Debug: Cargadas ${fetchedQuestions.length} preguntas desde Firestore.`);
+                // 1. Try to fetch from Firestore first if it's properly configured
+                if (firebaseConfig.projectId !== "dummy-project-id" && questionsCollectionRef) {
+                    console.log("Quiz Debug: Intentando obtener preguntas de Firestore...");
+                    loadedQuestions = await fetchQuestionsFromFirestore();
+                    if (loadedQuestions.length > 0) {
+                        console.log(`Quiz Debug: Cargadas ${loadedQuestions.length} preguntas desde Firestore.`);
+                    } else {
+                        console.log("Quiz Debug: Firestore accesible pero vacío. Se intentará poblar con preguntas predeterminadas/del usuario.");
+                    }
                 } else {
-                    console.log("Quiz Debug: Firestore vacío o inaccesible. Combinando preguntas predeterminadas y proporcionadas por el usuario como fallback inicial.");
-                    // Fallback to a guaranteed set of questions if Firestore is empty/fails
+                    console.warn("Quiz Debug: Firebase no está completamente configurado (dummy projectId o questionsCollectionRef no definido). Saltando la carga desde Firestore.");
+                }
+
+
+                // Fallback mechanism: Always ensure there's a base set of questions
+                if (loadedQuestions.length === 0) {
+                    console.log("Quiz Debug: No se cargaron preguntas de Firestore o no es accesible. Combinando preguntas predeterminadas y proporcionadas por el usuario como fallback inicial.");
                     loadedQuestions = [...defaultQuestions, ...userProvidedQuestions];
-                    // Attempt to upload these combined questions to Firestore if it's empty, but don't block display
-                    if (isFirebaseReady && questionsCollectionRef) {
-                        try {
-                            console.log("Quiz Debug: Intentando subir preguntas predeterminadas y del usuario a Firestore (si estaba vacío).");
+                    
+                    // Attempt to upload these combined questions to Firestore if possible, but don't block
+                    if (isFirebaseReady && questionsCollectionRef && firebaseConfig.projectId !== "dummy-project-id") {
+                         try {
+                            console.log("Quiz Debug: Intentando subir preguntas predeterminadas y del usuario a Firestore.");
                             for (const q of loadedQuestions) {
-                                // Add a check to prevent duplicate adds if this runs multiple times
-                                // Or, consider checking if a question already exists before adding
+                                // Simple check to avoid adding the same question multiple times on reloads
+                                // A more robust solution would involve checking for existence before adding
+                                // For now, we'll just add. Firestore might handle duplicates if document IDs are managed.
                                 await addQuestionToFirestore(q);
                             }
                             console.log("Quiz Debug: Preguntas predeterminadas y del usuario subidas a Firestore.");
@@ -1570,15 +1592,15 @@
                             console.error("Quiz Debug: Error al subir preguntas a Firestore:", uploadError);
                         }
                     } else {
-                         console.warn("Quiz Debug: Firebase no listo para subir preguntas, se usará solo el set local por ahora.");
+                        console.warn("Quiz Debug: Firebase no listo para persistencia; las preguntas predeterminadas no se guardarán en la nube.");
                     }
                 }
-
-                // Now try AI generation, but only use if it provides *more* or *better* questions
-                // This part runs in parallel or after a short delay if needed, but the user already has *some* questions
-                if (loadedQuestions.length < 30) { // If we don't have enough questions, try AI
-                    console.log("Quiz Debug: Menos de 30 preguntas cargadas. Intentando generar preguntas adicionales con IA.");
-                    const prompt = `Genera ${30 - loadedQuestions.length} preguntas de Verdadero/Falso sobre la normativa y funciones del guardia de seguridad en Chile, abarcando temas del Decreto Ley 3607, Decreto Supremo 93, y los roles y responsabilidades prácticas del guardia según la normativa legal vigente entre 2020 y 2025 (incluyendo contexto de la Ley 21.659, si bien las preguntas deben ser sobre la función actual o regulaciones anteriores si siguen siendo relevantes para la operación diaria). Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').`;
+                
+                // Now try AI generation if we still don't have enough questions (e.g., less than 30)
+                if (loadedQuestions.length < 30) { 
+                    console.log(`Quiz Debug: Menos de 30 preguntas (${loadedQuestions.length}) cargadas. Intentando generar preguntas adicionales con IA.`);
+                    const questionsToGenerate = 30 - loadedQuestions.length;
+                    const prompt = `Genera ${questionsToGenerate} preguntas de Verdadero/Falso sobre la normativa y funciones del guardia de seguridad en Chile, abarcando temas del Decreto Ley 3607, Decreto Supremo 93, y los roles y responsabilidades prácticas del guardia según la normativa legal vigente entre 2020 y 2025 (incluyendo contexto de la Ley 21.659, si bien las preguntas deben ser sobre la función actual o regulaciones anteriores si siguen siendo relevantes para la operación diaria). Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').`;
                     let chatHistory = [];
                     chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                     const payload = {
@@ -1600,8 +1622,9 @@
                     };
 
                     try {
-                        const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
+                        const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE API DE GEMINI
                         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                        console.log("Quiz Debug: Llamando a la API de Gemini para generar preguntas adicionales...");
                         const response = await fetch(apiUrl, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -1617,11 +1640,16 @@
                                 try {
                                     const aiGeneratedQuestions = JSON.parse(jsonText);
                                     if (Array.isArray(aiGeneratedQuestions) && aiGeneratedQuestions.length > 0) {
-                                        console.log(`Quiz Debug: IA generó ${aiGeneratedQuestions.length} preguntas adicionales.`);
+                                        console.log(`Quiz Debug: IA generó ${aiGeneratedQuestions.length} preguntas adicionales y se añadieron al set.`);
                                         loadedQuestions = loadedQuestions.concat(aiGeneratedQuestions);
-                                        // Also upload these new AI questions to Firestore
-                                        for (const q of aiGeneratedQuestions) {
-                                            await addQuestionToFirestore(q);
+                                        // Also upload these new AI questions to Firestore if possible
+                                        if (isFirebaseReady && questionsCollectionRef && firebaseConfig.projectId !== "dummy-project-id") {
+                                            for (const q of aiGeneratedQuestions) {
+                                                await addQuestionToFirestore(q);
+                                            }
+                                            console.log("Quiz Debug: Preguntas generadas por IA y subidas a Firestore.");
+                                        } else {
+                                            console.warn("Quiz Debug: Firebase no listo para persistencia; las preguntas generadas por IA no se guardarán en la nube.");
                                         }
                                     }
                                 } catch (parseError) {
@@ -1637,10 +1665,10 @@
                     }
                 }
 
-                // Ensure we have at least some questions, even if AI or Firestore completely fail
+                // Final check: Ensure we have at least some questions
                 if (loadedQuestions.length === 0) {
                     loadedQuestions = [...defaultQuestions, ...userProvidedQuestions];
-                    console.warn("Quiz Debug: Ninguna pregunta cargada. Usando el conjunto base de respaldo.");
+                    console.error("Quiz Debug: ¡Advertencia crítica! Ninguna pregunta cargada de ninguna fuente. Se usará el conjunto base de respaldo como último recurso.");
                 }
 
                 // Shuffle all available questions and select up to 30
