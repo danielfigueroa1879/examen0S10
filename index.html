@@ -10,73 +10,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons CSS (for lupa, person, document, terminal, keyboard, variable, unit icons) -->
+    <!-- Bootstrap Icons CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
         /* Estilos Base */
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f8f8f8; /* Blanco muy claro para el fondo */
-            color: #333; /* Texto oscuro */
+            background-color: #f8f8f8;
+            color: #333;
             margin: 0;
             padding: 0;
-            overflow-x: hidden; /* Evitar scroll horizontal */
-            display: flex; /* Usar flexbox para el layout principal */
-            flex-direction: column; /* Columna por defecto */
-            min-height: 100vh; /* Asegura que el cuerpo ocupe al menos toda la altura de la ventana */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* Capa superpuesta para efecto de desenfoque */
         .background-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 255, 255, 0.7); /* Blanco semi-transparente */
-            backdrop-filter: blur(3px); /* Ligeramente suave */
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(3px);
             -webkit-backdrop-filter: blur(3px);
             z-index: -1;
         }
 
-        /* Personalización de la barra de navegación */
+        /* Navbar */
         .navbar-custom {
-            background-color: rgba(23, 27, 74, 0.9); /* Azul oscuro (#171b4a) menos transparente */
-            backdrop-filter: blur(5px); /* Desenfoque para el banner */
+            background-color: rgba(23, 27, 74, 0.9);
+            backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             transition: all 0.3s ease-in-out;
             padding: 1rem 3%;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3); /* Sombra sutil */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
         .navbar-custom .navbar-brand {
             font-weight: 700;
-            color: #ffffff; /* Blanco para el logo */
+            color: #ffffff;
             transition: font-size 0.3s ease-in-out;
             margin-right: 0;
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* Alinea los ítems al inicio por defecto */
+            justify-content: flex-start;
         }
 
-        /* Estilos para el texto de la marca */
         .navbar-brand .brand-text {
-            font-size: 1.3rem; /* Tamaño predeterminado para móvil */
-            line-height: 1.2; /* Tighter line height for stacked text */
-            text-transform: uppercase; /* MAYÚSCULAS */
+            font-size: 1.3rem;
+            line-height: 1.2;
+            text-transform: uppercase;
         }
 
-        /* Estilos para el logo dentro de la marca */
         .navbar-brand .navbar-logo {
-            height: 50px; /* Tamaño más grande para móvil */
-            margin-left: 10px; /* Espacio entre texto y logo en móvil */
-            order: 1; /* Mover el logo a la derecha del texto en móvil */
+            height: 50px;
+            margin-left: 10px;
+            order: 1;
         }
 
         .navbar-custom .nav-link {
-            color: #ffffff !important; /* Texto de los enlaces blanco */
+            color: #ffffff !important;
             font-weight: 600;
             position: relative;
             text-decoration: none;
@@ -87,7 +84,7 @@
         }
 
         .navbar-custom .nav-link:hover {
-            color: #b2b6dc !important; /* Tono más claro del azul oscuro al pasar el cursor */
+            color: #b2b6dc !important;
         }
 
         .navbar-custom .nav-link::after {
@@ -98,7 +95,7 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #b2b6dc; /* Tono más claro para el subrayado */
+            background-color: #b2b6dc;
             transition: width 0.3s ease-in-out;
         }
 
@@ -106,12 +103,11 @@
             width: 80%;
         }
 
-        /* Reducción de la barra de navegación al hacer scroll */
         .navbar-shrink {
             padding: 0.5rem 3%;
             box-shadow: 0 0 15px rgba(0,0,0,0.4);
-            background-color: rgba(23, 27, 74, 0.95); /* Azul oscuro aún más opaco al encogerse */
-            backdrop-filter: blur(8px); /* Más desenfoque al encogerse */
+            background-color: rgba(23, 27, 74, 0.95);
+            backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
         }
 
@@ -119,7 +115,6 @@
             font-size: 1.2rem;
         }
 
-        /* Botón de búsqueda (lupa) */
         .search-toggler {
             background-color: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.2);
@@ -128,7 +123,7 @@
             padding: 0.5rem 0.8rem;
             transition: all 0.3s ease-in-out;
             margin-left: 10px;
-            display: flex; /* Asegura que la lupa sea visible */
+            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -139,34 +134,33 @@
         }
 
         .search-toggler i {
-            color: #ffffff; /* Blanco para la lupa */
+            color: #ffffff;
             font-size: 1.2rem;
         }
 
-        /* Contenedor de la barra de búsqueda (el input) */
         .search-bar-container {
             position: absolute;
-            top: 100%; /* Justo debajo de la navbar */
+            top: 100%;
             left: 0;
             width: 100%;
-            background-color: #171b4a; /* Azul oscuro (#171b4a) */
+            background-color: #171b4a;
             padding: 10px 3%;
             box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-            display: none; /* Oculto por defecto */
+            display: none;
             z-index: 1000;
         }
 
         .search-bar-container.show {
-            display: block; /* Muestra el input cuando se añade la clase .show */
+            display: block;
         }
 
         .search-bar-container input {
             width: 100%;
-            border-radius: 20px; /* Puntas más redondeadas */
+            border-radius: 20px;
             border: 1px solid #333;
             padding: 8px;
             font-family: 'Poppins', sans-serif;
-            background-color: #f0f0f0; /* Gris claro */
+            background-color: #f0f0f0;
             color: #333;
         }
 
@@ -174,7 +168,6 @@
             color: #666;
         }
 
-        /* Botón de Contacto */
         .contact-btn {
             background-color: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.2);
@@ -195,59 +188,56 @@
             font-size: 1.2rem;
         }
 
-        /* Botón de menú móvil (Hamburguesa) */
         .navbar-toggler {
-            border: none; /* Eliminar el borde */
-            border-radius: 0; /* Eliminar el redondeo */
-            padding: 0; /* Eliminar padding por defecto */
-            background-color: transparent; /* Asegurarse de que no tenga fondo */
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            background-color: transparent;
         }
 
         .navbar-toggler-icon {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-            width: 1.5em; /* Ajusta el tamaño si es necesario */
-            height: 1.5em; /* Ajusta el tamaño si es necesario */
+            width: 1.5em;
+            height: 1.5em;
         }
 
-        /* Área de Contenido Principal */
+        /* Contenido Principal */
         .main-content {
-            flex-grow: 1; /* Ocupa el espacio restante */
+            flex-grow: 1;
             padding: 20px 8%;
             text-align: justify;
             line-height: 1.6;
             color: #333;
-            min-width: 0; /* Permite que se encoja */
-            padding-top: 100px; /* Ajuste para el banner fijo */
+            min-width: 0;
+            padding-top: 100px;
         }
 
-        /* Estilo de sección de información (ventanas transparentes) */
         .info-section {
-            background-color: rgba(255, 255, 255, 0.7); /* Blanco semi-transparente como ventanas */
+            background-color: rgba(255, 255, 255, 0.7);
             padding: 30px;
             border-radius: 15px;
-            border: 2px solid transparent; /* Borde inicial transparente */
+            border: 2px solid transparent;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             margin-bottom: 40px;
             text-align: center;
-            position: relative; /* Para la ventana flotante roja */
-            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para el hover */
-        }
-        /* Borde e iluminación para todas las secciones de información al hacer hover */
-        .info-section:hover {
-            border-color: #dc3545; /* Color del borde al hacer hover (rojo) */
-            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4), 0 0 15px rgba(220, 53, 69, 0.6); /* Sombra que simula el resplandor */
-        }
-        /* Estilo específico para la sección de examen al hacer hover */
-        #exam-section:hover {
-            border-color: #dc3545; /* Rojo también para el hover del examen */
-            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4), 0 0 15px rgba(220, 53, 69, 0.6); /* Sombra que simula el resplandor */
-        }
-        /* Estilo para la sección de examen cuando está activa */
-        #exam-section.active-red-border {
-            border-color: #dc3545; /* Rojo permanente */
-            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.6), 0 0 20px rgba(220, 53, 69, 0.8); /* Resplandor más fuerte */
+            position: relative;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
+        .info-section:hover {
+            border-color: #dc3545;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4), 0 0 15px rgba(220, 53, 69, 0.6);
+        }
+
+        #exam-section:hover {
+            border-color: #dc3545;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4), 0 0 15px rgba(220, 53, 69, 0.6);
+        }
+
+        #exam-section.active-red-border {
+            border-color: #dc3545;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.6), 0 0 20px rgba(220, 53, 69, 0.8);
+        }
 
         .main-content h1, .main-content h2, .main-content h3,
         .main-content h4, .main-content h5, .main-content h6 {
@@ -256,12 +246,11 @@
             margin-top: 1.7em;
             margin-bottom: 0.8em;
             text-align: center;
-            color: #283593; /* Azul oscuro (#283593) para los encabezados de sección */
+            color: #283593;
         }
 
-        /* Nuevo estilo para el encabezado del examen si se quiere verde */
         .main-content .exam-heading-green {
-            color: #28a745; /* Verde */
+            color: #28a745;
         }
 
         .main-content p {
@@ -270,18 +259,17 @@
 
         .main-content a {
             font-weight: bold;
-            color: #283593; /* Azul oscuro (#283593) para los enlaces */
+            color: #283593;
             text-decoration: none;
             position: relative;
             transition: color 0.3s ease-in-out;
         }
 
         .main-content a:hover {
-            color: #515ba6; /* Azul medio al pasar el cursor */
+            color: #515ba6;
             text-decoration: underline;
         }
 
-        /* Imágenes */
         .main-content img {
             max-width: 100%;
             height: auto;
@@ -299,34 +287,31 @@
             margin-bottom: 20px;
         }
 
-        /* Listas */
         .main-content ul {
             list-style: none;
             padding-left: 0;
-            text-align: left; /* Alineación a la izquierda para las listas */
+            text-align: left;
         }
 
         .main-content ul li::before {
             content: "\2023";
             font-size: 1em;
-            color: #283593; /* Azul oscuro (#283593) para las viñetas */
+            color: #283593;
             position: absolute;
             left: 0;
             top: 0.1em;
         }
 
-        /* Citas en bloque */
         .main-content blockquote {
-            background-color: rgba(40, 53, 147, 0.1); /* Azul oscuro semi-transparente */
-            border-left: 5px solid #283593; /* Borde azul oscuro */
+            background-color: rgba(40, 53, 147, 0.1);
+            border-left: 5px solid #283593;
             margin: 20px 0;
             padding: 15px 20px;
             border-radius: 8px;
             font-style: italic;
-            color: #515ba6; /* Azul medio para el texto */
+            color: #515ba6;
         }
 
-        /* Videos */
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
@@ -349,21 +334,19 @@
             border-radius: 10px;
         }
 
-        /* Íconos para elementos especiales */
         .icon-small {
             font-size: 0.9em;
             vertical-align: middle;
             margin-right: 5px;
-            color: #283593; /* Azul oscuro (#283593) para los íconos pequeños */
+            color: #283593;
         }
 
-        /* Estilo para el banner de instalación de PWA (creado dinámicamente) */
         #dynamic-install-banner {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #283593; /* Azul oscuro para el banner */
+            background-color: #283593;
             color: white;
             font-weight: bold;
             padding: 20px;
@@ -378,8 +361,8 @@
         #dynamic-install-banner button {
             margin-left: 10px;
             padding: 8px 16px;
-            background: #e8eaf6; /* Azul muy claro para el botón */
-            color: #283593; /* Texto azul oscuro */
+            background: #e8eaf6;
+            color: #283593;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -388,15 +371,14 @@
         }
 
         #dynamic-install-banner button:hover {
-            background-color: #c5cae9; /* Azul más oscuro al pasar el cursor */
+            background-color: #c5cae9;
             transform: translateY(-1px);
         }
 
-        /* Pie de página */
         .footer {
             text-align: center;
             padding: 20px;
-            background-color: #171b4a; /* Azul oscuro del banner principal */
+            background-color: #171b4a;
             color: #f8f8f8;
             font-size: 0.9em;
             margin-top: 50px;
@@ -405,24 +387,22 @@
             box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Estilos de la sección de Examen */
-        /* Ya definidos arriba para el hover */
-
+        /* Estilos del Examen */
         #exam-section {
-            background-color: rgba(255, 255, 255, 0.7); /* Ventanas transparentes */
+            background-color: rgba(255, 255, 255, 0.7);
             padding: 30px;
             border-radius: 15px;
-            border: 2px solid transparent; /* Borde inicial transparente */
+            border: 2px solid transparent;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             margin-bottom: 40px;
             text-align: center;
-            position: relative; /* Para la ventana flotante roja */
-            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para el hover */
-            min-height: 500px; /* Hacer el container del examen más largo verticalmente */
+            position: relative;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            min-height: 500px;
         }
 
         #start-exam-btn {
-            background-color: #dc3545; /* Rojo */
+            background-color: #dc3545;
             color: white;
             border: none;
             border-radius: 12px;
@@ -432,26 +412,24 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             margin-top: 20px;
-            display: block; /* Para centrar el botón */
-            margin-left: auto; /* Para centrar el botón */
-            margin-right: auto; /* Para centrar el botón */
-            /* Animation for jumping effect */
-            animation: jump 0.6s infinite alternate; /* Applies the jump animation */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            animation: jump 0.6s infinite alternate;
         }
 
         #start-exam-btn:hover {
-            background-color: #c82333; /* Rojo más oscuro para hover */
+            background-color: #c82333;
             transform: translateY(-3px);
-            animation: none; /* Stop animation on hover */
+            animation: none;
         }
 
-        /* Keyframes for the jump animation */
         @keyframes jump {
             0% {
                 transform: translateY(0);
             }
             100% {
-                transform: translateY(-10px); /* Adjust height of jump */
+                transform: translateY(-10px);
             }
         }
 
@@ -460,79 +438,74 @@
         }
 
         .question-card {
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo de pregunta ligeramente transparente */
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             margin-bottom: 20px;
             border-radius: 10px;
-            border: 1px solid rgba(0,0,0,0.05); /* Borde inicial casi transparente */
+            border: 1px solid rgba(0,0,0,0.05);
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transición para el borde azul */
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
 
         .question-card h5 {
-            color: #333; /* Texto de pregunta oscuro */
+            color: #333;
             font-weight: 700;
             font-size: 1.1em;
             text-align: justify;
             margin-bottom: 15px;
         }
         
-        /* Estilos para las opciones de Verdadero/Falso como botones */
         .option-button {
-            display: inline-block; /* Ocupa el espacio de su contenido */
-            background-color: #f0f0f0; /* Color de fondo normal del botón */
-            color: #333; /* Color de texto normal */
-            border: 1px solid #ccc; /* Borde del botón */
-            border-radius: 8px; /* Bordes redondeados */
+            display: inline-block;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 8px;
             padding: 10px 20px;
-            margin: 5px; /* Espacio entre botones */
+            margin: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 600;
             text-align: center;
-            user-select: none; /* Evita selección de texto */
+            user-select: none;
         }
 
         .option-button:hover {
-            background-color: #e0e0e0; /* Color al pasar el mouse */
-            transform: translateY(-2px); /* Pequeño efecto de elevación */
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
-        /* Estilo para botón seleccionado */
         .option-button.selected {
-            background-color: #283593; /* Azul oscuro al seleccionar */
-            color: white; /* Texto blanco al seleccionar */
+            background-color: #283593;
+            color: white;
             border-color: #283593;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        /* Estilos para respuestas correctas/incorrectas */
         .option-button.correct {
-            background-color: #28a745; /* Verde para respuesta correcta */
+            background-color: #28a745;
             color: white;
             border-color: #28a745;
         }
 
         .option-button.incorrect {
-            background-color: #dc3545; /* Rojo para respuesta incorrecta */
+            background-color: #dc3545;
             color: white;
             border-color: #dc3545;
         }
-        /* Estilo para el borde del question-card cuando una pregunta ha sido respondida */
+
         .question-card.answered-blue-border {
-            border-color: #2196f3; /* Azul para el borde de la pregunta respondida */
-            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.4); /* Resplandor azul */
+            border-color: #2196f3;
+            box-shadow: 0 2px 8px rgba(33, 150, 243, 0.4);
         }
 
-        /* Ocultar los radio buttons originales */
         .form-check-input[type="radio"] {
             display: none;
         }
 
-        /* Asegurar que el label ocupe todo el espacio del botón */
         .form-check-label.option-button {
-            width: auto; /* Permite que el ancho se ajuste al contenido */
+            width: auto;
         }
 
         .exam-controls {
@@ -557,7 +530,7 @@
         }
 
         #exam-results {
-            background-color: rgba(40, 53, 147, 0.3); /* Fondo azul oscuro semi-transparente para resultados */
+            background-color: rgba(40, 53, 147, 0.3);
             padding: 25px;
             border-radius: 15px;
             margin-top: 30px;
@@ -565,212 +538,33 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             display: none;
             border: 1px solid rgba(40,53,147,0.5);
-            color: #e8eaf6; /* Texto claro */
+            color: #e8eaf6;
         }
 
         #exam-results h3 {
-            color: #e8eaf6; /* Azul muy claro */
+            color: #e8eaf6;
         }
-        /* Estilo para la nota final con animación */
+
         #exam-results p {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #1a237e; /* Color oscuro para la nota */
-            animation: pulse-grade 4s infinite; /* Aplicar animación */
+            color: #1a237e;
+            animation: pulse-grade 4s infinite;
         }
 
-        /* Keyframes para la animación de la nota */
         @keyframes pulse-grade {
             0% { transform: scale(1); opacity: 1; text-shadow: 0 0 0px rgba(255, 255, 255, 0); }
             50% { transform: scale(1.05); opacity: 0.9; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
             100% { transform: scale(1); opacity: 1; text-shadow: 0 0 0px rgba(255, 255, 255, 0); }
         }
 
-
-        /* Estilo del chat flotante de IA */
-        #ai-clarifier-chat {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 350px; /* Ancho predeterminado para PC */
-            height: 450px; /* Alto predeterminado para PC */
-            background-color: #b3e5fc; /* Azul claro */
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            display: none; /* Oculto por defecto */
-            flex-direction: column;
-            justify-content: space-between;
-            z-index: 1060; /* Por encima de todo lo demás */
-            transition: all 0.3s ease-in-out;
-            border: 1px solid rgba(0,0,0,0.1);
-            color: #333;
-        }
-
-        #ai-clarifier-chat.show {
-            display: flex;
-        }
-
-        #ai-clarifier-chat .chat-header {
-            display: flex;
-            justify-content: flex-start; /* Alinear al inicio para texto e imagen */
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            position: relative; /* Para posicionar el botón de cierre */
-        }
-
-        #ai-clarifier-chat .chat-header h2 {
-            font-size: 1.0rem; /* Tamaño de fuente para PC */
-            margin: 0;
-            color: #283593; /* Azul oscuro */
-            margin-right: 10px; /* Espacio entre título y logo */
-        }
-
-        #ai-clarifier-chat .chat-header .close-button {
-            position: absolute; /* Posicionamiento absoluto */
-            top: -5px; /* Mover ligeramente hacia arriba para que no quede tan pegado */
-            right: 0px; /* Mover a la orilla derecha */
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #555;
-            cursor: pointer;
-            padding: 0; /* Eliminar padding por defecto del botón */
-        }
-
-        #ai-clarifier-chat .chat-header .close-button:hover {
-            color: #000;
-        }
-
-        #ai-clarifier-chat .chat-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding-right: 5px; /* Espacio para scrollbar */
-            margin-bottom: 15px;
-        }
-
-        #ai-clarifier-chat .chat-content p {
-            font-size: 0.9rem;
-            line-height: 1.4;
-            margin-bottom: 8px;
-        }
-
-        #ai-clarifier-chat textarea {
-            width: 100%;
-            height: 80px; /* Más pequeño para el chat flotante */
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            padding: 8px;
-            font-family: 'Poppins', sans-serif;
-            resize: vertical;
-            margin-bottom: 10px;
-            background-color: #fff;
-            color: #333;
-        }
-
-        #ai-clarifier-chat textarea::placeholder {
-            color: #aaa; /* Color más claro para el placeholder */
-        }
-
-        #ai-clarifier-chat button {
-            background-color: #dc3545; /* Rojo para el botón de IA */
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 15px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            width: 100%; /* Ocupa todo el ancho */
-        }
-
-        #ai-clarifier-chat button:hover {
-            background-color: #c82333; /* Rojo más oscuro para hover */
-            transform: translateY(-2px);
-        }
-
-        #ai-clarifier-chat #ai-clarifier-response {
-            background-color: #ffffff; /* Fondo blanco para las respuestas */
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-            border: 1px solid #eee; /* Borde sutil */
-            white-space: pre-wrap;
-            color: #283593; /* Texto azul oscuro */
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        #ai-clarifier-chat .gemini-logo {
-            width: 40px; /* Tamaño más pequeño para el logo al lado del título */
-            height: auto;
-            vertical-align: middle;
-            margin-top: -5px; /* Ajuste para alinear con el texto */
-        }
-        
-        /* Spinner de carga */
-        .spinner-border {
-            display: inline-block;
-            width: 2rem;
-            height: 2rem;
-            vertical-align: -0.125em;
-            border: 0.25em solid currentColor;
-            border-right-color: transparent;
-            border-radius: 50%;
-            -webkit-animation: .75s linear infinite spinner-border;
-            animation: .75s linear infinite spinner-border;
-            color: #dc3545; /* Rojo para el spinner */
-        }
-
-        @-webkit-keyframes spinner-border {
-            to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
-        }
-
-        @keyframes spinner-border {
-            to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
-        }
-
-        /* Estilo del botón flotante de IA (para abrir/cerrar el chat flotante) */
-        #floating-ai-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #00bcd4; /* Celeste */
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.8rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            cursor: pointer;
-            z-index: 1061; /* Por encima del chat flotante */
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-        }
-
-        #floating-ai-button:hover {
-            background-color: #0097a7; /* Celeste más oscuro al pasar el cursor */
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-        }
-
-        /* Contador de visitas (display: none en todas las pantallas ya que se elimina la funcionalidad) */
-        .visit-counter {
-            display: none; 
-        }
-
-        /* Ventana roja sutil de aparición/desaparición */
         .subtle-response-box {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(220, 53, 69, 0.2); /* Rojo suave, 20% opacidad */
-            color: #dc3545; /* Color del texto rojo */
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
             padding: 15px 25px;
             border-radius: 8px;
             font-weight: 600;
@@ -779,8 +573,8 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-            z-index: 10; /* Asegurarse de que esté por encima del contenido normal */
-            pointer-events: none; /* Permite hacer clic a través de ella */
+            z-index: 10;
+            pointer-events: none;
         }
 
         .subtle-response-box.show {
@@ -788,18 +582,18 @@
             visibility: visible;
         }
 
-        /* Estilos para el modal de resultados del examen */
+        /* Modal de resultados */
         #results-modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+            background-color: rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2000; /* Por encima de todo lo demás */
+            z-index: 2000;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
@@ -811,34 +605,34 @@
         }
 
         #results-modal-content {
-            background-color: #fff; /* Color de fondo por defecto, se cambiará dinámicamente */
+            background-color: #fff;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
             text-align: center;
             max-width: 90%;
-            width: 500px; /* Ancho fijo para el modal */
+            width: 500px;
             position: relative;
-            transform: translateY(-50px); /* Ligeramente elevado al aparecer */
+            transform: translateY(-50px);
             transition: transform 0.3s ease-out;
         }
 
         #results-modal-overlay.show #results-modal-content {
-            transform: translateY(0); /* Vuelve a su posición normal */
+            transform: translateY(0);
         }
 
         #results-modal-content.pass {
-            background-color: rgba(40, 167, 69, 0.9); /* Verde para aprobar */
+            background-color: rgba(40, 167, 69, 0.9);
             color: white;
         }
 
         #results-modal-content.fail {
-            background-color: rgba(220, 53, 69, 0.9); /* Rojo para reprobar */
+            background-color: rgba(220, 53, 69, 0.9);
             color: white;
         }
 
         #results-modal-content h3 {
-            font-size: 2.5rem; /* Tamaño de fuente más grande para la nota */
+            font-size: 2.5rem;
             margin-bottom: 15px;
             font-weight: 700;
         }
@@ -849,10 +643,10 @@
         }
 
         #results-modal-content #modal-grade {
-            font-size: 4rem; /* Nota más grande */
+            font-size: 4rem;
             font-weight: 900;
-            color: inherit; /* Hereda el color del modal (blanco) */
-            animation: pulse-modal-grade 1.5s infinite alternate; /* Animación para la nota del modal */
+            color: inherit;
+            animation: pulse-modal-grade 1.5s infinite alternate;
         }
 
         @keyframes pulse-modal-grade {
@@ -862,7 +656,7 @@
 
         #results-modal-content button {
             margin-top: 20px;
-            background-color: rgba(255, 255, 255, 0.2); /* Botón transparente blanco */
+            background-color: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.5);
             color: white;
             padding: 10px 20px;
@@ -876,71 +670,183 @@
             border-color: rgba(255, 255, 255, 0.8);
         }
 
+        /* Spinner */
+        .spinner-border {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            vertical-align: -0.125em;
+            border: 0.25em solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+            -webkit-animation: .75s linear infinite spinner-border;
+            animation: .75s linear infinite spinner-border;
+            color: #dc3545;
+        }
 
-        /* Ajustes responsivos */
-        @media (max-width: 768px) { /* Móvil: Diseño de una columna */
-            .navbar-custom {
-                padding: 1rem 5%;
-            }
-            .navbar-custom .navbar-brand {
-                font-size: 1.5rem; /* Texto más pequeño para móvil */
-                margin-right: 0;
-                /* Removido flex-direction column aquí para permitir que se apile el texto con <br> */
-            }
-            .navbar-brand .navbar-logo {
-                height: 65px; /* Logo más grande para móvil */
-                margin-left: 15px; 
-                margin-right: 0px; /* Asegura que no haya margen extra a la derecha */
-            }
-            .navbar-custom .navbar-collapse {
-                background-color: #171b4a; /* Azul oscuro para el menú colapsado */
-                padding: 10px;
-                border-radius: 8px;
-                margin-top: 10px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-                backdrop-filter: blur(5px); /* Desenfoque para el menú colapsado */
-                -webkit-backdrop-filter: blur(5px);
-            }
-            .navbar-custom .nav-link {
-                text-align: center;
-                margin: 5px 0;
-            }
-            .navbar-custom .nav-link::after {
-                width: 50%;
-            }
-            /* Relleno de contenido principal ajustado para móvil */
-            .main-content {
-                padding: 15px 2%;
-                padding-top: 90px; /* Ajuste para el banner fijo en móvil */
-            }
-            .main-content h1, .main-content h2, .main-content h3,
-            .main-content h4, .main-content h5, .main-content h6 {
-                font-size: 1.5rem;
-            }
-            #dynamic-install-banner {
-                display: flex; /* Mostrar banner de instalación dinámico en móvil */
-            }
-            #dynamic-install-banner p {
-                font-size: 1rem;
-                margin-bottom: 10px;
-            }
-            #dynamic-install-banner button {
-                padding: 8px 15px;
-            }
-            /* Ajustar tamaño de fuente de pregunta de examen para pantallas pequeñas */
-            .question-card h5 {
-                font-size: 0.9em;
-            }
-            /* Ajustar tamaño de fuente de alternativa para pantallas pequeñas */
-            .form-check-label.option-button {
-                font-size: 0.8em;
-            }
+        @-webkit-keyframes spinner-border {
+            to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+        }
 
-            /* Clarificador flotante reducido en móvil */
+        @keyframes spinner-border {
+            to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+        }
+
+        /* Estilo del chat flotante de IA */
+        #ai-clarifier-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: #b3e5fc;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1060;
+            transition: all 0.3s ease-in-out;
+            border: 1px solid rgba(0,0,0,0.1);
+            color: #333;
+        }
+
+        #ai-clarifier-chat.show {
+            display: flex;
+        }
+
+        #ai-clarifier-chat .chat-header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        #ai-clarifier-chat .chat-header h2 {
+            font-size: 1.0rem;
+            margin: 0;
+            color: #283593;
+            margin-right: 10px;
+        }
+
+        #ai-clarifier-chat .chat-header .close-button {
+            position: absolute;
+            top: -5px;
+            right: 0px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #555;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        #ai-clarifier-chat .chat-header .close-button:hover {
+            color: #000;
+        }
+
+        #ai-clarifier-chat .chat-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin-bottom: 15px;
+        }
+
+        #ai-clarifier-chat .chat-content p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        #ai-clarifier-chat textarea {
+            width: 100%;
+            height: 80px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 8px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            margin-bottom: 10px;
+            background-color: #fff;
+            color: #333;
+        }
+
+        #ai-clarifier-chat textarea::placeholder {
+            color: #aaa;
+        }
+
+        #ai-clarifier-chat button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+        }
+
+        #ai-clarifier-chat button:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+        #ai-clarifier-chat #ai-clarifier-response {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #eee;
+            white-space: pre-wrap;
+            color: #283593;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        #ai-clarifier-chat .gemini-logo {
+            width: 40px;
+            height: auto;
+            vertical-align: middle;
+            margin-top: -5px;
+        }
+
+        /* Estilo del botón flotante de IA */
+        #floating-ai-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #00bcd4;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            cursor: pointer;
+            z-index: 1061;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        #floating-ai-button:hover {
+            background-color: #0097a7;
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Responsive para el chat flotante */
+        @media (max-width: 768px) {
             #ai-clarifier-chat {
-                width: 90%; /* Más ancho en móvil */
-                height: 50vh; /* La mitad de la altura de la pantalla */
-                left: 5%; /* Centrar horizontalmente */
+                width: 90%;
+                height: 50vh;
+                left: 5%;
                 right: 5%;
                 bottom: 15px;
                 padding: 15px;
@@ -952,11 +858,83 @@
                 font-size: 1.5rem;
                 bottom: 15px;
                 right: 15px;
-                display: flex; /* Asegurarse de que esté visible en móvil */
+                display: flex;
+            }
+        }
+
+        @media (min-width: 769px) {
+            #ai-clarifier-chat {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 350px;
+                height: 450px;
+                display: none;
+            }
+            #ai-clarifier-chat .chat-header h2 {
+                font-size: 1.0rem;
+            }
+
+            #floating-ai-button {
+                display: flex;
+            }
+        }
+        @media (max-width: 768px) {
+            .navbar-custom {
+                padding: 1rem 5%;
+            }
+            .navbar-custom .navbar-brand {
+                font-size: 1.5rem;
+                margin-right: 0;
+            }
+            .navbar-brand .navbar-logo {
+                height: 65px;
+                margin-left: 15px; 
+                margin-right: 0px;
+            }
+            .navbar-custom .navbar-collapse {
+                background-color: #171b4a;
+                padding: 10px;
+                border-radius: 8px;
+                margin-top: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+            }
+            .navbar-custom .nav-link {
+                text-align: center;
+                margin: 5px 0;
+            }
+            .navbar-custom .nav-link::after {
+                width: 50%;
+            }
+            .main-content {
+                padding: 15px 2%;
+                padding-top: 90px;
+            }
+            .main-content h1, .main-content h2, .main-content h3,
+            .main-content h4, .main-content h5, .main-content h6 {
+                font-size: 1.5rem;
+            }
+            #dynamic-install-banner {
+                display: flex;
+            }
+            #dynamic-install-banner p {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+            #dynamic-install-banner button {
+                padding: 8px 15px;
+            }
+            .question-card h5 {
+                font-size: 0.9em;
+            }
+            .form-check-label.option-button {
+                font-size: 0.8em;
             }
 
             #results-modal-content {
-                max-width: 95%; /* Make modal wider on small screens */
+                max-width: 95%;
                 width: auto;
                 padding: 20px;
             }
@@ -971,56 +949,36 @@
             }
         }
 
-        @media (min-width: 769px) { /* PC: Layout principal de una columna, chat flotante a la derecha */
+        @media (min-width: 769px) {
             body {
-                flex-direction: column; /* Restablecer a columna para PC */
+                flex-direction: column;
             }
             .content-container {
-                display: block; /* No usar flexbox para el contenedor principal */
+                display: block;
                 width: 100%;
             }
             .main-content {
-                width: auto; /* Ocupa el ancho natural */
-                padding-right: 8%; /* Restablecer padding normal */
+                width: auto;
+                padding-right: 8%;
             }
-            /* Ocultar el banner de instalación dinámico en PC */
             #dynamic-install-banner {
                 display: none !important;
             }
 
-            /* Clarificador flotante en PC */
-            #ai-clarifier-chat {
-                position: fixed; /* Mantiene la posición fija */
-                bottom: 20px;
-                right: 20px;
-                width: 350px; /* Ancho para PC */
-                height: 450px; /* Alto para PC */
-                display: none; /* Oculto por defecto, se muestra con el botón flotante */
-            }
-            #ai-clarifier-chat .chat-header h2 {
-                font-size: 1.0rem; /* Tamaño de fuente más pequeño para PC */
-            }
-
-            #floating-ai-button {
-                display: flex; /* Asegurarse de que esté visible en PC */
-            }
-
-            /* Ajustes específicos para navbar-brand en PC */
             .navbar-custom .navbar-brand {
-                font-size: 2.2rem; /* Título más grande para PC */
-                flex-direction: row; /* Asegura que el texto y la imagen estén en fila */
-                white-space: nowrap; /* Evita que el texto se divida */
+                font-size: 2.2rem;
+                flex-direction: row;
+                white-space: nowrap;
                 align-items: center;
             }
             .navbar-brand .brand-text {
-                display: inline; /* Asegura que el texto "SEGURIDAD PRIVADA" esté en una línea */
-                letter-spacing: 1px; /* Espaciado entre letras para mejor separación */
+                display: inline;
+                letter-spacing: 1px;
             }
             .navbar-brand .navbar-logo {
-                height: 75px; /* Logo más grande en PC */
-                margin-left: 20px; /* Más espacio a la derecha del texto */
+                height: 75px;
+                margin-left: 20px;
             }
-            /* Esconder el <br> en PC */
             .mobile-only {
                 display: none;
             }
@@ -1035,7 +993,7 @@
         <div class="container-fluid px-3">
             <a class="navbar-brand" href="#">
                 <span class="brand-text">SEGURIDAD <br class="mobile-only">PRIVADA</span>
-                <img src="logoSec.png" alt="Logo Seguridad Privada" class="navbar-logo">
+                <img src="https://via.placeholder.com/75x75/171b4a/ffffff?text=SP" alt="Logo Seguridad Privada" class="navbar-logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -1076,14 +1034,12 @@
             
             <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
 
-            <div id="quiz-container" class="mt-4">
+            <div id="quiz-container" class="mt-4" style="display: none;">
                 <p class="text-center text-info">Cargando preguntas del examen...</p>
             </div>
             <div class="exam-controls">
                 <button id="submit-quiz-btn" style="display: none;">Enviar Examen</button>
             </div>
-            <!-- The original exam-results div is now replaced by the modal for displaying results -->
-            <!-- <div id="exam-results" class="mt-4"></div> -->
             <div id="subtle-response-box" class="subtle-response-box">
                 ¡El examen está listo para comenzar!
             </div>
@@ -1107,23 +1063,13 @@
             </div>
         </section>
 
-        <section class="info-section">
-            <h2 id="contacto">Contacto</h2>
-            <p>Si tienes preguntas o necesitas más información, no dudes en contactarnos. Estamos aquí para ayudarte a ser un profesional de seguridad mejor informado y capacitado.</p>
-            <address class="text-center">
-                <strong>Daniel Elías Figueroa Chacama</strong><br>
-                Ingeniero en Informática<br>
-                Chile
-            </address>
-        </section>
-
         <!-- Nueva sección para el Asistente de Redacción de Informes -->
         <section id="report-assistant-section" class="info-section mt-5">
             <h2 class="text-center">Asistente de Redacción de Informes y Comunicaciones ✨</h2>
             <p class="text-center">Describe brevemente el incidente o la situación, y la IA te ayudará a redactar un borrador de informe o comunicación profesional.</p>
             
             <div class="mb-3 text-center">
-                <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo" style="width: 60px; height: auto;">
+                <img src="https://via.placeholder.com/60x60/4285f4/ffffff?text=AI" alt="Logo de Gemini IA" class="gemini-logo" style="width: 60px; height: auto;">
             </div>
 
             <textarea id="incident-description-input" class="form-control mb-3" rows="5" placeholder="Ej: Hubo un hurto en la tienda. Un hombre con camisa azul tomó un objeto y salió corriendo."></textarea>
@@ -1145,22 +1091,14 @@
             <a id="download-acta-btn" href="https://dal5.short.gy/Act" target="_blank" download="Acta_Detencion_Particulares.pdf" class="btn btn-success mt-3" style="display: none;">Descargar Acta (PDF)</a>
         </section>
 
-        <!-- Panel de Administración Oculto para Agregar Preguntas -->
-        <!-- Para hacerlo visible, cambia 'display: none;' en la regla CSS para #admin-panel a 'display: block;' o 'display: flex;' -->
-        <section id="admin-panel" class="info-section mt-5" style="display: none;"> 
-            <h2 class="text-center">Panel de Administración de Preguntas</h2>
-            <p class="text-center">Agrega nuevas preguntas al banco de datos del examen.</p>
-            <div class="mb-3 text-center">
-                <label for="new-question-input" class="form-label">Nueva Pregunta:</label>
-                <textarea id="new-question-input" class="form-control mb-2" rows="3" placeholder="Escribe la nueva pregunta aquí."></textarea>
-                <label for="new-question-answer" class="form-label">Respuesta Correcta:</label>
-                <select id="new-question-answer" class="form-select mb-3">
-                    <option value="Verdadero">Verdadero</option>
-                    <option value="Falso">Falso</option>
-                </select>
-                <button id="add-question-btn" class="btn btn-info w-100">Guardar Pregunta</button>
-                <div id="admin-feedback" class="mt-3"></div>
-            </div>
+        <section class="info-section">
+            <h2 id="contacto">Contacto</h2>
+            <p>Si tienes preguntas o necesitas más información, no dudes en contactarnos. Estamos aquí para ayudarte a ser un profesional de seguridad mejor informado y capacitado.</p>
+            <address class="text-center">
+                <strong>Daniel Elías Figueroa Chacama</strong><br>
+                Ingeniero en Informática<br>
+                Chile
+            </address>
         </section>
     </div>
 
@@ -1176,14 +1114,16 @@
         </div>
     </div>
 
-
+    <!-- Botón flotante de IA -->
     <div id="floating-ai-button" aria-label="Abrir Clarificador de Inteligencia Artificial">
-        <i class="bi bi-robot"></i> </div>
+        <i class="bi bi-robot"></i>
+    </div>
 
+    <!-- Chat flotante del clarificador de IA -->
     <div id="ai-clarifier-chat" class="ai-clarifier-chat">
         <div class="chat-header">
             <h2>Clarificador IA</h2>
-            <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo">
+            <img src="https://via.placeholder.com/40x40/4285f4/ffffff?text=AI" alt="Logo de Gemini IA" class="gemini-logo">
             <button class="close-button" id="close-ai-chat">×</button>
         </div>
         <div class="chat-content">
@@ -1196,88 +1136,16 @@
         </div>
     </div>
 
-
     <footer class="footer">
         <p>Plataforma creada por Daniel Elías Figueroa Chacama, Ingeniero en Informática.</p>
         <p>© 2025 Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        // Global Firebase variables (provided by Canvas environment)
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        // Initialize Firebase
-        let app;
-        let db;
-        let auth;
-        let questionsCollectionRef;
-        let isFirebaseReady = false; // Flag to indicate if Firebase is ready
-
-        try {
-            app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            auth = getAuth(app);
-            console.log("Firebase initialized.");
-
-            // Authenticate user and set up Firestore collection reference
-            auth.onAuthStateChanged(async (user) => {
-                if (user) {
-                    console.log("Auth state changed: User is signed in.", user.uid);
-                    isFirebaseReady = true;
-                    questionsCollectionRef = collection(db, `artifacts/${appId}/public/data/quizQuestions`);
-                    // If DOM is already loaded, and Firebase just became ready, try generating questions
-                    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-                        // We might want to call generateQuestions here, but it's already called on DOMContentLoaded
-                        // so ensure it's not called twice or that it handles being called when Firebase is not ready yet.
-                    }
-                } else {
-                    console.log("Auth state changed: No user signed in.");
-                    isFirebaseReady = false;
-                    try {
-                        if (initialAuthToken) {
-                            await signInWithCustomToken(auth, initialAuthToken);
-                            console.log("Signed in with custom token via onAuthStateChanged.");
-                        } else {
-                            await signInAnonymously(auth);
-                            console.log("Signed in anonymously via onAuthStateChanged (no initial token).");
-                        }
-                    } catch (error) {
-                        console.error("Error during authentication in onAuthStateChanged:", error);
-                    }
-                }
-            });
-
-            // Initial sign-in attempt if not already authenticated
-            if (!auth.currentUser) {
-                if (initialAuthToken) {
-                    signInWithCustomToken(auth, initialAuthToken)
-                        .then(() => console.log("Initial sign-in with custom token successful."))
-                        .catch((error) => {
-                            console.error("Initial sign-in with custom token failed, attempting anonymous:", error);
-                            signInAnonymously(auth)
-                                .then(() => console.log("Initial anonymous sign-in successful."))
-                                .catch((anonError) => console.error("Initial anonymous sign-in failed:", anonError));
-                        });
-                } else {
-                    signInAnonymously(auth)
-                        .then(() => console.log("Initial anonymous sign-in successful."))
-                        .catch((error) => console.error("Initial anonymous sign-in failed:", error));
-                }
-            }
-
-        } catch (error) {
-            console.error("Error initializing Firebase:", error);
-        }
-
-
-        document.addEventListener('DOMContentLoaded', async function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
             console.log("DOM Content Loaded. Initializing app logic.");
 
             // Navbar Shrink on Scroll
@@ -1294,92 +1162,22 @@
             const searchToggle = document.getElementById('searchToggle');
             const searchBar = document.getElementById('searchBar');
 
-            // Add event listener for search toggle
             searchToggle.addEventListener('click', function() {
                 searchBar.classList.toggle('show');
             });
 
-            // Hide search bar if clicked outside
             document.addEventListener('click', function(event) {
-                // Check if the click is outside the search bar and the toggle button
                 if (!searchBar.contains(event.target) && !searchToggle.contains(event.target)) {
                     searchBar.classList.remove('show');
                 }
             });
 
-
-            // --- PWA Installation Banner Logic (Dynamically Created) ---
-            let dynamicInstallBanner = null;
-            let bannerTimeout;
-
-            window.addEventListener('beforeinstallprompt', (e) => {
-                e.preventDefault();
-                deferredInstallPrompt = e;
-                
-                if (!dynamicInstallBanner && window.matchMedia('(max-width: 768px)').matches && !window.matchMedia('(display-mode: standalone)').matches) {
-                    dynamicInstallBanner = document.createElement('div');
-                    dynamicInstallBanner.id = 'dynamic-install-banner';
-                    dynamicInstallBanner.innerHTML = `
-                        ¿Quieres instalar esta app? 
-                        <button>Instalar</button>
-                    `;
-                    document.body.appendChild(dynamicInstallBanner);
-
-                    dynamicInstallBanner.querySelector('button').addEventListener('click', () => {
-                        clearTimeout(bannerTimeout);
-                        if (deferredInstallPrompt) {
-                            deferredInstallPrompt.prompt();
-                            deferredInstallPrompt.userChoice.then((choiceResult) => {
-                                if (choiceResult.outcome === 'accepted') {
-                                    console.log('Usuario aceptó la instalación');
-                                } else {
-                                    console.log('Usuario rechazó la instalación');
-                                }
-                                deferredInstallPrompt = null;
-                                if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
-                                    dynamicInstallBanner.remove();
-                                }
-                            });
-                        } else {
-                            console.log('deferredPrompt no disponible. El navegador no mostró el prompt de instalación.');
-                            if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
-                                dynamicInstallBanner.remove();
-                            }
-                        }
-                    });
-
-                    bannerTimeout = setTimeout(() => {
-                        if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
-                            dynamicInstallBanner.remove();
-                            console.log('Banner de instalación eliminado después de 10 segundos.');
-                        }
-                    }, 10000);
-
-                    window.addEventListener('scroll', () => {
-                        if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
-                            dynamicInstallBanner.remove();
-                            clearTimeout(bannerTimeout);
-                            console.log('Banner de instalación eliminado por scroll.');
-                        }
-                    }, { once: true });
-                }
-                console.log('beforeinstallprompt event fired. PWA is installable.');
-            });
-
-            window.addEventListener('appinstalled', () => {
-                if (dynamicInstallBanner && dynamicInstallBanner.parentNode) {
-                    dynamicCacheBanner.remove();
-                }
-                console.log('PWA fue instalada exitosamente.');
-            });
-
             // --- Quiz Logic ---
             const quizContainer = document.getElementById('quiz-container');
             const submitQuizBtn = document.getElementById('submit-quiz-btn');
-            // const examResults = document.getElementById('exam-results'); // No longer needed directly
             const startExamBtn = document.getElementById('start-exam-btn');
-            const examSection = document.getElementById('exam-section'); // Get exam section
-            const subtleResponseBox = document.getElementById('subtle-response-box'); 
+            const examSection = document.getElementById('exam-section');
+            const subtleResponseBox = document.getElementById('subtle-response-box');
 
             // Modal elements for results
             const resultsModalOverlay = document.getElementById('results-modal-overlay');
@@ -1391,14 +1189,7 @@
             const modalMessage = document.getElementById('modal-message');
             const closeModalBtn = document.getElementById('close-modal-btn');
 
-
-            quizContainer.style.display = 'none';
-            if (subtleResponseBox) {
-                subtleResponseBox.style.display = 'none'; // Hide by default
-            }
-            resultsModalOverlay.style.display = 'none'; // Hide modal by default
-
-            // Default questions for fallback
+            // Default questions for the exam
             const defaultQuestions = [
                 { question: "La Autoridad Fiscalizadora de la Seguridad Privada en Chile es la Prefectura de Carabineros de Chile del sector.", correctAnswer: "Verdadero" },
                 { question: "La Ley N° 21.659, publicada en marzo de 2024, es la única ley que regula la seguridad privada en Chile actualmente.", correctAnswer: "Falso" },
@@ -1432,276 +1223,122 @@
                 { question: "Para ser Guardia de Seguridad, se requiere haber cursado educación básica completa.", correctAnswer: "Falso" }
             ];
 
-            // Additional questions provided by the user from the image
-            const userProvidedQuestions = [
-                { question: "No tiene responsabilidad penal quienes compran una cosa hurtada, ya que él no la sustrajo.", correctAnswer: "Falso" },
-                { question: "La legítima defensa solamente se hace extensiva a la propia persona y no a terceros.", correctAnswer: "Falso" },
-                { question: "Robo es la apropiación de una cosa sin que intervengan la fuerza o violencia.", correctAnswer: "Falso" },
-                { question: "Son responsables en la comisión de un delito, los autores, los cómplices y los encubridores cuando en ellos solo se utilice imprudencia y negligencia.", correctAnswer: "Falso" },
-                { question: "La policia debe eximir de responsabilidad penal al que obre en defensa de su persona o derechos, siempre que concurra, entre otras circunstancias la agresión legítima.", correctAnswer: "Verdadero" },
-                { question: "La Nación políticamente organizada es sinónimo de Estado.", correctAnswer: "Verdadero" },
-                { question: "En el sistema de vigilancia privada vigente, solo los Guardias de Seguridad, están sujetos a la fiscalización de la Autoridad Fiscalizadora de la prefectura de Carabineros de su sector jurisdiccional.", correctAnswer: "Falso" },
-                { question: "En algunos casos los Guardias de Seguridad pueden actuar de civil, si están debidamente autorizados por la Autoridad Fiscalizadora.", correctAnswer: "Verdadero" },
-                { question: "El O.S. 10 no puede fiscalizar a los Guardias de Seguridad los dias domingos y festivos.", correctAnswer: "Falso" },
-                { question: "No es obligación que los Guardias de Seguridad mantengan la Directiva de Funcionamiento en su respectiva instalación.", correctAnswer: "Falso" },
-                { question: "Las alarmas son elementos manuales o eléctricos que se utilizan para advertir peligro o intrusión o de incendio.", correctAnswer: "Verdadero" },
-                { question: "Para una adecuada detección de incendios deben existir mangueras adecuadas y grifos cercanos", correctAnswer: "Falso" },
-                { question: "Un sistema de alarmas debe tener etapas básicas, detección, control y respuesta.", correctAnswer: "Verdadero" },
-                { question: "El circuito cerrado de Televisión es un complemento al sistema electrónico de alarma.", correctAnswer: "Verdadero" }
-            ];
-            
-            let questions = []; // This will hold the active quiz questions
-
-            // Function to add questions to Firestore
-            async function addQuestionToFirestore(questionObj) {
-                if (!isFirebaseReady || !questionsCollectionRef) {
-                    console.error("Firestore is not ready. Cannot add question.");
-                    showSubtleMessage('Error: Firestore no está listo para guardar preguntas.', true);
-                    return;
-                }
-                try {
-                    await addDoc(questionsCollectionRef, questionObj);
-                    console.log("Question added to Firestore:", questionObj.question);
-                } catch (e) {
-                    console.error("Error adding document: ", e);
-                    showSubtleMessage('Error al guardar la pregunta en la base de datos.', true);
-                }
-            }
-
-            // Function to fetch questions from Firestore
-            async function fetchQuestionsFromFirestore() {
-                if (!isFirebaseReady || !questionsCollectionRef) {
-                    console.warn("Firestore is not ready. Cannot fetch questions. Using default questions.");
-                    return [];
-                }
-                try {
-                    const querySnapshot = await getDocs(questionsCollectionRef);
-                    const fetchedQuestions = [];
-                    querySnapshot.forEach((doc) => {
-                        fetchedQuestions.push(doc.data());
-                    });
-                    console.log("Fetched questions from Firestore:", fetchedQuestions.length);
-                    return fetchedQuestions;
-                } catch (error) {
-                    console.error("Error fetching questions from Firestore: ", error);
-                    showSubtleMessage('Error al cargar preguntas desde la base de datos.', true);
-                    return [];
-                }
-            }
+            let questions = [];
+            let userAnswers = {};
 
             // Function to shuffle an array
             function shuffleArray(array) {
-                for (let i = array.length - 1; i > 0; i--) {
+                const shuffled = [...array];
+                for (let i = shuffled.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
-                    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+                    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
                 }
-                return array;
+                return shuffled;
             }
 
-            // Function to generate quiz questions (from Firestore, then AI, then default)
-            async function generateQuestions() {
+            // Function to generate quiz questions
+            function generateQuestions() {
                 console.log("generateQuestions function called.");
+                
+                // Show loading message
                 quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas... Esto puede tardar unos segundos.</p>';
                 quizContainer.style.display = 'block';
                 startExamBtn.style.display = 'none';
-                // examResults.style.display = 'none'; // No longer directly visible
-                submitQuizBtn.style.display = 'block'; // Ensure submit button is shown
+                submitQuizBtn.style.display = 'none';
 
                 // Activate persistent red border for the exam section
                 examSection.classList.add('active-red-border');
 
-                // Show subtle message box with loading message
+                // Show subtle message box
                 if (subtleResponseBox) { 
                     subtleResponseBox.style.display = 'block';
                     subtleResponseBox.classList.add('show');
                     subtleResponseBox.textContent = '¡Generando preguntas, por favor espera!';
                 }
 
-                // Wait for Firebase to be ready
-                await new Promise(resolve => {
-                    const checkFirebase = setInterval(() => {
-                        if (isFirebaseReady) {
-                            clearInterval(checkFirebase);
-                            resolve();
-                        }
-                    }, 100);
-                });
-
-                let allAvailableQuestions = [];
-
-                // 1. Try to fetch from Firestore first
-                const fetchedQuestions = await fetchQuestionsFromFirestore();
-                if (fetchedQuestions.length > 0) {
-                    allAvailableQuestions = fetchedQuestions;
-                    console.log(`Loaded ${fetchedQuestions.length} questions from Firestore.`);
-                } else {
-                    console.log("Firestore empty or inaccessible. Using default and user-provided questions.");
-                    // Combine default and user-provided questions
-                    const combinedQuestions = [...defaultQuestions, ...userProvidedQuestions];
-                    allAvailableQuestions = combinedQuestions;
-
-                    // Upload combined questions to Firestore if it was empty
-                    for (const q of combinedQuestions) {
-                        await addQuestionToFirestore(q);
+                // Simulate loading time and then generate questions
+                setTimeout(() => {
+                    // Shuffle questions and select 20 random ones
+                    questions = shuffleArray(defaultQuestions).slice(0, 20);
+                    userAnswers = {};
+                    
+                    displayQuiz();
+                    
+                    if (subtleResponseBox) {
+                        subtleResponseBox.textContent = '¡Preguntas cargadas! ¡Mucha suerte!';
+                        setTimeout(() => {
+                            subtleResponseBox.classList.remove('show');
+                            setTimeout(() => subtleResponseBox.style.display = 'none', 500);
+                        }, 2000);
                     }
-                    console.log("Uploaded default and user-provided questions to Firestore.");
-                }
-
-                // If still no questions from Firestore or initial combined upload, try AI generation
-                if (allAvailableQuestions.length === 0) {
-                     const prompt = `Genera 30 preguntas de Verdadero/Falso sobre la normativa y funciones del guardia de seguridad en Chile, abarcando temas del Decreto Ley 3607, Decreto Supremo 93, y los roles y responsabilidades prácticas del guardia según la normativa legal vigente entre 2020 y 2025 (incluyendo contexto de la Ley 21.659, si bien las preguntas deben ser sobre la función actual o regulaciones anteriores si siguen siendo relevantes para la operación diaria). Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').`;
-                    let chatHistory = [];
-                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                    const payload = {
-                        contents: chatHistory,
-                        generationConfig: {
-                            responseMimeType: "application/json",
-                            responseSchema: {
-                                type: "ARRAY",
-                                items: {
-                                    type: "OBJECT",
-                                    properties: {
-                                        "question": { "type": "STRING" },
-                                        "correctAnswer": { "type": "STRING" }
-                                    },
-                                    "propertyOrdering": ["question", "correctAnswer"]
-                                }
-                            }
-                        }
-                    };
-
-                    try {
-                        console.log("Attempting to generate questions with Gemini API...");
-                        const apiKey = ""; // Use your actual API key
-                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-
-                        if (!response.ok) {
-                            const errorData = await response.json();
-                            console.error('Error al generar preguntas con Gemini API:', response.status, response.statusText, errorData);
-                            quizContainer.innerHTML = '<p class="text-danger text-center">Error al cargar las preguntas de la IA. Usando preguntas de respaldo. (Código de estado: ' + response.status + ')</p>';
-                            if (subtleResponseBox) subtleResponseBox.textContent = 'Error al cargar preguntas. Usando respaldo.';
-                            allAvailableQuestions = defaultQuestions; // Fallback to absolute default
-                        } else {
-                            const result = await response.json();
-                            if (result.candidates && result.candidates.length > 0 &&
-                                result.candidates[0].content && result.candidates[0].content.parts &&
-                                result.candidates[0].content.parts.length > 0) {
-                                const jsonText = result.candidates[0].content.parts[0].text;
-                                try {
-                                    const aiGeneratedQuestions = JSON.parse(jsonText);
-                                    if (Array.isArray(aiGeneratedQuestions) && aiGeneratedQuestions.length > 0) {
-                                        allAvailableQuestions = aiGeneratedQuestions;
-                                        // Upload AI-generated questions to Firestore for future use
-                                        for (const q of aiGeneratedQuestions) {
-                                            await addQuestionToFirestore(q);
-                                        }
-                                        console.log("AI generated questions and uploaded to Firestore.");
-                                    } else {
-                                        console.warn("AI generated invalid/empty questions. Using default questions.");
-                                        allAvailableQuestions = defaultQuestions;
-                                    }
-                                } catch (parseError) {
-                                    console.error('Error al parsear la respuesta JSON de Gemini:', parseError);
-                                    allAvailableQuestions = defaultQuestions;
-                                }
-                            } else {
-                                console.warn("Unexpected API response structure from AI. Using default questions.");
-                                allAvailableQuestions = defaultQuestions;
-                            }
-                        }
-                    } catch (error) {
-                        console.error('Network error calling Gemini API for questions:', error);
-                        allAvailableQuestions = defaultQuestions;
-                    }
-                }
-
-                // If after all attempts, there are still no questions, use a hardcoded fallback
-                if (allAvailableQuestions.length === 0) {
-                    allAvailableQuestions = [...defaultQuestions, ...userProvidedQuestions]; // Ensure some questions are always there
-                    console.warn("No questions loaded from any source. Using hardcoded defaults as a last resort.");
-                }
-
-                // Shuffle all available questions and select a subset if desired
-                questions = shuffleArray(allAvailableQuestions).slice(0, 30); // Take up to 30 random questions
-
-                displayQuiz();
-                if (subtleResponseBox) {
-                    subtleResponseBox.textContent = '¡Preguntas cargadas! ¡Mucha suerte!';
-                    setTimeout(() => {
-                        subtleResponseBox.classList.remove('show');
-                        setTimeout(() => subtleResponseBox.style.display = 'none', 500); // Wait for transition to finish
-                    }, 3000); // Show for 3 seconds
-                }
+                }, 1000);
             }
 
             // Function to display quiz questions
             function displayQuiz() {
-                quizContainer.innerHTML = ''; // Clear loading message
+                quizContainer.innerHTML = '';
+                
                 questions.forEach((q, index) => {
                     const questionCard = document.createElement('div');
                     questionCard.classList.add('question-card');
                     questionCard.innerHTML = `
                         <h5>${index + 1}. ${q.question}</h5>
                         <div class="options-container">
-                            <label class="option-button">
-                                <input class="form-check-input" type="radio" name="question${index}" value="Verdadero" data-index="${index}">
+                            <label class="option-button" data-question="${index}" data-value="Verdadero">
+                                <input class="form-check-input" type="radio" name="question${index}" value="Verdadero" style="display: none;">
                                 Verdadero
                             </label>
-                            <label class="option-button">
-                                <input class="form-check-input" type="radio" name="question${index}" value="Falso" data-index="${index}">
+                            <label class="option-button" data-question="${index}" data-value="Falso">
+                                <input class="form-check-input" type="radio" name="question${index}" value="Falso" style="display: none;">
                                 Falso
                             </label>
                         </div>
-                        <div class="feedback-message mt-2" style="font-weight: 600;"></div>
+                        <div class="feedback-message mt-2" style="font-weight: 600; display: none;"></div>
                     `;
                     quizContainer.appendChild(questionCard);
 
-                    // Add event listeners to custom buttons
-                    const radioButtons = questionCard.querySelectorAll(`input[name="question${index}"]`);
-                    radioButtons.forEach(radio => {
-                        radio.addEventListener('change', function() {
-                            const selectedValue = this.value;
-                            const questionIndex = parseInt(this.dataset.index);
+                    // Add event listeners to option buttons
+                    const optionButtons = questionCard.querySelectorAll('.option-button');
+                    optionButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const questionIndex = parseInt(this.dataset.question);
+                            const selectedValue = this.dataset.value;
                             const currentQuestion = questions[questionIndex];
                             const feedbackMessage = questionCard.querySelector('.feedback-message');
 
-                            // Remove 'selected' class and correct/incorrect classes from all buttons for this question
-                            radioButtons.forEach(innerRadio => {
-                                const parentLabel = innerRadio.closest('.option-button');
-                                parentLabel.classList.remove('selected', 'correct', 'incorrect');
+                            // Store user answer
+                            userAnswers[questionIndex] = selectedValue;
+
+                            // Remove all selected/feedback classes from this question
+                            optionButtons.forEach(btn => {
+                                btn.classList.remove('selected', 'correct', 'incorrect');
                             });
 
-                            // Add 'selected' class to the parent label of the checked radio button
-                            this.closest('.option-button').classList.add('selected');
+                            // Add selected class to clicked button
+                            this.classList.add('selected');
                             
-                            // Check if the answer is correct
+                            // Show immediate feedback
                             if (selectedValue === currentQuestion.correctAnswer) {
-                                this.closest('.option-button').classList.add('correct');
-                                feedbackMessage.style.color = '#28a745'; // Green
+                                this.classList.add('correct');
+                                feedbackMessage.style.color = '#28a745';
                                 feedbackMessage.textContent = '¡Correcto!';
                             } else {
-                                this.closest('.option-button').classList.add('incorrect');
-                                feedbackMessage.style.color = '#dc3545'; // Red
+                                this.classList.add('incorrect');
+                                feedbackMessage.style.color = '#dc3545';
                                 feedbackMessage.textContent = `Incorrecto. La respuesta correcta era: "${currentQuestion.correctAnswer}".`;
                             }
 
-                            // Disable all radio buttons for this question after selection
-                            radioButtons.forEach(innerRadio => {
-                                innerRadio.disabled = true;
-                            });
-
-                            // Add blue border to the question card
+                            feedbackMessage.style.display = 'block';
                             questionCard.classList.add('answered-blue-border');
+
+                            // Check if all questions are answered
+                            if (Object.keys(userAnswers).length === questions.length) {
+                                submitQuizBtn.style.display = 'block';
+                            }
                         });
                     });
                 });
-                quizContainer.style.display = 'block'; // Show quiz container
-                submitQuizBtn.style.display = 'block'; // Show submit button
+
                 console.log("Quiz questions displayed.");
             }
 
@@ -1709,8 +1346,7 @@
             function submitQuiz() {
                 let score = 0;
                 questions.forEach((q, index) => {
-                    const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
-                    if (selectedOption && selectedOption.value === q.correctAnswer) {
+                    if (userAnswers[index] === q.correctAnswer) {
                         score++;
                     }
                 });
@@ -1723,11 +1359,11 @@
                 // Populate modal content
                 modalCorrectCount.textContent = score;
                 modalTotalQuestions.textContent = maxScore;
-                modalPercentage.textContent = percentage.toFixed(2);
+                modalPercentage.textContent = percentage.toFixed(1);
                 modalGrade.textContent = grade.toFixed(1);
 
                 // Set modal message and color
-                resultsModalContent.classList.remove('pass', 'fail'); // Clear previous classes
+                resultsModalContent.classList.remove('pass', 'fail');
                 if (passed) {
                     modalMessage.textContent = '¡Felicitaciones! Has aprobado.';
                     resultsModalContent.classList.add('pass');
@@ -1737,11 +1373,17 @@
                 }
 
                 // Show the modal
-                resultsModalOverlay.style.display = 'flex'; // Use flex to center
-                setTimeout(() => resultsModalOverlay.classList.add('show'), 10); // Add show class after a tiny delay for transition
+                resultsModalOverlay.style.display = 'flex';
+                setTimeout(() => resultsModalOverlay.classList.add('show'), 10);
 
-                submitQuizBtn.style.display = 'none'; // Hide submit button after submission
-                quizContainer.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true); // Disable options after submission
+                submitQuizBtn.style.display = 'none';
+                
+                // Disable all option buttons
+                document.querySelectorAll('.option-button').forEach(button => {
+                    button.style.pointerEvents = 'none';
+                    button.style.opacity = '0.7';
+                });
+
                 console.log("Quiz submitted and results displayed in modal. Score:", score);
             }
 
@@ -1756,17 +1398,250 @@
                 return 7.0;
             }
 
-            // Event listener for "Empezar Examen Ahora" button
+            // Event listeners
             startExamBtn.addEventListener('click', generateQuestions);
-
             submitQuizBtn.addEventListener('click', submitQuiz);
 
             // Close modal button listener
             closeModalBtn.addEventListener('click', () => {
                 resultsModalOverlay.classList.remove('show');
-                resultsModalContent.classList.remove('pass', 'fail'); // Clean up classes
-                setTimeout(() => resultsModalOverlay.style.display = 'none', 300); // Hide after transition
+                setTimeout(() => {
+                    resultsModalOverlay.style.display = 'none';
+                    resultsModalContent.classList.remove('pass', 'fail');
+                    
+                    // Reset exam
+                    quizContainer.style.display = 'none';
+                    startExamBtn.style.display = 'block';
+                    submitQuizBtn.style.display = 'none';
+                    examSection.classList.remove('active-red-border');
+                    questions = [];
+                    userAnswers = {};
+                }, 300);
             });
+
+            // Click outside modal to close
+            resultsModalOverlay.addEventListener('click', (e) => {
+                if (e.target === resultsModalOverlay) {
+                    closeModalBtn.click();
+                }
+            });
+
+            // --- Report Drafting Assistant Logic ---
+            const incidentDescriptionInput = document.getElementById('incident-description-input');
+            const reportTypeSelect = document.getElementById('report-type-select');
+            const generateReportBtn = document.getElementById('generate-report-btn');
+            const reportOutput = document.getElementById('report-output');
+            const copyReportBtn = document.getElementById('copy-report-btn');
+            const downloadActaBtn = document.getElementById('download-acta-btn');
+
+            // Hide report action buttons on init
+            copyReportBtn.style.display = 'none';
+            downloadActaBtn.style.display = 'none';
+
+            generateReportBtn.addEventListener('click', async () => {
+                const description = incidentDescriptionInput.value.trim();
+                const selectedReportType = reportTypeSelect.value;
+
+                if (!description) {
+                    reportOutput.innerHTML = '<p style="color: #dc3545;">Por favor, describe el incidente.</p>';
+                    copyReportBtn.style.display = 'none';
+                    downloadActaBtn.style.display = 'none';
+                    return;
+                }
+
+                reportOutput.innerHTML = '<p style="color: #17a2b8;"><span class="spinner-border text-info" role="status"></span> Generando borrador...</p>';
+                generateReportBtn.disabled = true;
+                copyReportBtn.style.display = 'none';
+                downloadActaBtn.style.display = 'none';
+
+                if (selectedReportType === 'acta_detencion_particulares') {
+                    // For Detention Act, show download button directly
+                    reportOutput.innerHTML = `<p style="color: #28a745;">Haz clic en el botón para descargar el Acta de Detención:</p>`;
+                    downloadActaBtn.style.display = 'block';
+                    generateReportBtn.disabled = false;
+                    console.log("Showing Detention Act download button.");
+                    return;
+                }
+
+                // Generate a simulated report based on the type and description
+                setTimeout(() => {
+                    let generatedReport = '';
+                    const currentDate = new Date().toLocaleDateString('es-CL');
+                    const currentTime = new Date().toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' });
+
+                    switch (selectedReportType) {
+                        case 'informe_interno':
+                            generatedReport = `INFORME INTERNO DE INCIDENTE
+
+Fecha: ${currentDate}
+Hora: ${currentTime}
+Ubicación del Incidente: ${extractLocation(description) || 'No especificado'}
+Tipo de Incidente: ${classifyIncident(description)}
+
+DESCRIPCIÓN DETALLADA DEL EVENTO:
+${description}
+
+PERSONAL DE SEGURIDAD INVOLUCRADO:
+Guardia de Seguridad: [Nombre del guardia]
+Cargo: Guardia de Seguridad
+Acciones Iniciales: Observación del incidente y aplicación de protocolo establecido
+
+ACCIONES TOMADAS:
+- Se procedió según protocolo de seguridad establecido
+- ${containsKeywords(description, ['carabineros', 'policía', 'autoridad']) ? 'Se notificó a Carabineros de Chile' : 'Se evaluó la necesidad de contactar autoridades'}
+- Se documentó el incidente para registro interno
+
+EVIDENCIA RECOLECTADA:
+- Testimonio del guardia de seguridad
+- ${containsKeywords(description, ['cámara', 'video', 'grabación']) ? 'Revisión de cámaras de seguridad' : 'No especificado'}
+
+RECOMENDACIONES/OBSERVACIONES:
+Se recomienda mantener los protocolos de seguridad vigentes y evaluar medidas preventivas adicionales si corresponde.
+
+Firma del Guardia: ___________________
+Fecha de elaboración: ${currentDate}`;
+                            break;
+
+                        case 'comunicacion_policial':
+                            generatedReport = `COMUNICACIÓN A CARABINEROS DE CHILE
+
+Fecha: ${currentDate}
+Hora del Incidente: ${currentTime}
+Lugar del Incidente: ${extractLocation(description) || 'No especificado'}
+Tipo de Incidente: ${classifyIncident(description)}
+
+DESCRIPCIÓN DEL EVENTO:
+En la fecha y hora señalada, se registró el siguiente incidente: ${description}
+
+ACCIONES INMEDIATAS TOMADAS:
+- Observación y documentación del evento
+- Aplicación de protocolo de seguridad establecido
+- ${containsKeywords(description, ['detenido', 'retención', 'sospechoso']) ? 'Se procedió según normativa de detención por particulares' : 'Se mantuvo observación del área'}
+
+Se pone en conocimiento de la autoridad policial para los fines que estime conveniente.
+
+Atentamente,
+[Nombre del Guardia de Seguridad]
+[Empresa de Seguridad]`;
+                            break;
+
+                        case 'correo_supervisor':
+                            generatedReport = `Asunto: Reporte de Incidente - ${currentDate}
+
+Estimado Supervisor,
+
+Por medio del presente, informo sobre el siguiente incidente ocurrido en mi turno:
+
+Fecha y Hora: ${currentDate} - ${currentTime}
+Resumen del Evento: ${description}
+
+ACCIONES TOMADAS:
+- Se aplicó el protocolo de seguridad correspondiente
+- Se documentó el incidente según procedimiento
+- ${containsKeywords(description, ['urgente', 'grave', 'inmediato']) ? 'Se considera necesaria supervisión adicional' : 'Situación bajo control'}
+
+${containsKeywords(description, ['decisión', 'autorización', 'supervisor']) ? 'REQUIERE ACCIÓN DEL SUPERVISOR:\nSe solicita orientación para próximos pasos a seguir.' : 'SITUACIÓN CONTROLADA:\nNo se requiere acción inmediata adicional.'}
+
+Quedo a disposición para cualquier aclaración adicional.
+
+Saludos cordiales,
+[Nombre del Guardia]`;
+                            break;
+
+                        case 'reporte_general':
+                            generatedReport = `REPORTE GENERAL DE EVENTO
+
+Fecha: ${currentDate}
+Hora: ${currentTime}
+Ubicación: ${extractLocation(description) || 'No especificado'}
+Naturaleza del Evento: ${classifyIncident(description)}
+
+DESCRIPCIÓN:
+${description}
+
+PERSONAS AFECTADAS/INVOLUCRADAS:
+${containsKeywords(description, ['persona', 'cliente', 'empleado', 'visitante']) ? 'Personal y/o visitantes presentes en el área' : 'No especificado'}
+
+MEDIDAS ADOPTADAS:
+- Observación y registro del evento
+- Aplicación de protocolos de seguridad vigentes
+- Documentación para registro institucional
+
+ESTADO ACTUAL:
+Situación normalizada y bajo control.
+
+Elaborado por: [Nombre del Guardia]
+Fecha de elaboración: ${currentDate}`;
+                            break;
+
+                        default:
+                            generatedReport = 'Error: Tipo de reporte no reconocido.';
+                    }
+
+                    reportOutput.innerHTML = `<pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background-color: #f8f9fa; padding: 10px; border-radius: 5px; color: #333; margin: 0;">${generatedReport}</pre>`;
+                    copyReportBtn.style.display = 'block';
+                    generateReportBtn.disabled = false;
+                }, 1500);
+            });
+
+            copyReportBtn.addEventListener('click', () => {
+                const reportContent = reportOutput.textContent;
+                navigator.clipboard.writeText(reportContent).then(() => {
+                    showSubtleMessage('¡Borrador copiado al portapapeles!');
+                }).catch(err => {
+                    console.error('Error al copiar el borrador:', err);
+                    showSubtleMessage('No se pudo copiar el borrador.', true);
+                });
+            });
+
+            // Helper functions for report generation
+            function extractLocation(text) {
+                const locationKeywords = ['tienda', 'oficina', 'entrada', 'estacionamiento', 'recepción', 'pasillo', 'sector', 'área'];
+                for (let keyword of locationKeywords) {
+                    if (text.toLowerCase().includes(keyword)) {
+                        return keyword.charAt(0).toUpperCase() + keyword.slice(1);
+                    }
+                }
+                return null;
+            }
+
+            function classifyIncident(text) {
+                const lowerText = text.toLowerCase();
+                if (lowerText.includes('hurto') || lowerText.includes('robo')) return 'Hurto/Robo';
+                if (lowerText.includes('accidente')) return 'Accidente';
+                if (lowerText.includes('sospechoso') || lowerText.includes('extraño')) return 'Actividad Sospechosa';
+                if (lowerText.includes('emergencia')) return 'Emergencia';
+                if (lowerText.includes('incendio') || lowerText.includes('fuego')) return 'Incendio';
+                if (lowerText.includes('altercado') || lowerText.includes('pelea')) return 'Altercado';
+                return 'Incidente General';
+            }
+
+            function containsKeywords(text, keywords) {
+                const lowerText = text.toLowerCase();
+                return keywords.some(keyword => lowerText.includes(keyword.toLowerCase()));
+            }
+
+            // Function to show subtle messages
+            function showSubtleMessage(message, isError = false) {
+                const messageBox = document.createElement('div');
+                messageBox.className = 'subtle-response-box show';
+                messageBox.textContent = message;
+
+                if (isError) {
+                    messageBox.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
+                    messageBox.style.color = '#dc3545';
+                } else {
+                    messageBox.style.backgroundColor = 'rgba(40, 53, 147, 0.2)';
+                    messageBox.style.color = '#283593';
+                }
+
+                document.body.appendChild(messageBox);
+
+                setTimeout(() => {
+                    messageBox.classList.remove('show');
+                    messageBox.addEventListener('transitionend', () => messageBox.remove());
+                }, 3000);
+            }
 
             // --- AI Clarifier Logic (Floating) ---
             const floatingAiButton = document.getElementById('floating-ai-button');
@@ -1784,225 +1659,83 @@
             closeAiChatBtn.addEventListener('click', () => {
                 console.log("Close chat button clicked. Hiding chat.");
                 aiClarifierChat.classList.remove('show');
-                aiQuestionInput.value = ''; // Clear input on close
-                aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>'; // Reset response
+                aiQuestionInput.value = '';
+                aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>';
             });
 
             askAiBtn.addEventListener('click', async function() {
                 const userQuestion = aiQuestionInput.value.trim();
                 if (userQuestion === "") {
-                    aiClarifierResponse.innerHTML = '<p class="text-danger">Por favor, escribe tu pregunta.</p>';
+                    aiClarifierResponse.innerHTML = '<p style="color: #dc3545;">Por favor, escribe tu pregunta.</p>';
                     return;
                 }
 
-                aiClarifierResponse.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Cargando respuesta de la IA... Esto puede tardar unos segundos.</p>';
+                aiClarifierResponse.innerHTML = '<p style="color: #17a2b8;"><span class="spinner-border text-info" role="status"></span> Cargando respuesta de la IA... Esto puede tardar unos segundos.</p>';
                 askAiBtn.disabled = true;
-                console.log("Ask AI button clicked. Sending prompt to Gemini for clarification.");
+                console.log("Ask AI button clicked. Generating response for:", userQuestion);
 
-                // Update prompt to include Ley 21.659 effective date
-                // And to respond in plain text.
-                const prompt = `Como un experto en la normativa de seguridad privada de Chile (Decreto Ley 3607, Decreto Supremo 93 y Ley 21.659, considerando que la Ley 21.659 entra en vigencia el 28-NOV-2025), explica lo siguiente de manera clara, concisa y enfocada en las funciones y requisitos de GUARDIAS DE SEGURIDAD, y cualquier normativa relevante entre 2020 y 2025: "${userQuestion}". Proporciona solo la respuesta directa y relevante, sin incluir ningún encabezado, pie de página o formato de código (ej. \`\`\`json\`\`\`, \`\`\`text\`\`\`, etc.) o marcas de viñetas innecesarias si la respuesta es un solo párrafo.`;
-                let chatHistory = [];
-                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                
-                // Do not specify responseMimeType: "application/json" to get plain text
-                const payload = { contents: chatHistory };
-
-                try {
-                    console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
-                    const apiKey = ""; // Replace with your actual API key
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' }, 
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error('Error al obtener datos de la API de Gemini para aclaración:', response.status, response.statusText, errorData);
-                        aiClarifierResponse.innerHTML = `<p class="text-danger">Hubo un error (${response.status}) al obtener la respuesta de la IA. Por favor, inténtalo de nuevo.</p>`;
-                        return;
-                    }
-
-                    const result = await response.json();
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        let text = result.candidates[0].content.parts[0].text;
-                        // Remove any code blocks or residual text if AI included it
-                        text = text.replace(/```json\n?[\s\S]*?\n?```/, '').trim();
-                        text = text.replace(/```\n?[\s\S]*?\n?```/, '').trim();
-                        aiClarifierResponse.innerHTML = `<p>${text}</p>`;
-                        console.log("AI clarification received and displayed.");
-                    } else {
-                        console.warn("Unexpected API response structure from Gemini for clarification or empty.");
-                        aiClarifierResponse.innerHTML = '<p class="text-warning">No se pudo obtener una respuesta clara de la IA. Intenta reformular tu pregunta.</p>';
-                    }
-                } catch (error) {
-                    console.error('Network error or parsing issue in Gemini API call for clarification:', error);
-                    aiClarifierResponse.innerHTML = '<p class="text-danger">Error de conexión al Clarificador IA. Asegúrate de tener acceso a internet y que el servicio esté disponible.</p>';
-                } finally {
-                    askAiBtn.disabled = false;
-                    console.log("AI Clarifier request finished.");
-                }
-            });
-
-            // --- Report Drafting Assistant Logic ---
-            const incidentDescriptionInput = document.getElementById('incident-description-input');
-            const reportTypeSelect = document.getElementById('report-type-select');
-            const generateReportBtn = document.getElementById('generate-report-btn');
-            const reportOutput = document.getElementById('report-output');
-            const copyReportBtn = document.getElementById('copy-report-btn');
-            const downloadActaBtn = document.getElementById('download-acta-btn'); // New download button
-
-            // Hide report action buttons on init
-            copyReportBtn.style.display = 'none';
-            downloadActaBtn.style.display = 'none';
-
-            generateReportBtn.addEventListener('click', async () => {
-                const description = incidentDescriptionInput.value.trim();
-                const selectedReportType = reportTypeSelect.value;
-
-                if (!description) {
-                    reportOutput.innerHTML = '<p class="text-danger">Por favor, describe el incidente.</p>';
-                    // Hide action buttons if no description
-                    copyReportBtn.style.display = 'none';
-                    downloadActaBtn.style.display = 'none';
-                    return;
-                }
-
-                reportOutput.innerHTML = '<p class="text-info"><span class="spinner-border text-info" role="status"></span> Generando borrador...</p>';
-                generateReportBtn.disabled = true;
-                copyReportBtn.style.display = 'none'; // Hide before generating
-                downloadActaBtn.style.display = 'none'; // Hide before generating
-
-
-                if (selectedReportType === 'acta_detencion_particulares') {
-                    // For Detention Act, show download button directly
-                    reportOutput.innerHTML = `<p class="text-success">Haz clic en el botón para descargar el Acta de Detención:</p>`;
-                    downloadActaBtn.style.display = 'block';
-                    generateReportBtn.disabled = false; // Enable generate button again
-                    console.log("Showing Detention Act download button.");
-                    return; // End function here, do not call API
-                }
-
-                // If not Detention Act, proceed with API call to generate text
-                let promptText = "";
-                // Base prompt for report generation
-                const basePrompt = `Eres un asistente de IA especializado en generar borradores de comunicaciones profesionales para personal de seguridad privada en Chile, basándote en el contexto del incidente. Tu objetivo es redactar informes claros, concisos y objetivos, utilizando la normativa chilena relevante para guardias de seguridad (considerando Decreto Ley 3607, Decreto Supremo 93 y Ley 21.659, teniendo en cuenta que la Ley 21.659 entra en vigencia el 28-NOV-2025).`;
-
-                switch (selectedReportType) {
-                    case 'informe_interno':
-                        promptText = `${basePrompt} Genera un Informe Interno de Incidente. Extrae la siguiente información de la descripción del usuario y formatéala en secciones claras, sin preámbulos ni conclusiones conversacionales: Fecha y Hora (DD/MM/AAAA HH:MM, si es posible, usa la fecha actual si no se especifica), Ubicación del Incidente, Tipo de Incidente (ej. Hurto, Robo, Acto sospechoso, Accidente, Incumplimiento normativo), Descripción Detallada del Evento (narrativa cronológica de lo ocurrido, acciones del guardia), Personal de Seguridad Involucrado (nombres, cargos, acciones iniciales), Acciones Tomadas (medidas inmediatas, notificaciones a autoridades como Carabineros si aplica, retenciones, etc.), Evidencia Recolectada (cámaras, testimonios, objetos), y Recomendaciones/Observaciones. Si la información no está en la descripción, indica 'No especificado'. Descripción: "${description}"`;
-                        break;
-                    case 'comunicacion_policial':
-                        promptText = `${basePrompt} Redacta una Comunicación formal a Carabineros de Chile sobre el incidente. Incluye: Fecha, Hora, Lugar del Incidente, Tipo de Incidente, Descripción concisa del evento enfocándose en los hechos relevantes para la autoridad, y Acciones inmediatas tomadas por el guardia. Si la información no está en la descripción, indica 'No especificado'. No incluyas saludos ni despedidas, solo el cuerpo de la comunicación. Descripción: "${description}"`;
-                        break;
-                    case 'correo_supervisor':
-                        promptText = `${basePrompt} Redacta un Correo Electrónico a un supervisor. Incluye: Asunto (claro y conciso), Fecha y Hora del Incidente, Breve resumen del evento, Acciones tomadas por el guardia, y si se requiere alguna acción o decisión adicional por parte del supervisor. No uses saludos ni despedidas conversacionales, solo el cuerpo del correo. Descripción: "${description}"`;
-                        break;
-                    case 'reporte_general':
-                        promptText = `${basePrompt} Genera un Reporte General de Evento. Extrae: Fecha y Hora (usa la fecha actual si no se especifica), Ubicación, Naturaleza del Evento, Breve descripción de lo ocurrido, Personas afectadas/involucradas, y Medidas adoptadas por el guardia. Si la información no está en la descripción, indica 'No especificado'. No incluyas preámbulos ni conclusiones. Descripción: "${description}"`;
-                        break;
-                }
-
-                let chatHistory = [{ role: "user", parts: [{ text: promptText }] }];
-                const payload = { contents: chatHistory }; 
-
-                try {
-                    const apiKey = ""; // Replace with your actual API key
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    
-                    console.log("Payload sent to Gemini for report:", payload); 
-
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error('Error generating report with Gemini API:', response.status, response.statusText, errorData);
-                        reportOutput.innerHTML = `<p class="text-danger">Error al generar el informe: ${errorData.error.message || 'Error desconocido'}.</p>`;
-                        return;
-                    }
-
-                    const result = await response.json();
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const generatedText = result.candidates[0].content.parts[0].text;
-                        reportOutput.innerHTML = `<pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background-color: #f8f9fa; padding: 10px; border-radius: 5px; color: #333;">${generatedText}</pre>`;
-                        copyReportBtn.style.display = 'block'; // Show only if text generated
-                    } else {
-                        reportOutput.innerHTML = '<p class="text-warning">No se pudo generar un informe. Intenta con una descripción más detallada.</p>';
-                    }
-                } catch (error) {
-                    console.error('Network error or parsing issue in Gemini API call for report:', error);
-                    reportOutput.innerHTML = '<p class="text-danger">Error de conexión. Asegúrate de tener conexión a internet.</p>';
-                } finally {
-                    generateReportBtn.disabled = false; // Always enable when generation finishes
-                }
-            });
-
-            copyReportBtn.addEventListener('click', () => {
-                const reportContent = reportOutput.textContent;
-                navigator.clipboard.writeText(reportContent).then(() => {
-                    // Replaced alert() with a subtle message
-                    showSubtleMessage('¡Borrador copiado al portapapeles!');
-                }).catch(err => {
-                    console.error('Error al copiar el borrador:', err);
-                    // Replaced alert() with a subtle message
-                    showSubtleMessage('No se pudo copiar el borrador.', true); // true to indicate error (red)
-                });
-            });
-
-            // Function to show subtle messages
-            function showSubtleMessage(message, isError = false) {
-                const messageBox = document.createElement('div');
-                messageBox.className = 'subtle-response-box show';
-                messageBox.textContent = message;
-
-                if (isError) {
-                    messageBox.style.backgroundColor = 'rgba(220, 53, 69, 0.2)'; // Soft red
-                    messageBox.style.color = '#dc3545'; // Red
-                } else {
-                    messageBox.style.backgroundColor = 'rgba(40, 53, 147, 0.2)'; // Soft blue
-                    messageBox.style.color = '#283593'; // Blue
-                }
-
-                document.body.appendChild(messageBox);
-
+                // Simulate AI response generation
                 setTimeout(() => {
-                    messageBox.classList.remove('show');
-                    messageBox.addEventListener('transitionend', () => messageBox.remove());
-                }, 3000); // Message disappears after 3 seconds
+                    const response = generateAIResponse(userQuestion);
+                    aiClarifierResponse.innerHTML = `<p>${response}</p>`;
+                    askAiBtn.disabled = false;
+                    console.log("AI Clarifier response generated and displayed.");
+                }, 2000);
+            });
+
+            // Function to generate simulated AI responses
+            function generateAIResponse(question) {
+                const lowerQuestion = question.toLowerCase();
+                
+                // Respuestas sobre Decreto 93
+                if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('requisito') || lowerQuestion.includes('educación'))) {
+                    return "Según el Decreto 93, para ser Guardia de Seguridad se requiere: tener al menos 18 años de edad, haber cursado educación media completa o su equivalente, no tener antecedentes penales, aprobar examen psicológico y físico, y completar el curso de formación de 90 horas académicas.";
+                }
+                
+                if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('uniforme') || lowerQuestion.includes('vestimenta'))) {
+                    return "El Decreto 93 establece que el uniforme del guardia debe ser de color azul marino, con distintivos que identifiquen a la empresa y al guardia. Debe incluir placa identificatoria con nombre y RUN, y no puede asemejarse a uniformes de Fuerzas Armadas o de Orden.";
+                }
+                
+                if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('seguro') || lowerQuestion.includes('utM'))) {
+                    return "El Decreto 93 establece que las empresas deben contratar un seguro de vida para sus guardias con una cifra asegurada de 75 UTM, que cubra accidentes y enfermedades derivadas del trabajo.";
+                }
+                
+                // Respuestas sobre funciones del guardia
+                if (lowerQuestion.includes('función') || lowerQuestion.includes('responsabilidad')) {
+                    return "Las principales funciones del guardia de seguridad incluyen: vigilar y proteger bienes y personas, detectar y prevenir actos que atenten contra la seguridad, informar novedades a superiores, aplicar medidas de seguridad según protocolos, y colaborar con autoridades cuando sea requerido.";
+                }
+                
+                if (lowerQuestion.includes('detención') || lowerQuestion.includes('detener')) {
+                    return "Los guardias pueden detener a personas solo en caso de delito flagrante, aplicando el Artículo 134 del Código Procesal Penal. Deben entregar inmediatamente al detenido a Carabineros y no pueden usar fuerza excesiva.";
+                }
+                
+                // Respuestas sobre Ley 21.659
+                if (lowerQuestion.includes('ley 21.659') || lowerQuestion.includes('nueva ley')) {
+                    return "La Ley 21.659 moderniza la regulación de seguridad privada en Chile. Entra en vigencia el 28 de noviembre de 2025 y establece nuevos estándares para empresas y guardias, fortalece la fiscalización y mejora los requisitos de formación.";
+                }
+                
+                // Respuestas sobre armamento
+                if (lowerQuestion.includes('arma') || lowerQuestion.includes('armamento')) {
+                    return "Los guardias de seguridad NO están autorizados para portar armas de fuego según el Decreto 93. Solo pueden usar elementos de protección personal autorizados como bastón de goma, silbato y linterna.";
+                }
+                
+                // Respuestas sobre procedimientos
+                if (lowerQuestion.includes('procedimiento') || lowerQuestion.includes('protocolo')) {
+                    return "Los guardias deben seguir protocolos establecidos: observar y reportar, no alterar sitio del suceso, preservar evidencias, comunicar novedades de inmediato, actuar con prudencia y solicitar apoyo cuando sea necesario.";
+                }
+                
+                // Respuestas sobre formación
+                if (lowerQuestion.includes('curso') || lowerQuestion.includes('formación') || lowerQuestion.includes('90 horas')) {
+                    return "El curso OS-10 para guardias de seguridad tiene una duración de 90 horas académicas y debe incluir materias como: legislación, procedimientos de seguridad, primeros auxilios, comunicaciones, derechos humanos y ética profesional.";
+                }
+                
+                // Respuesta general
+                return "Basándome en la normativa chilena de seguridad privada (Decreto Ley 3607, Decreto 93 y Ley 21.659), puedo ayudarte con temas específicos sobre funciones del guardia, requisitos, procedimientos y marco legal. ¿Podrías ser más específico con tu consulta?";
             }
 
-            // --- Admin Panel Logic ---
-            const newQuestionInput = document.getElementById('new-question-input');
-            const newQuestionAnswer = document.getElementById('new-question-answer');
-            const addQuestionBtn = document.getElementById('add-question-btn');
-            const adminFeedback = document.getElementById('admin-feedback');
-
-            addQuestionBtn.addEventListener('click', async () => {
-                const questionText = newQuestionInput.value.trim();
-                const correctAnswer = newQuestionAnswer.value;
-
-                if (questionText === "") {
-                    adminFeedback.innerHTML = '<p class="text-danger">Por favor, escribe la pregunta.</p>';
-                    return;
-                }
-
-                const newQuestion = { question: questionText, correctAnswer: correctAnswer };
-                await addQuestionToFirestore(newQuestion);
-                adminFeedback.innerHTML = '<p class="text-success">¡Pregunta guardada exitosamente!</p>';
-                newQuestionInput.value = ''; // Clear input
-                setTimeout(() => { adminFeedback.innerHTML = ''; }, 3000);
-            });
+            console.log("Quiz system and AI Clarifier initialized successfully.");
         });
     </script>
+
 </body>
 </html>
