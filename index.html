@@ -1034,6 +1034,10 @@
         <section id="exam-section" class="mt-5">
             <h2 class="text-center exam-heading-green">Examen de Preparación OS-10</h2>
             <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
+            <p class="text-center" style="color: #dc3545; font-weight: 600; font-size: 0.9rem;">
+                <i class="bi bi-exclamation-triangle"></i> 
+                <strong>IMPORTANTE:</strong> Este examen consta de 30 preguntas. Una vez que selecciones una respuesta, no podrás cambiarla. Lee cuidadosamente antes de responder.
+            </p>
             
             <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
 
@@ -1223,7 +1227,28 @@
                 { question: "La función principal de una antena en un transceptor portátil es amplificar el sonido.", correctAnswer: "Falso" },
                 { question: "El contacto magnético es un sistema de alarma utilizado en puertas y ventanas para detectar aperturas.", correctAnswer: "Verdadero" },
                 { question: "Los daños físicos y psíquicos sufridos por un guardia en el cumplimiento de sus funciones se consideran actos del servicio y pueden derivar en enfermedades profesionales.", correctAnswer: "Verdadero" },
-                { question: "Para ser Guardia de Seguridad, se requiere haber cursado educación básica completa.", correctAnswer: "Falso" }
+                { question: "Para ser Guardia de Seguridad, se requiere haber cursado educación básica completa.", correctAnswer: "Falso" },
+                { question: "No tiene responsabilidad penal quienes compran una cosa hurtada, ya que él no la sustrajo.", correctAnswer: "Falso" },
+                { question: "La legítima defensa solamente se hace extensiva a la propia persona y no a terceros.", correctAnswer: "Falso" },
+                { question: "Robo es la apropiación de una cosa sin que intervengan la fuerza o violencia.", correctAnswer: "Falso" },
+                { question: "Son responsables en la comisión de un delito, los autores, los cómplices y los encubridores cuando en ellos solo se utilice imprudencia y negligencia.", correctAnswer: "Falso" },
+                { question: "La policía debe eximir de responsabilidad penal al que obre en defensa de su persona o derechos, siempre que concurra, entre otras circunstancias la agresión legítima.", correctAnswer: "Verdadero" },
+                { question: "La Nación políticamente organizada es sinónimo de Estado.", correctAnswer: "Verdadero" },
+                { question: "En el sistema de vigilancia privada vigente, solo los Guardias de Seguridad, están sujetos a la fiscalización de la Autoridad Fiscalizadora de la prefectura de Carabineros de su sector jurisdiccional.", correctAnswer: "Falso" },
+                { question: "En algunos casos los Guardias de Seguridad pueden actuar de civil, si están debidamente autorizados por la Autoridad Fiscalizadora.", correctAnswer: "Verdadero" },
+                { question: "El O.S. 10 no puede fiscalizar a los Guardias de Seguridad los días domingos y festivos.", correctAnswer: "Falso" },
+                { question: "No es obligación que los Guardias de Seguridad mantengan la Directiva de Funcionamiento en su respectiva instalación.", correctAnswer: "Falso" },
+                { question: "Las alarmas son elementos manuales o eléctricos que se utilizan para advertir peligro o intrusión o de incendio.", correctAnswer: "Verdadero" },
+                { question: "Para una adecuada detección de incendios deben existir mangueras adecuadas y grifos cercanos.", correctAnswer: "Falso" },
+                { question: "Un sistema de alarmas debe tener etapas básicas, detección, control y respuesta.", correctAnswer: "Verdadero" },
+                { question: "El circuito cerrado de Televisión es un complemento al sistema electrónico de alarma.", correctAnswer: "Verdadero" },
+                { question: "La empresa de seguridad privada debe informar mensualmente a Carabineros sobre el personal que labora en sus instalaciones.", correctAnswer: "Verdadero" },
+                { question: "Los guardias pueden realizar registros corporales a personas que ingresen a las instalaciones que custodian.", correctAnswer: "Falso" },
+                { question: "El guardia de seguridad puede usar la fuerza física solo en legítima defensa propia o de terceros.", correctAnswer: "Verdadero" },
+                { question: "Es obligatorio que el guardia de seguridad mantenga un libro de novedades actualizado durante su turno.", correctAnswer: "Verdadero" },
+                { question: "El curso OS-10 debe ser renovado cada 3 años según la normativa vigente.", correctAnswer: "Falso" },
+                { question: "Los guardias de seguridad pueden portar bastón de goma como elemento de protección personal.", correctAnswer: "Verdadero" },
+                { question: "La detención por particulares no puede exceder de 24 horas sin entregar al detenido a la autoridad competente.", correctAnswer: "Verdadero" }
             ];
 
             let questions = [];
@@ -1261,18 +1286,18 @@
 
                 // Simulate loading time and then generate questions
                 setTimeout(() => {
-                    // Shuffle questions and select 20 random ones
-                    questions = shuffleArray(defaultQuestions).slice(0, 20);
+                    // Shuffle questions and select ALL 30 questions (cambió de 20 a 30)
+                    questions = shuffleArray(defaultQuestions);
                     userAnswers = {};
                     
                     displayQuiz();
                     
                     if (subtleResponseBox) {
-                        subtleResponseBox.textContent = '¡Preguntas cargadas! ¡Mucha suerte!';
+                        subtleResponseBox.textContent = '¡30 preguntas cargadas! Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
                         setTimeout(() => {
                             subtleResponseBox.classList.remove('show');
                             setTimeout(() => subtleResponseBox.style.display = 'none', 500);
-                        }, 2000);
+                        }, 4000); // Mostrar por 4 segundos para dar tiempo a leer el mensaje
                     }
                 }, 1000);
             }
@@ -1305,6 +1330,13 @@
                     optionButtons.forEach(button => {
                         button.addEventListener('click', function() {
                             const questionIndex = parseInt(this.dataset.question);
+                            
+                            // Verificar si la pregunta ya fue respondida (NUEVA FUNCIONALIDAD)
+                            if (userAnswers[questionIndex] !== undefined) {
+                                // Si ya fue respondida, no hacer nada
+                                return;
+                            }
+                            
                             const selectedValue = this.dataset.value;
                             const currentQuestion = questions[questionIndex];
                             const feedbackMessage = questionCard.querySelector('.feedback-message');
@@ -1333,10 +1365,25 @@
 
                             feedbackMessage.style.display = 'block';
                             questionCard.classList.add('answered-blue-border');
+                            
+                            // BLOQUEAR TODOS LOS BOTONES DE ESTA PREGUNTA (NUEVA FUNCIONALIDAD)
+                            optionButtons.forEach(btn => {
+                                btn.style.pointerEvents = 'none';
+                                btn.style.opacity = '0.8';
+                                btn.style.cursor = 'not-allowed';
+                            });
+                            
+                            // Agregar texto explicativo de que la respuesta está bloqueada
+                            const lockMessage = document.createElement('div');
+                            lockMessage.style.cssText = 'font-size: 0.8em; color: #666; margin-top: 8px; font-style: italic;';
+                            lockMessage.textContent = '🔒 Respuesta registrada - No se puede modificar';
+                            feedbackMessage.appendChild(lockMessage);
 
                             // Check if all questions are answered
                             if (Object.keys(userAnswers).length === questions.length) {
                                 submitQuizBtn.style.display = 'block';
+                                // Mostrar mensaje de que puede enviar el examen
+                                showSubtleMessage('¡Todas las preguntas respondidas! Puedes enviar tu examen.');
                             }
                         });
                     });
@@ -1629,6 +1676,11 @@ Fecha de elaboración: ${currentDate}`;
                 const messageBox = document.createElement('div');
                 messageBox.className = 'subtle-response-box show';
                 messageBox.textContent = message;
+                messageBox.style.position = 'fixed';
+                messageBox.style.top = '20%';
+                messageBox.style.left = '50%';
+                messageBox.style.transform = 'translate(-50%, -50%)';
+                messageBox.style.zIndex = '1500';
 
                 if (isError) {
                     messageBox.style.backgroundColor = 'rgba(220, 53, 69, 0.2)';
