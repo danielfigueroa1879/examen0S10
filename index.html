@@ -494,25 +494,6 @@
             box-shadow: 0 2px 8px rgba(33, 150, 243, 0.4); /* Resplandor azul */
         }
 
-        /* NUEVOS ESTILOS PARA FEEDBACK INMEDIATO */
-        /* Estilo para la respuesta correcta */
-        .option-button.correct-feedback {
-            background-color: #d4edda; /* Verde muy claro */
-            color: #155724; /* Texto verde oscuro */
-            border-color: #28a745; /* Verde Bootstrap */
-            box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
-            font-weight: 700;
-        }
-
-        /* Estilo para la respuesta incorrecta seleccionada */
-        .option-button.wrong-feedback {
-            background-color: #f8d7da; /* Rojo muy claro */
-            color: #721c24; /* Texto rojo oscuro */
-            border-color: #dc3545; /* Rojo Bootstrap */
-            box-shadow: 0 0 8px rgba(220, 53, 69, 0.5);
-            font-weight: 700;
-        }
-
         /* Ocultar los radio buttons originales */
         .form-check-input[type="radio"] {
             display: none;
@@ -1335,7 +1316,7 @@
 
                 try {
                     console.log("Attempting to generate questions with Gemini API...");
-                    const apiKey = ""; // TU CLAVE DE API PROPORCIONADA
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
                         method: 'POST',
@@ -1425,7 +1406,7 @@
                     const questionCard = document.createElement('div');
                     questionCard.classList.add('question-card');
                     questionCard.innerHTML = `
-                        <h5 data-question-id="${index}">${index + 1}. ${q.question}</h5>
+                        <h5>${index + 1}. ${q.question}</h5>
                         <div class="options-container">
                             <label class="option-button">
                                 <input class="form-check-input" type="radio" name="question${index}" value="Verdadero">
@@ -1446,34 +1427,11 @@
                             // Remove 'selected' class from all buttons for this question
                             radioButtons.forEach(innerRadio => {
                                 innerRadio.closest('.option-button').classList.remove('selected');
-                                // Remove previous feedback classes
-                                innerRadio.closest('.option-button').classList.remove('correct-feedback', 'wrong-feedback');
                             });
                             // Add 'selected' class to the parent label of the checked radio button
-                            const selectedLabel = this.closest('.option-button');
-                            selectedLabel.classList.add('selected');
-                            
+                            this.closest('.option-button').classList.add('selected');
                             // Add blue border to the question card
                             questionCard.classList.add('answered-blue-border');
-
-                            // --- SHOW IMMEDIATE FEEDBACK ---
-                            const currentQuestionIndex = parseInt(this.name.replace('question', ''));
-                            const currentQuestion = questions[currentQuestionIndex];
-
-                            if (this.value === currentQuestion.correctAnswer) {
-                                selectedLabel.classList.add('correct-feedback');
-                            } else {
-                                selectedLabel.classList.add('wrong-feedback');
-                                // Also highlight the correct answer
-                                radioButtons.forEach(innerRadio => {
-                                    if (innerRadio.value === currentQuestion.correctAnswer) {
-                                        innerRadio.closest('.option-button').classList.add('correct-feedback');
-                                    }
-                                });
-                            }
-
-                            // Disable all radios for this question after an answer is selected
-                            radioButtons.forEach(innerRadio => innerRadio.disabled = true);
                         });
                     });
                 });
@@ -1497,15 +1455,15 @@
                 const grade = calculateGrade(percentage);
 
                 examResults.innerHTML = `
-                    <h3>Resultados del Examen</h3>
+                    <h3>Results del Examen</h3>
                     <p>Respuestas correctas: ${score} de ${maxScore}</p>
                     <p>Porcentaje: ${percentage.toFixed(2)}%</p>
                     <p>Tu nota en escala del 1 al 7: <strong style="color: #1a237e;">${grade.toFixed(1)}</strong></p>
-                    ${grade >= 4.0 ? '<p class="text-success">¡Felicitaciones! Has aprobado.</p>'' : '<p class="text-danger">Necesitas repasar más. ¡No te desanimes!</p>'}
+                    ${grade >= 4.0 ? '<p class="text-success">¡Felicitaciones! Has aprobado.</p>' : '<p class="text-danger">Necesitas repasar más. ¡No te desanimes!</p>'}
                 `;
                 examResults.style.display = 'block';
                 submitQuizBtn.style.display = 'none'; // Ocultar botón de enviar después del envío
-                // All inputs for quiz are already disabled per-question once answered.
+                quizContainer.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true); // Desactivar opciones después del envío
                 console.log("Quiz submitted and results displayed. Score:", score);
             }
 
@@ -1567,7 +1525,7 @@
 
                 try {
                     console.log("Attempting to get AI clarification with Gemini API for user question:", userQuestion);
-                    const apiKey = ""; 
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
                         method: 'POST',
@@ -1668,7 +1626,7 @@
                 const payload = { contents: chatHistory }; 
 
                 try {
-                    const apiKey = ""; 
+                    const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     
                     console.log("Payload enviado a Gemini para informe:", payload); 
@@ -1689,7 +1647,7 @@
                     const result = await response.json();
                     if (result.candidates && result.candidates.length > 0 &&
                         result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content[0].parts.length > 0) {
+                        result.candidates[0].content.parts.length > 0) {
                         const generatedText = result.candidates[0].content.parts[0].text;
                         reportOutput.innerHTML = `<pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background-color: #f8f9fa; padding: 10px; border-radius: 5px; color: #333;">${generatedText}</pre>`;
                         copyReportBtn.style.display = 'block'; // Mostrar solo si se generó texto
@@ -1706,8 +1664,12 @@
 
             copyReportBtn.addEventListener('click', () => {
                 const reportContent = reportOutput.textContent;
-                document.execCommand('copy'); // Fallback for clipboard API issues in iframes
-                alert('Borrador copiado al portapapeles.');
+                navigator.clipboard.writeText(reportContent).then(() => {
+                    alert('Borrador copiado al portapapeles.');
+                }).catch(err => {
+                    console.error('Error al copiar el borrador:', err);
+                    alert('No se pudo copiar el borrador.');
+                });
             });
             // Esto permite que el botón de descarga funcione directamente como un enlace
             // No necesita lógica JavaScript adicional más allá de ser visible.
@@ -1715,4 +1677,3 @@
     </script>
 </body>
 </html>
-
