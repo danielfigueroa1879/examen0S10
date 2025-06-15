@@ -435,11 +435,24 @@
             display: block; /* Para centrar el botón */
             margin-left: auto; /* Para centrar el botón */
             margin-right: auto; /* Para centrar el botón */
+            /* Animation for jumping effect */
+            animation: jump 0.6s infinite alternate; /* Applies the jump animation */
         }
 
         #start-exam-btn:hover {
             background-color: #c82333; /* Rojo más oscuro para hover */
             transform: translateY(-3px);
+            animation: none; /* Stop animation on hover */
+        }
+
+        /* Keyframes for the jump animation */
+        @keyframes jump {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10px); /* Adjust height of jump */
+            }
         }
 
         #quiz-container {
