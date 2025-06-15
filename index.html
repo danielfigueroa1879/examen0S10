@@ -1528,32 +1528,42 @@
                     }, 100);
                 });
 
-                let allAvailableQuestions = [];
+                let loadedQuestions = [];
 
                 // 1. Try to fetch from Firestore first
                 console.log("Quiz Debug: Intentando obtener preguntas de Firestore...");
                 const fetchedQuestions = await fetchQuestionsFromFirestore();
+
                 if (fetchedQuestions.length > 0) {
-                    allAvailableQuestions = fetchedQuestions;
+                    loadedQuestions = fetchedQuestions;
                     console.log(`Quiz Debug: Cargadas ${fetchedQuestions.length} preguntas desde Firestore.`);
                 } else {
-                    console.log("Quiz Debug: Firestore vacío o inaccesible. Usando preguntas predeterminadas y proporcionadas por el usuario.");
-                    // Combine default and user-provided questions
-                    const combinedQuestions = [...defaultQuestions, ...userProvidedQuestions];
-                    allAvailableQuestions = combinedQuestions;
-
-                    // Upload combined questions to Firestore if it was empty
-                    console.log("Quiz Debug: Subiendo preguntas predeterminadas y del usuario a Firestore...");
-                    for (const q of combinedQuestions) {
-                        await addQuestionToFirestore(q);
+                    console.log("Quiz Debug: Firestore vacío o inaccesible. Combinando preguntas predeterminadas y proporcionadas por el usuario como fallback inicial.");
+                    // Fallback to a guaranteed set of questions if Firestore is empty/fails
+                    loadedQuestions = [...defaultQuestions, ...userProvidedQuestions];
+                    // Attempt to upload these combined questions to Firestore if it's empty, but don't block display
+                    if (isFirebaseReady && questionsCollectionRef) {
+                        try {
+                            console.log("Quiz Debug: Intentando subir preguntas predeterminadas y del usuario a Firestore (si estaba vacío).");
+                            for (const q of loadedQuestions) {
+                                // Add a check to prevent duplicate adds if this runs multiple times
+                                // Or, consider checking if a question already exists before adding
+                                await addQuestionToFirestore(q);
+                            }
+                            console.log("Quiz Debug: Preguntas predeterminadas y del usuario subidas a Firestore.");
+                        } catch (uploadError) {
+                            console.error("Quiz Debug: Error al subir preguntas a Firestore:", uploadError);
+                        }
+                    } else {
+                         console.warn("Quiz Debug: Firebase no listo para subir preguntas, se usará solo el set local por ahora.");
                     }
-                    console.log("Quiz Debug: Preguntas predeterminadas y del usuario subidas a Firestore.");
                 }
 
-                // If still no questions from Firestore or initial combined upload, try AI generation
-                if (allAvailableQuestions.length === 0) {
-                     console.log("Quiz Debug: No hay preguntas disponibles, intentando generar con la API de Gemini.");
-                     const prompt = `Genera 30 preguntas de Verdadero/Falso sobre la normativa y funciones del guardia de seguridad en Chile, abarcando temas del Decreto Ley 3607, Decreto Supremo 93, y los roles y responsabilidades prácticas del guardia según la normativa legal vigente entre 2020 y 2025 (incluyendo contexto de la Ley 21.659, si bien las preguntas deben ser sobre la función actual o regulaciones anteriores si siguen siendo relevantes para la operación diaria). Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').`;
+                // Now try AI generation, but only use if it provides *more* or *better* questions
+                // This part runs in parallel or after a short delay if needed, but the user already has *some* questions
+                if (loadedQuestions.length < 30) { // If we don't have enough questions, try AI
+                    console.log("Quiz Debug: Menos de 30 preguntas cargadas. Intentando generar preguntas adicionales con IA.");
+                    const prompt = `Genera ${30 - loadedQuestions.length} preguntas de Verdadero/Falso sobre la normativa y funciones del guardia de seguridad en Chile, abarcando temas del Decreto Ley 3607, Decreto Supremo 93, y los roles y responsabilidades prácticas del guardia según la normativa legal vigente entre 2020 y 2025 (incluyendo contexto de la Ley 21.659, si bien las preguntas deben ser sobre la función actual o regulaciones anteriores si siguen siendo relevantes para la operación diaria). Cada pregunta debe tener una única respuesta correcta: 'Verdadero' o 'Falso'. El formato debe ser un arreglo de objetos JSON, donde cada objeto tenga 'question' y 'correctAnswer' (el string 'Verdadero' o 'Falso').`;
                     let chatHistory = [];
                     chatHistory.push({ role: "user", parts: [{ text: prompt }] });
                     const payload = {
@@ -1575,9 +1585,7 @@
                     };
 
                     try {
-                        console.log("Quiz Debug: Llamando a la API de Gemini para generar preguntas...");
-                        // !! IMPORTANTE: Inserta tu CLAVE API de Google Gemini aquí !!
-                        const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
+                        const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; // TU CLAVE DE API PROPORCIONADA
                         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                         const response = await fetch(apiUrl, {
                             method: 'POST',
@@ -1585,13 +1593,7 @@
                             body: JSON.stringify(payload)
                         });
 
-                        if (!response.ok) {
-                            const errorData = await response.json();
-                            console.error('Quiz Debug: Error al generar preguntas con Gemini API:', response.status, response.statusText, errorData);
-                            quizContainer.innerHTML = '<p class="text-danger text-center">Error al cargar las preguntas de la IA. Usando preguntas de respaldo. (Código de estado: ' + response.status + ')</p>';
-                            if (subtleResponseBox) subtleResponseBox.textContent = 'Error al cargar preguntas. Usando respaldo.';
-                            allAvailableQuestions = defaultQuestions; // Fallback to absolute default
-                        } else {
+                        if (response.ok) {
                             const result = await response.json();
                             if (result.candidates && result.candidates.length > 0 &&
                                 result.candidates[0].content && result.candidates[0].content.parts &&
@@ -1600,48 +1602,43 @@
                                 try {
                                     const aiGeneratedQuestions = JSON.parse(jsonText);
                                     if (Array.isArray(aiGeneratedQuestions) && aiGeneratedQuestions.length > 0) {
-                                        allAvailableQuestions = aiGeneratedQuestions;
-                                        console.log("Quiz Debug: IA generó preguntas. Subiendo a Firestore...");
-                                        // Upload AI-generated questions to Firestore for future use
+                                        console.log(`Quiz Debug: IA generó ${aiGeneratedQuestions.length} preguntas adicionales.`);
+                                        loadedQuestions = loadedQuestions.concat(aiGeneratedQuestions);
+                                        // Also upload these new AI questions to Firestore
                                         for (const q of aiGeneratedQuestions) {
                                             await addQuestionToFirestore(q);
                                         }
-                                        console.log("Quiz Debug: Preguntas generadas por IA y subidas a Firestore.");
-                                    } else {
-                                        console.warn("Quiz Debug: La IA generó preguntas inválidas o vacías. Usando preguntas predeterminadas.");
-                                        allAvailableQuestions = defaultQuestions;
                                     }
                                 } catch (parseError) {
-                                    console.error('Quiz Debug: Error al parsear la respuesta JSON de Gemini:', parseError);
-                                    allAvailableQuestions = defaultQuestions;
+                                    console.error('Quiz Debug: Error al parsear la respuesta JSON de Gemini (adicionales):', parseError);
                                 }
-                            } else {
-                                console.warn("Quiz Debug: Estructura de respuesta de la API de Gemini inesperada o vacía. Usando preguntas predeterminadas.");
-                                allAvailableQuestions = defaultQuestions;
                             }
+                        } else {
+                            const errorData = await response.json();
+                            console.error('Quiz Debug: Error al llamar a la API de Gemini para preguntas adicionales:', response.status, errorData);
                         }
                     } catch (error) {
-                        console.error('Quiz Debug: Error de red al llamar a la API de Gemini para preguntas:', error);
-                        allAvailableQuestions = defaultQuestions;
+                        console.error('Quiz Debug: Error de red al llamar a la API de Gemini para preguntas adicionales:', error);
                     }
                 }
 
-                // If after all attempts, there are still no questions, use a hardcoded fallback
-                if (allAvailableQuestions.length === 0) {
-                    allAvailableQuestions = [...defaultQuestions, ...userProvidedQuestions]; // Ensure some questions are always there
-                    console.warn("Quiz Debug: No se cargaron preguntas de ninguna fuente. Usando valores predeterminados como último recurso.");
+                // Ensure we have at least some questions, even if AI or Firestore completely fail
+                if (loadedQuestions.length === 0) {
+                    loadedQuestions = [...defaultQuestions, ...userProvidedQuestions];
+                    console.warn("Quiz Debug: Ninguna pregunta cargada. Usando el conjunto base de respaldo.");
                 }
 
-                // Shuffle all available questions and select a subset if desired
-                questions = shuffleArray(allAvailableQuestions).slice(0, 30); // Take up to 30 random questions
+                // Shuffle all available questions and select up to 30
+                questions = shuffleArray(loadedQuestions).slice(0, 30);
+                console.log(`Quiz Debug: Se mostrarán ${questions.length} preguntas finales.`);
 
                 displayQuiz();
                 if (subtleResponseBox) {
                     subtleResponseBox.textContent = '¡Preguntas cargadas! ¡Mucha suerte!';
                     setTimeout(() => {
                         subtleResponseBox.classList.remove('show');
-                        setTimeout(() => subtleResponseBox.style.display = 'none', 500); // Wait for transition to finish
-                    }, 3000); // Show for 3 seconds
+                        setTimeout(() => subtleResponseBox.style.display = 'none', 500);
+                    }, 3000);
                 }
                 console.log("Quiz Debug: Proceso de generación de preguntas finalizado.");
             }
@@ -1819,7 +1816,6 @@
 
                 try {
                     console.log("AI Clarifier Debug: Intentando obtener aclaración de la IA con la API de Gemini para la pregunta del usuario:", userQuestion);
-                    // !! IMPORTANTE: Inserta tu CLAVE API de Google Gemini aquí !!
                     const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     const response = await fetch(apiUrl, {
@@ -1922,7 +1918,6 @@
 
                 try {
                     console.log("Report Assistant Debug: Llamando a la API de Gemini para generar informe.");
-                    // !! IMPORTANTE: Inserta tu CLAVE API de Google Gemini aquí !!
                     const apiKey = "AIzaSyCUMr9SRpaPJEmB1dhG_g67GZtT8n4_3CI"; 
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     
