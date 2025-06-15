@@ -61,14 +61,16 @@
         }
 
         .navbar-brand .brand-text {
-            font-size: 1.3rem;
+            font-size: 1.8rem; /* Aumentado de 1.3rem a 1.8rem */
             line-height: 1.2;
             text-transform: uppercase;
+            font-weight: 800; /* Más grueso */
+            letter-spacing: 1.5px; /* Más espaciado */
         }
 
         .navbar-brand .navbar-logo {
-            height: 50px;
-            margin-left: 10px;
+            height: 65px; /* Aumentado de 50px a 65px */
+            margin-left: 15px; /* Aumentado margen */
             order: 1;
         }
 
@@ -888,8 +890,8 @@
                 margin-right: 0;
             }
             .navbar-brand .navbar-logo {
-                height: 65px;
-                margin-left: 15px; 
+                height: 85px; /* Aumentado de 65px a 85px para móvil */
+                margin-left: 20px; /* Aumentado margen */
                 margin-right: 0px;
             }
             .navbar-custom .navbar-collapse {
@@ -966,18 +968,19 @@
             }
 
             .navbar-custom .navbar-brand {
-                font-size: 2.2rem;
+                font-size: 2.8rem; /* Aumentado de 2.2rem a 2.8rem para PC */
                 flex-direction: row;
                 white-space: nowrap;
                 align-items: center;
+                font-weight: 900; /* Más grueso en PC */
             }
             .navbar-brand .brand-text {
                 display: inline;
-                letter-spacing: 1px;
+                letter-spacing: 2px; /* Aumentado de 1px a 2px */
             }
             .navbar-brand .navbar-logo {
-                height: 75px;
-                margin-left: 20px;
+                height: 95px; /* Aumentado de 75px a 95px para PC */
+                margin-left: 25px; /* Aumentado margen */
             }
             .mobile-only {
                 display: none;
@@ -993,7 +996,7 @@
         <div class="container-fluid px-3">
             <a class="navbar-brand" href="#">
                 <span class="brand-text">SEGURIDAD <br class="mobile-only">PRIVADA</span>
-                <img src="https://via.placeholder.com/75x75/171b4a/ffffff?text=SP" alt="Logo Seguridad Privada" class="navbar-logo">
+                <img src="logoSec.png" alt="Logo Seguridad Privada" class="navbar-logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -1069,7 +1072,7 @@
             <p class="text-center">Describe brevemente el incidente o la situación, y la IA te ayudará a redactar un borrador de informe o comunicación profesional.</p>
             
             <div class="mb-3 text-center">
-                <img src="https://via.placeholder.com/60x60/4285f4/ffffff?text=AI" alt="Logo de Gemini IA" class="gemini-logo" style="width: 60px; height: auto;">
+                <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo" style="width: 60px; height: auto;">
             </div>
 
             <textarea id="incident-description-input" class="form-control mb-3" rows="5" placeholder="Ej: Hubo un hurto en la tienda. Un hombre con camisa azul tomó un objeto y salió corriendo."></textarea>
@@ -1123,7 +1126,7 @@
     <div id="ai-clarifier-chat" class="ai-clarifier-chat">
         <div class="chat-header">
             <h2>Clarificador IA</h2>
-            <img src="https://via.placeholder.com/40x40/4285f4/ffffff?text=AI" alt="Logo de Gemini IA" class="gemini-logo">
+            <img src="gemini.png" alt="Logo de Gemini IA" class="gemini-logo">
             <button class="close-button" id="close-ai-chat">×</button>
         </div>
         <div class="chat-content">
