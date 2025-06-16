@@ -1568,6 +1568,301 @@ const questionsByCategory = {
         { question: "La detención por particulares no puede exceder de 24 horas sin entregar al detenido a la autoridad competente.", correctAnswer: "Verdadero" }
     ]
 };
+            // Función para crear el array de preguntas mezcladas categorizadamente
+function createCategorizedQuestions() {
+    const allQuestions = [];
+    const categories = Object.keys(questionsByCategory);
+    
+    // Obtener 3-5 preguntas de cada categoría de manera aleatoria
+    categories.forEach(category => {
+        const categoryQuestions = questionsByCategory[category];
+        const shuffledCategoryQuestions = shuffleArray([...categoryQuestions]);
+        
+        // Determinar cuántas preguntas tomar de cada categoría
+        let questionsToTake;
+        switch(category) {
+            case "CONOCIMIENTOS LEGALES":
+                questionsToTake = 5; // Más preguntas de esta categoría importante
+                break;
+            case "PRIMEROS AUXILIOS":
+                questionsToTake = 4;
+                break;
+            case "PROTECCIÓN DE INSTALACIONES":
+                questionsToTake = 5; // Categoría importante
+                break;
+            case "CONOCIMIENTOS DE SISTEMAS DE ALARMA":
+                questionsToTake = 3;
+                break;
+            case "VALORES Y ÉTICA":
+                questionsToTake = 4;
+                break;
+            case "SISTEMAS DE COMUNICACIÓN Y ENLACE":
+                questionsToTake = 3;
+                break;
+            case "PREVENCIÓN Y CONTROL DE EMERGENCIA":
+                questionsToTake = 4;
+                break;
+            case "PREGUNTAS ADICIONALES":
+                questionsToTake = 2;
+                break;
+            default:
+                questionsToTake = 3;
+        }
+        
+        // Agregar las preguntas seleccionadas con la información de categoría
+        for (let i = 0; i < Math.min(questionsToTake, shuffledCategoryQuestions.length); i++) {
+            allQuestions.push({
+                ...shuffledCategoryQuestions[i],
+                category: category
+            });
+        }
+    });
+    
+    // Mezclar todas las preguntas seleccionadas
+    return shuffleArray(allQuestions);
+}
+
+// Función para mostrar las estadísticas de categorías al final del examen
+function showCategoryStats(questions, userAnswers) {
+    const categoryStats = {};
+    
+    questions.forEach((question, index) => {
+        const category = question.category;
+        if (!categoryStats[category]) {
+            categoryStats[category] = { total: 0, correct: 0 };
+        }
+        categoryStats[category].total++;
+        
+        if (userAnswers[index] === question.correctAnswer) {
+            categoryStats[category].correct++;
+        }
+    });
+    
+    return categoryStats;
+}
+
+// IMPORTANTE: Reemplazar la función generateQuestions existente con esta versión
+function generateQuestionsCategorized() {
+    console.log("generateQuestionsCategorized function called.");
+    
+    // Show loading message
+    quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas categorizadas... Esto puede tardar unos segundos.</p>';
+    quizContainer.style.display = 'block';
+    startExamBtn.style.display = 'none';
+    submitQuizBtn.style.display = 'none';
+
+    // Activate persistent red border for the exam section
+    examSection.classList.add('active-red-border');
+
+    // Show subtle message box
+    if (subtleResponseBox) { 
+        subtleResponseBox.style.display = 'block';
+        subtleResponseBox.classList.add('show');
+        subtleResponseBox.textContent = '¡Generando preguntas categorizadas, por favor espera!';
+    }
+
+    // Simulate loading time and then generate categorized questions
+    setTimeout(() => {
+        questions = createCategorizedQuestions();
+        userAnswers = {};
+        
+        displayCategorizedQuiz();
+        
+        if (subtleResponseBox) {
+            subtleResponseBox.textContent = '¡30 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
+            setTimeout(() => {
+                subtleResponseBox.classList.remove('show');
+                setTimeout(() => subtleResponseBox.style.display = 'none', 500);
+            }, 4000);
+        }
+    }, 1000);
+}
+
+// Función para mostrar el quiz categorizado
+function displayCategorizedQuiz() {
+    quizContainer.innerHTML = '';
+    
+    questions.forEach((q, index) => {
+        const questionCard = document.createElement('div');
+        questionCard.classList.add('question-card');
+        
+        // Agregar badge de categoría
+        const categoryBadge = getCategoryBadge(q.category);
+        
+        questionCard.innerHTML = `
+            <div class="category-badge-container mb-2">
+                ${categoryBadge}
+            </div>
+            <h5>${index + 1}. ${q.question}</h5>
+            <div class="options-container">
+                <label class="option-button" data-question="${index}" data-value="Verdadero">
+                    <input class="form-check-input" type="radio" name="question${index}" value="Verdadero" style="display: none;">
+                    Verdadero
+                </label>
+                <label class="option-button" data-question="${index}" data-value="Falso">
+                    <input class="form-check-input" type="radio" name="question${index}" value="Falso" style="display: none;">
+                    Falso
+                </label>
+            </div>
+            <div class="feedback-message mt-2" style="font-weight: 600; display: none;"></div>
+        `;
+        quizContainer.appendChild(questionCard);
+
+        // Add event listeners to option buttons (mismo código que antes)
+        const optionButtons = questionCard.querySelectorAll('.option-button');
+        optionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const questionIndex = parseInt(this.dataset.question);
+                
+                if (userAnswers[questionIndex] !== undefined) {
+                    return;
+                }
+                
+                const selectedValue = this.dataset.value;
+                const currentQuestion = questions[questionIndex];
+                const feedbackMessage = questionCard.querySelector('.feedback-message');
+
+                userAnswers[questionIndex] = selectedValue;
+
+                optionButtons.forEach(btn => {
+                    btn.classList.remove('selected', 'correct', 'incorrect');
+                });
+
+                this.classList.add('selected');
+                
+                if (selectedValue === currentQuestion.correctAnswer) {
+                    this.classList.add('correct');
+                    feedbackMessage.style.color = '#28a745';
+                    feedbackMessage.textContent = '¡Correcto!';
+                } else {
+                    this.classList.add('incorrect');
+                    feedbackMessage.style.color = '#dc3545';
+                    feedbackMessage.textContent = `Incorrecto. La respuesta correcta era: "${currentQuestion.correctAnswer}".`;
+                }
+
+                feedbackMessage.style.display = 'block';
+                questionCard.classList.add('answered-blue-border');
+                
+                optionButtons.forEach(btn => {
+                    btn.style.pointerEvents = 'none';
+                    btn.style.opacity = '0.8';
+                    btn.style.cursor = 'not-allowed';
+                });
+                
+                const lockMessage = document.createElement('div');
+                lockMessage.style.cssText = 'font-size: 0.8em; color: #666; margin-top: 8px; font-style: italic;';
+                lockMessage.textContent = '🔒 Respuesta registrada - No se puede modificar';
+                feedbackMessage.appendChild(lockMessage);
+
+                if (Object.keys(userAnswers).length === questions.length) {
+                    submitQuizBtn.style.display = 'block';
+                    showSubtleMessage('¡Todas las preguntas respondidas! Puedes enviar tu examen.');
+                }
+            });
+        });
+    });
+
+    console.log("Categorized quiz questions displayed.");
+}
+
+// Función para obtener el badge de categoría con colores
+function getCategoryBadge(category) {
+    const categoryColors = {
+        "CONOCIMIENTOS LEGALES": "bg-primary",
+        "PRIMEROS AUXILIOS": "bg-danger", 
+        "PROTECCIÓN DE INSTALACIONES": "bg-success",
+        "CONOCIMIENTOS DE SISTEMAS DE ALARMA": "bg-warning text-dark",
+        "VALORES Y ÉTICA": "bg-info",
+        "SISTEMAS DE COMUNICACIÓN Y ENLACE": "bg-secondary",
+        "PREVENCIÓN Y CONTROL DE EMERGENCIA": "bg-dark",
+        "PREGUNTAS ADICIONALES": "bg-purple"
+    };
+    
+    const colorClass = categoryColors[category] || "bg-secondary";
+    const categoryShort = getCategoryShortName(category);
+    
+    return `<span class="badge ${colorClass} category-badge">${categoryShort}</span>`;
+}
+
+// Función para obtener nombres cortos de categorías
+function getCategoryShortName(category) {
+    const shortNames = {
+        "CONOCIMIENTOS LEGALES": "Legal",
+        "PRIMEROS AUXILIOS": "Primeros Auxilios",
+        "PROTECCIÓN DE INSTALACIONES": "Protección",
+        "CONOCIMIENTOS DE SISTEMAS DE ALARMA": "Sistemas Alarma",
+        "VALORES Y ÉTICA": "Ética",
+        "SISTEMAS DE COMUNICACIÓN Y ENLACE": "Comunicación",
+        "PREVENCIÓN Y CONTROL DE EMERGENCIA": "Emergencias",
+        "PREGUNTAS ADICIONALES": "Adicionales"
+    };
+    
+    return shortNames[category] || category;
+}
+
+// Función modificada para enviar quiz con estadísticas por categoría
+function submitCategorizedQuiz() {
+    let score = 0;
+    questions.forEach((q, index) => {
+        if (userAnswers[index] === q.correctAnswer) {
+            score++;
+        }
+    });
+
+    const maxScore = questions.length;
+    const percentage = (score / maxScore) * 100;
+    const grade = calculateGrade(percentage);
+    const passed = grade >= 4.0;
+    
+    // Obtener estadísticas por categoría
+    const categoryStats = showCategoryStats(questions, userAnswers);
+
+    // Populate modal content
+    modalCorrectCount.textContent = score;
+    modalTotalQuestions.textContent = maxScore;
+    modalPercentage.textContent = percentage.toFixed(1);
+    modalGrade.textContent = grade.toFixed(1);
+
+    // Crear contenido detallado por categorías
+    let categoryBreakdown = '<div class="category-breakdown mt-3"><h6>Resultados por Categoría:</h6>';
+    Object.entries(categoryStats).forEach(([category, stats]) => {
+        const categoryPercentage = ((stats.correct / stats.total) * 100).toFixed(1);
+        const categoryShort = getCategoryShortName(category);
+        const statusIcon = stats.correct === stats.total ? '✅' : 
+                          categoryPercentage >= 60 ? '⚠️' : '❌';
+        
+        categoryBreakdown += `
+            <div class="category-stat">
+                ${statusIcon} <strong>${categoryShort}:</strong> ${stats.correct}/${stats.total} (${categoryPercentage}%)
+            </div>
+        `;
+    });
+    categoryBreakdown += '</div>';
+
+    // Set modal message and color
+    resultsModalContent.classList.remove('pass', 'fail');
+    if (passed) {
+        modalMessage.innerHTML = '¡Felicitaciones! Has aprobado.' + categoryBreakdown;
+        resultsModalContent.classList.add('pass');
+    } else {
+        modalMessage.innerHTML = 'Necesitas repasar más. ¡No te desanimes!' + categoryBreakdown;
+        resultsModalContent.classList.add('fail');
+    }
+
+    // Show the modal
+    resultsModalOverlay.style.display = 'flex';
+    setTimeout(() => resultsModalOverlay.classList.add('show'), 10);
+
+    submitQuizBtn.style.display = 'none';
+    
+    // Disable all option buttons
+    document.querySelectorAll('.option-button').forEach(button => {
+        button.style.pointerEvents = 'none';
+        button.style.opacity = '0.7';
+    });
+
+    console.log("Categorized quiz submitted and results displayed in modal. Score:", score);
+}
 
             // Function to shuffle an array
             function shuffleArray(array) {
