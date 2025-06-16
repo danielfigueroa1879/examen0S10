@@ -990,6 +990,60 @@
                 display: none;
             }
         }
+// CSS adicional para los badges de categoría (agregar al <style> del HTML)
+const additionalCSS = `
+.category-badge {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.category-badge-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.bg-purple {
+    background-color: #6f42c1 !important;
+    color: white !important;
+}
+
+.category-breakdown {
+    text-align: left;
+    border-top: 1px solid rgba(255,255,255,0.3);
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.category-stat {
+    padding: 2px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 3px;
+}
+
+.category-breakdown h6 {
+    color: inherit;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .category-badge {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+    }
+    
+    .category-stat {
+        font-size: 0.8rem;
+    }
+}
+`;
+   
     </style>
 </head>
 <body>
@@ -1701,9 +1755,9 @@ const defaultQuestions = [
                 return 7.0;
             }
 
-            // Event listeners
-            startExamBtn.addEventListener('click', generateQuestions);
-            submitQuizBtn.addEventListener('click', submitQuiz);
+            // Cambiar estos event listeners:
+startExamBtn.addEventListener('click', generateQuestionsCategorized);
+submitQuizBtn.addEventListener('click', submitCategorizedQuiz);
 
             // Close modal button listener
             closeModalBtn.addEventListener('click', () => {
