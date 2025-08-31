@@ -1663,20 +1663,18 @@ function generateQuestionsCategorized() {
     }
 
     // Simulate loading time and then generate categorized questions
-    setTimeout(() => {
-        questions = createCategorizedQuestions();
-        userAnswers = {};
-        
-        displayCategorizedQuiz();
-        
-        if (subtleResponseBox) {
-            subtleResponseBox.textContent = '¡30 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
-            setTimeout(() => {
-                subtleResponseBox.classList.remove('show');
-                setTimeout(() => subtleResponseBox.style.display = 'none', 500);
-            }, 4000);
-        }
-    }, 1000);
+    questions = createCategorizedQuestions();
+    userAnswers = {};
+    
+    displayCategorizedQuiz();
+    
+    if (subtleResponseBox) {
+        subtleResponseBox.textContent = '¡50 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
+        setTimeout(() => {
+            subtleResponseBox.classList.remove('show');
+            setTimeout(() => subtleResponseBox.style.display = 'none', 500);
+        }, 4000);
+    }
 }
 
 // Función para mostrar el quiz categorizado
@@ -1875,133 +1873,9 @@ function submitCategorizedQuiz() {
                 return shuffled;
             }
 
-            // Function to generate quiz questions
-            function generateQuestions() {
-                console.log("generateQuestions function called.");
-                
-                // Show loading message
-                quizContainer.innerHTML = '<p class="text-center text-info"><span class="spinner-border text-info" role="status"></span> Generando preguntas... Esto puede tardar unos segundos.</p>';
-                quizContainer.style.display = 'block';
-                startExamBtn.style.display = 'none';
-                submitQuizBtn.style.display = 'none';
+            
 
-                // Activate persistent red border for the exam section
-                examSection.classList.add('active-red-border');
-
-                // Show subtle message box
-                if (subtleResponseBox) { 
-                    subtleResponseBox.style.display = 'block';
-                    subtleResponseBox.classList.add('show');
-                    subtleResponseBox.textContent = '¡Generando preguntas, por favor espera!';
-                }
-
-                // Simulate loading time and then generate questions
-                setTimeout(() => {
-                    // Usar exactamente las primeras 30 preguntas del banco (sin slice, ya que defaultQuestions tiene exactamente 50)
-                    questions = shuffleArray(defaultQuestions).slice(0, 30); // Asegurar exactamente 30 preguntas
-                    userAnswers = {};
-                    
-                    displayQuiz();
-                    
-                    if (subtleResponseBox) {
-                        subtleResponseBox.textContent = '¡Exactamente 30 preguntas cargadas! Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
-                        setTimeout(() => {
-                            subtleResponseBox.classList.remove('show');
-                            setTimeout(() => subtleResponseBox.style.display = 'none', 500);
-                        }, 4000); // Mostrar por 4 segundos para dar tiempo a leer el mensaje
-                    }
-                }, 1000);
-            }
-
-            // Function to display quiz questions
-            function displayQuiz() {
-                quizContainer.innerHTML = '';
-                
-                questions.forEach((q, index) => {
-                    const questionCard = document.createElement('div');
-                    questionCard.classList.add('question-card');
-                    questionCard.innerHTML = `
-                        <h5>${index + 1}. ${q.question}</h5>
-                        <div class="options-container">
-                            <label class="option-button" data-question="${index}" data-value="Verdadero">
-                                <input class="form-check-input" type="radio" name="question${index}" value="Verdadero" style="display: none;">
-                                Verdadero
-                            </label>
-                            <label class="option-button" data-question="${index}" data-value="Falso">
-                                <input class="form-check-input" type="radio" name="question${index}" value="Falso" style="display: none;">
-                                Falso
-                            </label>
-                        </div>
-                        <div class="feedback-message mt-2" style="font-weight: 600; display: none;"></div>
-                    `;
-                    quizContainer.appendChild(questionCard);
-
-                    // Add event listeners to option buttons
-                    const optionButtons = questionCard.querySelectorAll('.option-button');
-                    optionButtons.forEach(button => {
-                        button.addEventListener('click', function() {
-                            const questionIndex = parseInt(this.dataset.question);
-                            
-                            // Verificar si la pregunta ya fue respondida (NUEVA FUNCIONALIDAD)
-                            if (userAnswers[questionIndex] !== undefined) {
-                                // Si ya fue respondida, no hacer nada
-                                return;
-                            }
-                            
-                            const selectedValue = this.dataset.value;
-                            const currentQuestion = questions[questionIndex];
-                            const feedbackMessage = questionCard.querySelector('.feedback-message');
-
-                            // Store user answer
-                            userAnswers[questionIndex] = selectedValue;
-
-                            // Remove all selected/feedback classes from this question
-                            optionButtons.forEach(btn => {
-                                btn.classList.remove('selected', 'correct', 'incorrect');
-                            });
-
-                            // Add selected class to clicked button
-                            this.classList.add('selected');
-                            
-                            // Show immediate feedback
-                            if (selectedValue === currentQuestion.correctAnswer) {
-                                this.classList.add('correct');
-                                feedbackMessage.style.color = '#28a745';
-                                feedbackMessage.textContent = '¡Correcto!';
-                            } else {
-                                this.classList.add('incorrect');
-                                feedbackMessage.style.color = '#dc3545';
-                                feedbackMessage.textContent = `Incorrecto. La respuesta correcta era: "${currentQuestion.correctAnswer}".`;
-                            }
-
-                            feedbackMessage.style.display = 'block';
-                            questionCard.classList.add('answered-blue-border');
-                            
-                            // BLOQUEAR TODOS LOS BOTONES DE ESTA PREGUNTA (NUEVA FUNCIONALIDAD)
-                            optionButtons.forEach(btn => {
-                                btn.style.pointerEvents = 'none';
-                                btn.style.opacity = '0.8';
-                                btn.style.cursor = 'not-allowed';
-                            });
-                            
-                            // Agregar texto explicativo de que la respuesta está bloqueada
-                            const lockMessage = document.createElement('div');
-                            lockMessage.style.cssText = 'font-size: 0.8em; color: #666; margin-top: 8px; font-style: italic;';
-                            lockMessage.textContent = '🔒 Respuesta registrada - No se puede modificar';
-                            feedbackMessage.appendChild(lockMessage);
-
-                            // Check if all questions are answered
-                            if (Object.keys(userAnswers).length === questions.length) {
-                                submitQuizBtn.style.display = 'block';
-                                // Mostrar mensaje de que puede enviar el examen
-                                showSubtleMessage('¡Todas las preguntas respondidas! Puedes enviar tu examen.');
-                            }
-                        });
-                    });
-                });
-
-                console.log("Quiz questions displayed.");
-            }
+            
 
             // Function to submit quiz and calculate score
             function submitQuiz() {
