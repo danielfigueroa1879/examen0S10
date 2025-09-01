@@ -990,8 +990,7 @@
                 display: none;
             }
         }
-// CSS adicional para los badges de categoría (agregar al <style> del HTML)
-const additionalCSS = `
+/* CSS adicional para los badges de categoría (agregar al <style> del HTML) */
 .category-badge {
     font-size: 0.75rem;
     padding: 4px 8px;
@@ -1213,9 +1212,6 @@ const additionalCSS = `
         document.addEventListener('DOMContentLoaded', function() {
             console.log("DOM Content Loaded. Initializing app logic.");
 
-            let questions = []; // Declare questions here
-            let userAnswers = {}; // Declare userAnswers here
-
             // Navbar Shrink on Scroll
             const navbar = document.getElementById('mainNavbar');
             window.addEventListener('scroll', function() {
@@ -1245,8 +1241,7 @@ const additionalCSS = `
             const submitQuizBtn = document.getElementById('submit-quiz-btn');
             const startExamBtn = document.getElementById('start-exam-btn');
             const examSection = document.getElementById('exam-section');
-                        if (subtleResponseBox) {
-                subtleResponseBox.textContent = '¡50 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
+            const subtleResponseBox = document.getElementById('subtle-response-box');
 
             // Modal elements for results
             const resultsModalOverlay = document.getElementById('results-modal-overlay');
@@ -1577,22 +1572,22 @@ function createCategorizedQuestions() {
     const allQuestions = [];
     const categories = Object.keys(questionsByCategory);
     
-    // Obtener un número específico de preguntas de cada categoría para sumar 50
+    // Obtener preguntas de cada categoría de manera aleatoria para un total de 50
     categories.forEach(category => {
         const categoryQuestions = questionsByCategory[category];
         const shuffledCategoryQuestions = shuffleArray([...categoryQuestions]);
         
-        // Determinar cuántas preguntas tomar de cada categoría para un total de 50
+        // Determinar cuántas preguntas tomar de cada categoría
         let questionsToTake;
         switch(category) {
             case "CONOCIMIENTOS LEGALES":
-                questionsToTake = 8; 
+                questionsToTake = 8;
                 break;
             case "PRIMEROS AUXILIOS":
-                questionsToTake = 6;
+                questionsToTake = 7;
                 break;
             case "PROTECCIÓN DE INSTALACIONES":
-                questionsToTake = 8; 
+                questionsToTake = 8;
                 break;
             case "CONOCIMIENTOS DE SISTEMAS DE ALARMA":
                 questionsToTake = 5;
@@ -1604,16 +1599,16 @@ function createCategorizedQuestions() {
                 questionsToTake = 5;
                 break;
             case "PREVENCIÓN Y CONTROL DE EMERGENCIA":
-                questionsToTake = 8;
+                questionsToTake = 7;
                 break;
             case "PREGUNTAS ADICIONALES":
                 questionsToTake = 3;
                 break;
             default:
-                questionsToTake = 5; // Fallback, should not be hit with current categories
+                questionsToTake = 3;
         }
         
-        // Asegurarse de no tomar más preguntas de las disponibles en la categoría
+        // Agregar las preguntas seleccionadas con la información de categoría
         for (let i = 0; i < Math.min(questionsToTake, shuffledCategoryQuestions.length); i++) {
             allQuestions.push({
                 ...shuffledCategoryQuestions[i],
@@ -1666,19 +1661,20 @@ function generateQuestionsCategorized() {
     }
 
     // Simulate loading time and then generate categorized questions
-    questions = createCategorizedQuestions();
-    console.log("Generated questions count:", questions.length);
-    userAnswers = {};
-    
-    displayCategorizedQuiz();
-    
-    if (subtleResponseBox) {
-        subtleResponseBox.textContent = '¡50 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
-        setTimeout(() => {
-            subtleResponseBox.classList.remove('show');
-            setTimeout(() => subtleResponseBox.style.display = 'none', 500);
-        }, 4000);
-    }
+    setTimeout(() => {
+        questions = createCategorizedQuestions();
+        userAnswers = {};
+        
+        displayCategorizedQuiz();
+        
+        if (subtleResponseBox) {
+            subtleResponseBox.textContent = '¡50 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
+            setTimeout(() => {
+                subtleResponseBox.classList.remove('show');
+                setTimeout(() => subtleResponseBox.style.display = 'none', 500);
+            }, 4000);
+        }
+    }, 1000);
 }
 
 // Función para mostrar el quiz categorizado
@@ -1877,28 +1873,173 @@ function submitCategorizedQuiz() {
                 return shuffled;
             }
 
-            
+            // Function to display quiz questions
+            function displayQuiz() {
+                quizContainer.innerHTML = '';
+                
+                questions.forEach((q, index) => {
+                    const questionCard = document.createElement('div');
+                    questionCard.classList.add('question-card');
+                    questionCard.innerHTML = `
+                        <h5>${index + 1}. ${q.question}</h5>
+                        <div class="options-container">
+                            <label class="option-button" data-question="${index}" data-value="Verdadero">
+                                <input class="form-check-input" type="radio" name="question${index}" value="Verdadero" style="display: none;">
+                                Verdadero
+                            </label>
+                            <label class="option-button" data-question="${index}" data-value="Falso">
+                                <input class="form-check-input" type="radio" name="question${index}" value="Falso" style="display: none;">
+                                Falso
+                            </label>
+                        </div>
+                        <div class="feedback-message mt-2" style="font-weight: 600; display: none;"></div>
+                    `;
+                    quizContainer.appendChild(questionCard);
 
-            
+                    // Add event listeners to option buttons
+                    const optionButtons = questionCard.querySelectorAll('.option-button');
+                    optionButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            const questionIndex = parseInt(this.dataset.question);
+                            
+                            // Verificar si la pregunta ya fue respondida (NUEVA FUNCIONALIDAD)
+                            if (userAnswers[questionIndex] !== undefined) {
+                                // Si ya fue respondida, no hacer nada
+                                return;
+                            }
+                            
+                            const selectedValue = this.dataset.value;
+                            const currentQuestion = questions[questionIndex];
+                            const feedbackMessage = questionCard.querySelector('.feedback-message');
 
-            
+                            // Store user answer
+                            userAnswers[questionIndex] = selectedValue;
 
-            // Function to calculate grade from 1 to 7
-            function calculateGrade(percentage) {
-                if (percentage < 60) { // Below 60% is failing
-                    if (percentage < 30) return 1.0;
-                    if (percentage < 45) return 2.0; // Adjusted for a smoother failing scale
-                    return 3.0;
+                            // Remove all selected/feedback classes from this question
+                            optionButtons.forEach(btn => {
+                                btn.classList.remove('selected', 'correct', 'incorrect');
+                            });
+
+                            // Add selected class to clicked button
+                            this.classList.add('selected');
+                            
+                            // Show immediate feedback
+                            if (selectedValue === currentQuestion.correctAnswer) {
+                                this.classList.add('correct');
+                                feedbackMessage.style.color = '#28a745';
+                                feedbackMessage.textContent = '¡Correcto!';
+                            } else {
+                                this.classList.add('incorrect');
+                                feedbackMessage.style.color = '#dc3545';
+                                feedbackMessage.textContent = `Incorrecto. La respuesta correcta era: "${currentQuestion.correctAnswer}".`;
+                            }
+
+                            feedbackMessage.style.display = 'block';
+                            questionCard.classList.add('answered-blue-border');
+                            
+                            // BLOQUEAR TODOS LOS BOTONES DE ESTA PREGUNTA (NUEVA FUNCIONALIDAD)
+                            optionButtons.forEach(btn => {
+                                btn.style.pointerEvents = 'none';
+                                btn.style.opacity = '0.8';
+                                btn.style.cursor = 'not-allowed';
+                            });
+                            
+                            // Agregar texto explicativo de que la respuesta está bloqueada
+                            const lockMessage = document.createElement('div');
+                            lockMessage.style.cssText = 'font-size: 0.8em; color: #666; margin-top: 8px; font-style: italic;';
+                            lockMessage.textContent = '🔒 Respuesta registrada - No se puede modificar';
+                            feedbackMessage.appendChild(lockMessage);
+
+                            // Check if all questions are answered
+                            if (Object.keys(userAnswers).length === questions.length) {
+                                submitQuizBtn.style.display = 'block';
+                                // Mostrar mensaje de que puede enviar el examen
+                                showSubtleMessage('¡Todas las preguntas respondidas! Puedes enviar tu examen.');
+                            }
+                        });
+                    });
+                });
+
+                console.log("Quiz questions displayed.");
+            }
+
+            // Function to submit quiz and calculate score
+            function submitQuiz() {
+                let score = 0;
+                questions.forEach((q, index) => {
+                    if (userAnswers[index] === q.correctAnswer) {
+                        score++;
+                    }
+                });
+
+                const maxScore = questions.length;
+                const percentage = (score / maxScore) * 100;
+                const grade = calculateGrade(percentage);
+                const passed = grade >= 4.0;
+
+                // Populate modal content
+                modalCorrectCount.textContent = score;
+                modalTotalQuestions.textContent = maxScore;
+                modalPercentage.textContent = percentage.toFixed(1);
+                modalGrade.textContent = grade.toFixed(1);
+
+                // Set modal message and color
+                resultsModalContent.classList.remove('pass', 'fail');
+                if (passed) {
+                    modalMessage.textContent = '¡Felicitaciones! Has aprobado.';
+                    resultsModalContent.classList.add('pass');
+                } else {
+                    modalMessage.textContent = 'Necesitas repasar más. ¡No te desanimes!';
+                    resultsModalContent.classList.add('fail');
                 }
-                if (percentage < 70) return 4.0; // 60% to 69.9% is 4.0
-                if (percentage < 80) return 5.0; // 70% to 79.9% is 5.0
-                if (percentage < 90) return 6.0; // 80% to 89.9% is 6.0
-                return 7.0; // 90% and above is 7.0
+
+                // Show the modal
+                resultsModalOverlay.style.display = 'flex';
+                setTimeout(() => resultsModalOverlay.classList.add('show'), 10);
+
+                submitQuizBtn.style.display = 'none';
+                
+                // Disable all option buttons
+                document.querySelectorAll('.option-button').forEach(button => {
+                    button.style.pointerEvents = 'none';
+                    button.style.opacity = '0.7';
+                });
+
+                console.log("Quiz submitted and results displayed in modal. Score:", score);
+            }
+
+            // MODIFICADO: Función para calcular la nota en escala de 1 a 7 con 60% de exigencia
+            function calculateGrade(percentage) {
+                // Escala de notas chilena con 60% de exigencia para un 4.0
+                const percentageAsDecimal = percentage / 100;
+                let grade;
+
+                if (percentage >= 60) {
+                    // Rango de Aprobación: escala lineal desde 4.0 (para 60%) hasta 7.0 (para 100%)
+                    grade = 3 * ((percentageAsDecimal - 0.6) / (1.0 - 0.6)) + 4.0;
+                } else {
+                    // Rango de Reprobación: escala lineal desde 1.0 (para 0%) hasta 3.9 (para <60%)
+                    grade = 3 * (percentageAsDecimal / 0.6) + 1.0;
+                }
+                
+                // Redondear a un decimal
+                grade = Math.round(grade * 10) / 10;
+                
+                // Asegurarse de que los límites no se excedan
+                if (grade > 7.0) grade = 7.0;
+                if (grade < 1.0) grade = 1.0;
+                
+                // Asegurarse de que una nota de reprobación nunca sea 4.0
+                if (percentage < 60 && grade >= 4.0) {
+                    grade = 3.9;
+                }
+
+                return grade;
             }
 
             // Cambiar estos event listeners:
-startExamBtn.addEventListener('click', generateQuestionsCategorized);
-submitQuizBtn.addEventListener('click', submitCategorizedQuiz);
+			startExamBtn.addEventListener('click', generateQuestionsCategorized);
+			submitQuizBtn.addEventListener('click', submitCategorizedQuiz);
 
             // Close modal button listener
             closeModalBtn.addEventListener('click', () => {
@@ -2160,7 +2301,7 @@ Fecha de elaboración: ${currentDate}`;
             });
 
             closeAiChatBtn.addEventListener('click', () => {
-                console.log("Close AI chat button clicked. Hiding chat.");
+                console.log("Close chat button clicked. Hiding chat.");
                 aiClarifierChat.classList.remove('show');
                 aiQuestionInput.value = '';
                 aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>';
@@ -2188,73 +2329,52 @@ Fecha de elaboración: ${currentDate}`;
 
             // Function to generate simulated AI responses
             function generateAIResponse(question) {
-                console.log("Generating AI response for:", question);
                 const lowerQuestion = question.toLowerCase();
                 
                 // Respuestas sobre Decreto 93
                 if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('requisito') || lowerQuestion.includes('educación'))) {
-                    const response = "Según el Decreto 93, para ser Guardia de Seguridad se requiere: tener al menos 18 años de edad, haber cursado educación media completa o su equivalente, no tener antecedentes penales, aprobar examen psicológico y físico, y completar el curso de formación de 90 horas académicas.";
-                    console.log("AI response:", response);
-                    return response;
+                    return "Según el Decreto 93, para ser Guardia de Seguridad se requiere: tener al menos 18 años de edad, haber cursado educación media completa o su equivalente, no tener antecedentes penales, aprobar examen psicológico y físico, y completar el curso de formación de 90 horas académicas.";
                 }
                 
                 if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('uniforme') || lowerQuestion.includes('vestimenta'))) {
-                    const response = "El Decreto 93 establece que el uniforme del guardia debe ser de color azul marino, con distintivos que identifiquen a la empresa y al guardia. Debe incluir placa identificatoria con nombre y RUN, y no puede asemejarse a uniformes de Fuerzas Armadas o de Orden.";
-                    console.log("AI response:", response);
-                    return response;
+                    return "El Decreto 93 establece que el uniforme del guardia debe ser de color azul marino, con distintivos que identifiquen a la empresa y al guardia. Debe incluir placa identificatoria con nombre y RUN, y no puede asemejarse a uniformes de Fuerzas Armadas o de Orden.";
                 }
                 
                 if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('seguro') || lowerQuestion.includes('utM'))) {
-                    const response = "El Decreto 93 establece que las empresas deben contratar un seguro de vida para sus guardias con una cifra asegurada de 75 UTM, que cubra accidentes y enfermedades derivadas del trabajo.";
-                    console.log("AI response:", response);
-                    return response;
+                    return "El Decreto 93 establece que las empresas deben contratar un seguro de vida para sus guardias con una cifra asegurada de 75 UTM, que cubra accidentes y enfermedades derivadas del trabajo.";
                 }
                 
                 // Respuestas sobre funciones del guardia
                 if (lowerQuestion.includes('función') || lowerQuestion.includes('responsabilidad')) {
-                    const response = "Las principales funciones del guardia de seguridad incluyen: vigilar y proteger bienes y personas, detectar y prevenir actos que atenten contra la seguridad, informar novedades a superiores, aplicar medidas de seguridad según protocolos, y colaborar con autoridades cuando sea requerido.";
-                    console.log("AI response:", response);
-                    return response;
+                    return "Las principales funciones del guardia de seguridad incluyen: vigilar y proteger bienes y personas, detectar y prevenir actos que atenten contra la seguridad, informar novedades a superiores, aplicar medidas de seguridad según protocolos, y colaborar con autoridades cuando sea requerido.";
                 }
                 
                 if (lowerQuestion.includes('detención') || lowerQuestion.includes('detener')) {
-                    const response = "Los guardias pueden detener a personas solo en caso de delito flagrante, aplicando el Artículo 134 del Código Procesal Penal. Deben entregar inmediatamente al detenido a Carabineros y no pueden usar fuerza excesiva.";
-                    console.log("AI response:", response);
-                    return response;
+                    return "Los guardias pueden detener a personas solo en caso de delito flagrante, aplicando el Artículo 134 del Código Procesal Penal. Deben entregar inmediatamente al detenido a Carabineros y no pueden usar fuerza excesiva.";
                 }
                 
                 // Respuestas sobre Ley 21.659
                 if (lowerQuestion.includes('ley 21.659') || lowerQuestion.includes('nueva ley')) {
-                    const response = "La Ley 21.659 moderniza la regulación de seguridad privada en Chile. Entra en vigencia el 28 de noviembre de 2025 y establece nuevos estándares para empresas y guardias, fortalece la fiscalización y mejora los requisitos de formación.";
-                    console.log("AI response:", response);
-                    return response;
+                    return "La Ley 21.659 moderniza la regulación de seguridad privada en Chile. Entra en vigencia el 28 de noviembre de 2025 y establece nuevos estándares para empresas y guardias, fortalece la fiscalización y mejora los requisitos de formación.";
                 }
                 
                 // Respuestas sobre armamento
                 if (lowerQuestion.includes('arma') || lowerQuestion.includes('armamento')) {
-                    const response = "Los guardias de seguridad NO están autorizados para portar armas de fuego según el Decreto 93. Solo pueden usar elementos de protección personal autorizados como bastón de goma, silbato y linterna.";
-                    console.log("AI response:", response);
-                    return response;
+                    return "Los guardias de seguridad NO están autorizados para portar armas de fuego según el Decreto 93. Solo pueden usar elementos de protección personal autorizados como bastón de goma, silbato y linterna.";
                 }
                 
                 // Respuestas sobre procedimientos
                 if (lowerQuestion.includes('procedimiento') || lowerQuestion.includes('protocolo')) {
-                    const response = "Los guardias deben seguir protocolos establecidos: observar y reportar, no alterar sitio del suceso, preservar evidencias, comunicar novedades de inmediato, actuar con prudencia y solicitar apoyo cuando sea necesario.";
-                    console.log("AI response:", response);
-                    return response;
+                    return "Los guardias deben seguir protocolos establecidos: observar y reportar, no alterar sitio del suceso, preservar evidencias, comunicar novedades de inmediato, actuar con prudencia y solicitar apoyo cuando sea necesario.";
                 }
                 
                 // Respuestas sobre formación
                 if (lowerQuestion.includes('curso') || lowerQuestion.includes('formación') || lowerQuestion.includes('90 horas')) {
-                    const response = "El curso OS-10 para guardias de seguridad tiene una duración de 90 horas académicas y debe incluir materias como: legislación, procedimientos de seguridad, primeros auxilios, comunicaciones, derechos humanos y ética profesional.";
-                    console.log("AI response:", response);
-                    return response;
+                    return "El curso OS-10 para guardias de seguridad tiene una duración de 90 horas académicas y debe incluir materias como: legislación, procedimientos de seguridad, primeros auxilios, comunicaciones, derechos humanos y ética profesional.";
                 }
                 
                 // Respuesta general
-                const response = "Basándome en la normativa chilena de seguridad privada (Decreto Ley 3607, Decreto 93 y Ley 21.659), puedo ayudarte con temas específicos sobre funciones del guardia, requisitos, procedimientos y marco legal. ¿Podrías ser más específico con tu consulta?";
-                console.log("AI response:", response);
-                return response;
+                return "Basándome en la normativa chilena de seguridad privada (Decreto Ley 3607, Decreto 93 y Ley 21.659), puedo ayudarte con temas específicos sobre funciones del guardia, requisitos, procedimientos y marco legal. ¿Podrías ser más específico con tu consulta?";
             }
 
             console.log("Quiz system and AI Clarifier initialized successfully.");
