@@ -1213,6 +1213,9 @@ const additionalCSS = `
         document.addEventListener('DOMContentLoaded', function() {
             console.log("DOM Content Loaded. Initializing app logic.");
 
+            let questions = []; // Declare questions here
+            let userAnswers = {}; // Declare userAnswers here
+
             // Navbar Shrink on Scroll
             const navbar = document.getElementById('mainNavbar');
             window.addEventListener('scroll', function() {
@@ -1664,6 +1667,7 @@ function generateQuestionsCategorized() {
 
     // Simulate loading time and then generate categorized questions
     questions = createCategorizedQuestions();
+    console.log("Generated questions count:", questions.length);
     userAnswers = {};
     
     displayCategorizedQuiz();
@@ -1877,50 +1881,7 @@ function submitCategorizedQuiz() {
 
             
 
-            // Function to submit quiz and calculate score
-            function submitQuiz() {
-                let score = 0;
-                questions.forEach((q, index) => {
-                    if (userAnswers[index] === q.correctAnswer) {
-                        score++;
-                    }
-                });
-
-                const maxScore = questions.length;
-                const percentage = (score / maxScore) * 100;
-                const grade = calculateGrade(percentage);
-                const passed = grade >= 4.0;
-
-                // Populate modal content
-                modalCorrectCount.textContent = score;
-                modalTotalQuestions.textContent = maxScore;
-                modalPercentage.textContent = percentage.toFixed(1);
-                modalGrade.textContent = grade.toFixed(1);
-
-                // Set modal message and color
-                resultsModalContent.classList.remove('pass', 'fail');
-                if (passed) {
-                    modalMessage.textContent = '¡Felicitaciones! Has aprobado.';
-                    resultsModalContent.classList.add('pass');
-                } else {
-                    modalMessage.textContent = 'Necesitas repasar más. ¡No te desanimes!';
-                    resultsModalContent.classList.add('fail');
-                }
-
-                // Show the modal
-                resultsModalOverlay.style.display = 'flex';
-                setTimeout(() => resultsModalOverlay.classList.add('show'), 10);
-
-                submitQuizBtn.style.display = 'none';
-                
-                // Disable all option buttons
-                document.querySelectorAll('.option-button').forEach(button => {
-                    button.style.pointerEvents = 'none';
-                    button.style.opacity = '0.7';
-                });
-
-                console.log("Quiz submitted and results displayed in modal. Score:", score);
-            }
+            
 
             // Function to calculate grade from 1 to 7
             function calculateGrade(percentage) {
@@ -2199,7 +2160,7 @@ Fecha de elaboración: ${currentDate}`;
             });
 
             closeAiChatBtn.addEventListener('click', () => {
-                console.log("Close chat button clicked. Hiding chat.");
+                console.log("Close AI chat button clicked. Hiding chat.");
                 aiClarifierChat.classList.remove('show');
                 aiQuestionInput.value = '';
                 aiClarifierResponse.innerHTML = '<p>Tu respuesta aparecerá aquí.</p>';
@@ -2227,52 +2188,73 @@ Fecha de elaboración: ${currentDate}`;
 
             // Function to generate simulated AI responses
             function generateAIResponse(question) {
+                console.log("Generating AI response for:", question);
                 const lowerQuestion = question.toLowerCase();
                 
                 // Respuestas sobre Decreto 93
                 if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('requisito') || lowerQuestion.includes('educación'))) {
-                    return "Según el Decreto 93, para ser Guardia de Seguridad se requiere: tener al menos 18 años de edad, haber cursado educación media completa o su equivalente, no tener antecedentes penales, aprobar examen psicológico y físico, y completar el curso de formación de 90 horas académicas.";
+                    const response = "Según el Decreto 93, para ser Guardia de Seguridad se requiere: tener al menos 18 años de edad, haber cursado educación media completa o su equivalente, no tener antecedentes penales, aprobar examen psicológico y físico, y completar el curso de formación de 90 horas académicas.";
+                    console.log("AI response:", response);
+                    return response;
                 }
                 
                 if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('uniforme') || lowerQuestion.includes('vestimenta'))) {
-                    return "El Decreto 93 establece que el uniforme del guardia debe ser de color azul marino, con distintivos que identifiquen a la empresa y al guardia. Debe incluir placa identificatoria con nombre y RUN, y no puede asemejarse a uniformes de Fuerzas Armadas o de Orden.";
+                    const response = "El Decreto 93 establece que el uniforme del guardia debe ser de color azul marino, con distintivos que identifiquen a la empresa y al guardia. Debe incluir placa identificatoria con nombre y RUN, y no puede asemejarse a uniformes de Fuerzas Armadas o de Orden.";
+                    console.log("AI response:", response);
+                    return response;
                 }
                 
                 if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('seguro') || lowerQuestion.includes('utM'))) {
-                    return "El Decreto 93 establece que las empresas deben contratar un seguro de vida para sus guardias con una cifra asegurada de 75 UTM, que cubra accidentes y enfermedades derivadas del trabajo.";
+                    const response = "El Decreto 93 establece que las empresas deben contratar un seguro de vida para sus guardias con una cifra asegurada de 75 UTM, que cubra accidentes y enfermedades derivadas del trabajo.";
+                    console.log("AI response:", response);
+                    return response;
                 }
                 
                 // Respuestas sobre funciones del guardia
                 if (lowerQuestion.includes('función') || lowerQuestion.includes('responsabilidad')) {
-                    return "Las principales funciones del guardia de seguridad incluyen: vigilar y proteger bienes y personas, detectar y prevenir actos que atenten contra la seguridad, informar novedades a superiores, aplicar medidas de seguridad según protocolos, y colaborar con autoridades cuando sea requerido.";
+                    const response = "Las principales funciones del guardia de seguridad incluyen: vigilar y proteger bienes y personas, detectar y prevenir actos que atenten contra la seguridad, informar novedades a superiores, aplicar medidas de seguridad según protocolos, y colaborar con autoridades cuando sea requerido.";
+                    console.log("AI response:", response);
+                    return response;
                 }
                 
                 if (lowerQuestion.includes('detención') || lowerQuestion.includes('detener')) {
-                    return "Los guardias pueden detener a personas solo en caso de delito flagrante, aplicando el Artículo 134 del Código Procesal Penal. Deben entregar inmediatamente al detenido a Carabineros y no pueden usar fuerza excesiva.";
+                    const response = "Los guardias pueden detener a personas solo en caso de delito flagrante, aplicando el Artículo 134 del Código Procesal Penal. Deben entregar inmediatamente al detenido a Carabineros y no pueden usar fuerza excesiva.";
+                    console.log("AI response:", response);
+                    return response;
                 }
                 
                 // Respuestas sobre Ley 21.659
                 if (lowerQuestion.includes('ley 21.659') || lowerQuestion.includes('nueva ley')) {
-                    return "La Ley 21.659 moderniza la regulación de seguridad privada en Chile. Entra en vigencia el 28 de noviembre de 2025 y establece nuevos estándares para empresas y guardias, fortalece la fiscalización y mejora los requisitos de formación.";
+                    const response = "La Ley 21.659 moderniza la regulación de seguridad privada en Chile. Entra en vigencia el 28 de noviembre de 2025 y establece nuevos estándares para empresas y guardias, fortalece la fiscalización y mejora los requisitos de formación.";
+                    console.log("AI response:", response);
+                    return response;
                 }
                 
                 // Respuestas sobre armamento
                 if (lowerQuestion.includes('arma') || lowerQuestion.includes('armamento')) {
-                    return "Los guardias de seguridad NO están autorizados para portar armas de fuego según el Decreto 93. Solo pueden usar elementos de protección personal autorizados como bastón de goma, silbato y linterna.";
+                    const response = "Los guardias de seguridad NO están autorizados para portar armas de fuego según el Decreto 93. Solo pueden usar elementos de protección personal autorizados como bastón de goma, silbato y linterna.";
+                    console.log("AI response:", response);
+                    return response;
                 }
                 
                 // Respuestas sobre procedimientos
                 if (lowerQuestion.includes('procedimiento') || lowerQuestion.includes('protocolo')) {
-                    return "Los guardias deben seguir protocolos establecidos: observar y reportar, no alterar sitio del suceso, preservar evidencias, comunicar novedades de inmediato, actuar con prudencia y solicitar apoyo cuando sea necesario.";
+                    const response = "Los guardias deben seguir protocolos establecidos: observar y reportar, no alterar sitio del suceso, preservar evidencias, comunicar novedades de inmediato, actuar con prudencia y solicitar apoyo cuando sea necesario.";
+                    console.log("AI response:", response);
+                    return response;
                 }
                 
                 // Respuestas sobre formación
                 if (lowerQuestion.includes('curso') || lowerQuestion.includes('formación') || lowerQuestion.includes('90 horas')) {
-                    return "El curso OS-10 para guardias de seguridad tiene una duración de 90 horas académicas y debe incluir materias como: legislación, procedimientos de seguridad, primeros auxilios, comunicaciones, derechos humanos y ética profesional.";
+                    const response = "El curso OS-10 para guardias de seguridad tiene una duración de 90 horas académicas y debe incluir materias como: legislación, procedimientos de seguridad, primeros auxilios, comunicaciones, derechos humanos y ética profesional.";
+                    console.log("AI response:", response);
+                    return response;
                 }
                 
                 // Respuesta general
-                return "Basándome en la normativa chilena de seguridad privada (Decreto Ley 3607, Decreto 93 y Ley 21.659), puedo ayudarte con temas específicos sobre funciones del guardia, requisitos, procedimientos y marco legal. ¿Podrías ser más específico con tu consulta?";
+                const response = "Basándome en la normativa chilena de seguridad privada (Decreto Ley 3607, Decreto 93 y Ley 21.659), puedo ayudarte con temas específicos sobre funciones del guardia, requisitos, procedimientos y marco legal. ¿Podrías ser más específico con tu consulta?";
+                console.log("AI response:", response);
+                return response;
             }
 
             console.log("Quiz system and AI Clarifier initialized successfully.");
