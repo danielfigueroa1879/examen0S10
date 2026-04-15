@@ -1093,7 +1093,7 @@
             <p class="text-center">Pon a prueba tus conocimientos sobre la normativa de seguridad privada y las funciones del guardia. ¡Obtén tu calificación en escala del 1 al 7, basada en el curso OS-10!</p>
             <p class="text-center" style="color: #dc3545; font-weight: 600; font-size: 0.9rem;">
                 <i class="bi bi-exclamation-triangle"></i> 
-                <strong>IMPORTANTE:</strong> Este examen consta de 50 preguntas. Una vez que selecciones una respuesta, no podrás cambiarla. Lee cuidadosamente antes de responder.
+                <strong>IMPORTANTE:</strong> Este examen consta de 60 preguntas. Una vez que selecciones una respuesta, no podrás cambiarla. Lee cuidadosamente antes de responder.
             </p>
             
             <button id="start-exam-btn" class="mb-4">Empezar Examen Ahora</button>
@@ -1292,7 +1292,15 @@ const questionsByCategory = {
         { question: "En el delito de hurto no encontramos ni fuerza en las cosas ni violencia ni intimidación en las personas.", correctAnswer: "Verdadero" },
         { question: "El Guardia de Seguridad puede portar armas de fuego cuando su empleador se lo permita.", correctAnswer: "Falso" },
         { question: "Delito es toda acción u omisión culpable penada por la Ley.", correctAnswer: "Verdadero" },
-        { question: "Los delitos que generalmente se cometen en los supermercados son definidos tipificados como hurtos o faltas.", correctAnswer: "Verdadero" }
+        { question: "Los delitos que generalmente se cometen en los supermercados son definidos tipificados como hurtos o faltas.", correctAnswer: "Verdadero" },
+        { question: "El Guardia de Seguridad debe hacer uso de la legitima defensa para la detención de un delincuente sorprendido infraganti.", correctAnswer: "Falso" },
+        { question: "Los daños, físicos y/o psíquicos, permanentes sufridos por los Guardias de Seguridad en el desempeño de sus funciones se consideran actos del servicio.", correctAnswer: "Verdadero" },
+        { question: "La Directiva de Funcionamiento es un documento que elabora Carabineros de Chile, para normar las actividades de los Guardias de Seguridad.", correctAnswer: "Falso" },
+        { question: "El personal que ejerce funciones de seguridad solamente puede usar bastón de servicio en los lugares públicos.", correctAnswer: "Falso" },
+        { question: "Es obligación del Guardia de Seguridad tramitar la tarjeta de identificación ante la Autoridad Fiscalizadora.", correctAnswer: "Verdadero" },
+        { question: "Delito infraganti es aquel que comete un Guardia de Seguridad al interior de una empresa.", correctAnswer: "Falso" },
+        { question: "Ante un delito flagrante el Guardia de Seguridad puede retener al responsable hasta que un funcionario policial llegue.", correctAnswer: "Verdadero" },
+        { question: "Robo es el que con la voluntad de su dueño y sin ánimo de lucrarse se apropia de cosa mueble ajena usando de violencia o de intimidación en las personas o de fuerza en las cosas.", correctAnswer: "Falso" }
     ],
 
     "PRIMEROS AUXILIOS": [
@@ -1319,7 +1327,9 @@ const questionsByCategory = {
         { question: "El uso del torniquete sólo se aplica en casos extremos, debiendo contenerse la presión sanguínea por no más de 5 minutos, soltando 30 segundos.", correctAnswer: "Verdadero" },
         { question: "Las hemorragias pueden ser venosas y arteriales.", correctAnswer: "Verdadero" },
         { question: "No pueden producirse quemaduras con elementos como químicos ácidos.", correctAnswer: "Falso" },
-        { question: "Los primeros auxilios a una persona con paro cardiaco es efectuar respiración boca a boca.", correctAnswer: "Verdadero" }
+        { question: "Los primeros auxilios a una persona con paro cardiaco es efectuar respiración boca a boca.", correctAnswer: "Verdadero" },
+        { question: "Ante una persona con pérdida de conocimiento se debe colocar en posición lateral de seguridad para evitar que se ahogue.", correctAnswer: "Verdadero" },
+        { question: "Frente a una quemadura grave se debe aplicar hielo directamente sobre la zona afectada.", correctAnswer: "Falso" }
     ],
 
     "PROTECCIÓN DE INSTALACIONES": [
@@ -1358,7 +1368,9 @@ const questionsByCategory = {
         { question: "El prevenir se logra estando atento al servicio, controlar y fiscalizar al máximo las medidas de seguridad de la empresa.", correctAnswer: "Verdadero" },
         { question: "Dentro de los tipos de barreras se cuentan las artificiales.", correctAnswer: "Verdadero" },
         { question: "El vigilante privado o guardia de seguridad deben efectuar inspecciones a la instalación protegida para reconocer peligros de incendio.", correctAnswer: "Verdadero" },
-        { question: "El Guardia de Seguridad es una barrera artificial pasiva.", correctAnswer: "Falso" }
+        { question: "El Guardia de Seguridad es una barrera artificial pasiva.", correctAnswer: "Falso" },
+        { question: "Algunos de los objetos que suelen portar los delincuentes, los cuales dificultan esconder la mercadería y, por lo tanto, dificultan el robo son: ropa muy suelta, paraguas, diarios o libros, mochilas o carteras, cajas o bolsos, coches de guagua.", correctAnswer: "Falso" },
+        { question: "La investigación policial tiene su fuente de información en el Sitio del Suceso. El personal especializado en la investigación espera y requiere una adecuada protección del sitio del suceso.", correctAnswer: "Verdadero" }
     ],
 
     "CONOCIMIENTOS DE SISTEMAS DE ALARMA": [
@@ -1488,6 +1500,9 @@ const questionsByCategory = {
         { question: "Es importante señalar que los delitos de robo y hurto no tienen características comunes como son la apropiación de cosa mueble ajena, con ánimo de lucro sin la voluntad de su dueño; la diferencia está en que en el robo se emplea la violencia o intimidación en las personas o fuerza en las cosas.", correctAnswer: "Falso" },
         { question: "Los llamados anónimos siempre corresponden a bromas.", correctAnswer: "Falso" },
         { question: "Es hurto cuando se introduce a un lugar mediante la seducción de un doméstico o a favor de nombres supuestos o simulación de autoridad y si se procede mediante fractura de puertas, vidrios, cierres, candados u otros dispositivos de protección o si utiliza medios de tracción.", correctAnswer: "Falso" },
+        { question: "Sabemos que para que exista fuego es necesario que se reúnan los cuatro elementos constituyentes. Para extinguirlo, por lo consiguiente, bastará con incrementar alguno de ellos.", correctAnswer: "Falso" },
+        { question: "Los extintores de soda ácido se usan para todo tipo de fuego.", correctAnswer: "Falso" },
+        { question: "La preparación del vigilante privado y del guardia de seguridad debe abarcar las fases que toda acción involucra, es decir, antes, durante y después de la ocurrencia de un delito o accidente.", correctAnswer: "Verdadero" },
         { question: "Un ángulo fundamental de descripción de personas es la Fotografía Hablada, y se emplea en informes para describir individuos sometidos a observación o han sido acusados de ser víctimas de un delito y son buscados.", correctAnswer: "Verdadero" },
         { question: "Evacuación: Es un sistema que se aplica en una Empresa u Organización, para abandonar un lugar, sitio, área o dependencia que se encuentra amagado por una situación de emergencia, temporal o permanente, que en forma organizada, metódica o coordinada, permita evitar daños a la integridad física de las personas y, cuando proceda, resguardar ciertos bienes.", correctAnswer: "Verdadero" },
         { question: "El Plan de evacuación elaborado por el organismo de seguridad, no debe estar en conocimiento de todo el personal, y su práctica debe realizarse con la periodicidad fijada.", correctAnswer: "Falso" },
@@ -1565,6 +1580,32 @@ const questionsByCategory = {
         { question: "El curso OS-10 debe ser renovado cada 3 años según la normativa vigente.", correctAnswer: "Falso" },
         { question: "Los guardias de seguridad pueden portar bastón de goma como elemento de protección personal.", correctAnswer: "Verdadero" },
         { question: "La detención por particulares no puede exceder de 24 horas sin entregar al detenido a la autoridad competente.", correctAnswer: "Verdadero" }
+    ],
+
+    "PROBIDAD, NO DISCRIMINACIÓN Y GÉNERO": [
+        { question: "Los guardias deben aplicar medidas para evitar vulneraciones de derechos durante controles a personas con identidad de género.", correctAnswer: "Verdadero" },
+        { question: "La no discriminación es un principio fundamental que debe guiar la actuación del Guardia de Seguridad en el ejercicio de sus funciones.", correctAnswer: "Verdadero" },
+        { question: "El Guardia de Seguridad puede negar el acceso a una instalación basándose en la apariencia física o vestimenta de una persona.", correctAnswer: "Falso" },
+        { question: "El trato igualitario y respetuoso hacia todas las personas, independiente de su condición, es parte de las obligaciones del Guardia de Seguridad.", correctAnswer: "Verdadero" },
+        { question: "Un Guardia de Seguridad puede requerir a una persona que se identifique con su documento de identidad sin tener fundamento legal para ello.", correctAnswer: "Falso" }
+    ],
+
+    "PRIVACIDAD Y USO DE DATOS PERSONALES": [
+        { question: "Una solicitud de ejercicio de derechos debe incluir la identificación del titular y la acción que desea ejercer.", correctAnswer: "Verdadero" },
+        { question: "El Guardia de Seguridad puede divulgar datos personales de las personas que ingresan a las instalaciones que custodia.", correctAnswer: "Falso" },
+        { question: "Las imágenes captadas por cámaras de seguridad constituyen datos personales y deben ser tratadas con confidencialidad.", correctAnswer: "Verdadero" },
+        { question: "El registro de visitas en el libro de acceso puede ser compartido libremente con terceros.", correctAnswer: "Falso" },
+        { question: "La protección de datos personales es una obligación que también aplica al personal de seguridad privada.", correctAnswer: "Verdadero" }
+    ],
+
+    "TÉCNICAS Y ELEMENTOS DEFENSIVOS": [
+        { question: "El uso de chaleco de protección es opcional y queda a criterio personal del guardia.", correctAnswer: "Falso" },
+        { question: "El guardia debe mantener en buen estado sus elementos defensivos y de protección.", correctAnswer: "Verdadero" },
+        { question: "La principal técnica aplicada en defensa personal es el uso de la fuerza (golpes, etc.) para poder reducir.", correctAnswer: "Falso" },
+        { question: "La principal técnica aplicada en defensa personal es el uso de la fuerza razonable para poder reducirlo.", correctAnswer: "Verdadero" },
+        { question: "Siempre se debe registrar un detenido y éste debe ser meticuloso y antes que el sujeto esté reducido, aislado y esposado.", correctAnswer: "Falso" },
+        { question: "Cuando se esposa un detenido con un par de esposas, se esposa la muñeca derecha pasando grillete por entre su cinturón para finalizar esposando muñeca izquierda dejando palmas hacia adentro.", correctAnswer: "Verdadero" },
+        { question: "El bastón de servicio puede ser utilizado como elemento de defensa solo cuando exista una agresión real e inminente.", correctAnswer: "Verdadero" }
     ]
 };
             // Función para crear el array de preguntas mezcladas categorizadamente
@@ -1572,22 +1613,22 @@ function createCategorizedQuestions() {
     const allQuestions = [];
     const categories = Object.keys(questionsByCategory);
     
-    // Obtener preguntas de cada categoría de manera aleatoria para un total de 50
+    // Obtener preguntas de cada categoría de manera aleatoria para un total de 60
     categories.forEach(category => {
         const categoryQuestions = questionsByCategory[category];
         const shuffledCategoryQuestions = shuffleArray([...categoryQuestions]);
-        
+
         // Determinar cuántas preguntas tomar de cada categoría
         let questionsToTake;
         switch(category) {
             case "CONOCIMIENTOS LEGALES":
-                questionsToTake = 8;
+                questionsToTake = 10;
                 break;
             case "PRIMEROS AUXILIOS":
                 questionsToTake = 7;
                 break;
             case "PROTECCIÓN DE INSTALACIONES":
-                questionsToTake = 8;
+                questionsToTake = 10;
                 break;
             case "CONOCIMIENTOS DE SISTEMAS DE ALARMA":
                 questionsToTake = 5;
@@ -1604,8 +1645,17 @@ function createCategorizedQuestions() {
             case "PREGUNTAS ADICIONALES":
                 questionsToTake = 3;
                 break;
+            case "PROBIDAD, NO DISCRIMINACIÓN Y GÉNERO":
+                questionsToTake = 2;
+                break;
+            case "PRIVACIDAD Y USO DE DATOS PERSONALES":
+                questionsToTake = 2;
+                break;
+            case "TÉCNICAS Y ELEMENTOS DEFENSIVOS":
+                questionsToTake = 2;
+                break;
             default:
-                questionsToTake = 3;
+                questionsToTake = 2;
         }
         
         // Agregar las preguntas seleccionadas con la información de categoría
@@ -1668,7 +1718,7 @@ function generateQuestionsCategorized() {
         displayCategorizedQuiz();
         
         if (subtleResponseBox) {
-            subtleResponseBox.textContent = '¡50 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
+            subtleResponseBox.textContent = '¡60 preguntas categorizadas cargadas! Verás preguntas de todas las materias. Una vez que selecciones una respuesta, no podrás cambiarla. ¡Mucha suerte!';
             setTimeout(() => {
                 subtleResponseBox.classList.remove('show');
                 setTimeout(() => subtleResponseBox.style.display = 'none', 500);
