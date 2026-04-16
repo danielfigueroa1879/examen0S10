@@ -1271,7 +1271,7 @@ const questionsByCategory = {
         { question: "Solamente durante la noche los Guardias de Seguridad pueden usar armas de fuego.", correctAnswer: "Falso" },
         { question: "La honra y dignidad de la persona es un derecho constitucional.", correctAnswer: "Verdadero" },
         { question: "La Constitución Política de la República establece la igualdad de las personas.", correctAnswer: "Verdadero" },
-        { question: "El Guardia de Seguridad puede ejercer sus funciones hasta el frontis de la instalación resguardada.", correctAnswer: "Verdadero" },
+        { question: "El Guardia de Seguridad puede ejercer sus funciones hasta el frontis de la instalación resguardada.", correctAnswer: "Falso" },
         { question: "El Guardia de Seguridad en el cumplimiento de sus funciones deberá usar una tenida uniforme determinada por la Directiva de Funcionamiento que ha sido aprobada por la Prefectura de Carabineros respectiva.", correctAnswer: "Verdadero" },
         { question: "En el CUASIDELITO existe la culpa.", correctAnswer: "Verdadero" },
         { question: "El que sin derecho encerrare o detuviere a otro privándole de su libertad, comete el delito de secuestro.", correctAnswer: "Verdadero" },
@@ -2481,21 +2481,29 @@ Fecha de elaboración: ${currentDate}`;
                 const lowerQuestion = question.toLowerCase();
                 
                 // Respuestas sobre Decreto 93
-                if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('requisito') || lowerQuestion.includes('educación'))) {
-                    return "Según el Decreto 93, para ser Guardia de Seguridad se requiere: tener al menos 18 años de edad, haber cursado educación media completa o su equivalente, no tener antecedentes penales, aprobar examen psicológico y físico, y completar el curso de formación de 90 horas académicas.";
+                if (lowerQuestion.includes('decreto 93') || lowerQuestion.includes('requisito') || lowerQuestion.includes('educación')) {
+                    return "Según la Ley 21.659 y Decreto 209 (vigentes desde 28 de noviembre de 2025), para ser Guardia de Seguridad se requiere: ser mayor de edad, haber cursado educación media completa o su equivalente, no tener antecedentes penales, cumplir con condiciones físicas y psíquicas compatibles con las labores, aprobar examen psicológico y físico, completar el curso de formación de 90 horas pedagógicas, y obtener autorización de la Subsecretaría de Prevención del Delito.";
                 }
                 
-                if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('uniforme') || lowerQuestion.includes('vestimenta'))) {
-                    return "El Decreto 93 establece que el uniforme del guardia debe ser de color azul marino, con distintivos que identifiquen a la empresa y al guardia. Debe incluir placa identificatoria con nombre y RUN, y no puede asemejarse a uniformes de Fuerzas Armadas o de Orden.";
+                if (lowerQuestion.includes('decreto 93') || lowerQuestion.includes('decreto 209') || lowerQuestion.includes('uniforme') || lowerQuestion.includes('vestimenta')) {
+                    if (lowerQuestion.includes('guardia')) {
+                        return "Según el Decreto 209 (vigente desde 28 de noviembre de 2025), el uniforme del guardia de seguridad debe ser de color NEGRO con los siguientes elementos: gorra negra modelo militar, camisa negra, pantalón negro, calzado y calcetines negros, cinturón negro, chaleco de alta visibilidad de color rojo fluorescente. El chaleco debe llevar la inscripción 'Seguridad Privada' en letras blancas en la parte superior delantera y trasera.";
+                    } else {
+                        return "El uniforme de vigilantes privados (según Decreto 209) es de color gris perla azulado, con gorra, camisa, pantalón y chaquetón del mismo color. Incluye corbata negra, calzado negro y chaleco reflectante con distintivos de la empresa.";
+                    }
                 }
                 
-                if (lowerQuestion.includes('decreto 93') && (lowerQuestion.includes('seguro') || lowerQuestion.includes('utM'))) {
-                    return "El Decreto 93 establece que las empresas deben contratar un seguro de vida para sus guardias con una cifra asegurada de 75 UTM, que cubra accidentes y enfermedades derivadas del trabajo.";
+                if (lowerQuestion.includes('decreto 209') && (lowerQuestion.includes('seguro') || lowerQuestion.includes('utM') || lowerQuestion.includes('UF'))) {
+                    return "Según el Decreto 209 (vigente desde 28 de noviembre de 2025), los empleadores deben contratar un seguro de vida a favor de cada guardia de seguridad, cuyo monto no podrá ser inferior a CIENTO TREINTA Y DOS UNIDADES DE FOMENTO (132 UF). Este seguro debe cubrir los riesgos derivados del desempeño de sus labores.";
                 }
                 
                 // Respuestas sobre funciones del guardia
-                if (lowerQuestion.includes('función') || lowerQuestion.includes('responsabilidad')) {
-                    return "Las principales funciones del guardia de seguridad incluyen: vigilar y proteger bienes y personas, detectar y prevenir actos que atenten contra la seguridad, informar novedades a superiores, aplicar medidas de seguridad según protocolos, y colaborar con autoridades cuando sea requerido.";
+                if (lowerQuestion.includes('función') || lowerQuestion.includes('responsabilidad') || lowerQuestion.includes('frontis') || lowerQuestion.includes('recinto')) {
+                    if (lowerQuestion.includes('frontis')) {
+                        return "Según el Decreto 209, Artículo 87, el guardia de seguridad ejerce funciones SOLO DENTRO DE UN RECINTO O ÁREA DETERMINADA Y PREVIAMENTE DELIMITADA. No puede ejercer funciones 'hasta el frontis' de la instalación, ya que el frontis es el exterior. Las funciones están limitadas al área autorizada.";
+                    } else {
+                        return "Las principales funciones del guardia de seguridad incluyen: vigilar y proteger bienes y personas dentro de su área autorizada, detectar y prevenir actos que atenten contra la seguridad, informar novedades a superiores, aplicar medidas de seguridad según protocolos, y colaborar con autoridades cuando sea requerido.";
+                    }
                 }
                 
                 if (lowerQuestion.includes('detención') || lowerQuestion.includes('detener')) {
@@ -2504,7 +2512,7 @@ Fecha de elaboración: ${currentDate}`;
                 
                 // Respuestas sobre Ley 21.659
                 if (lowerQuestion.includes('ley 21.659') || lowerQuestion.includes('nueva ley')) {
-                    return "La Ley 21.659 moderniza la regulación de seguridad privada en Chile. Entra en vigencia el 28 de noviembre de 2025 y establece nuevos estándares para empresas y guardias, fortalece la fiscalización y mejora los requisitos de formación.";
+                    return "La Ley 21.659 moderniza la regulación de seguridad privada en Chile. Entró en vigencia el 28 de noviembre de 2025 y establece nuevos estándares para empresas y guardias, fortalece la fiscalización a través de la Subsecretaría de Prevención del Delito (SPD), y mejora los requisitos de formación y capacitación del personal de seguridad privada. Sus reglamentos están en el Decreto 209 (Operaciones de Seguridad Privada) y Decreto 208 (Eventos Masivos).";
                 }
                 
                 // Respuestas sobre armamento
@@ -2523,7 +2531,7 @@ Fecha de elaboración: ${currentDate}`;
                 }
                 
                 // Respuesta general
-                return "Basándome en la normativa chilena de seguridad privada (Decreto Ley 3607, Decreto 93 y Ley 21.659), puedo ayudarte con temas específicos sobre funciones del guardia, requisitos, procedimientos y marco legal. ¿Podrías ser más específico con tu consulta?";
+                return "Basándome en la normativa chilena de seguridad privada (Ley 21.659, Decreto 209, Decreto 208, vigentes desde 28 de noviembre de 2025, y normativa anterior complementaria), puedo ayudarte con temas específicos sobre funciones del guardia, requisitos, procedimientos y marco legal. ¿Podrías ser más específico con tu consulta?";
             }
 
             console.log("Quiz system and AI Clarifier initialized successfully.");
