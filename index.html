@@ -318,15 +318,20 @@
             color: #515ba6;
         }
 
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            margin: 20px auto;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 100%;
         }
 
         .video-container iframe,
@@ -338,6 +343,12 @@
             width: 100%;
             height: 100%;
             border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .icon-small {
@@ -1122,15 +1133,16 @@
 
             <h3>Videos Educativos</h3>
             <p>Explora videos tutoriales y explicaciones sobre procedimientos y normativas de seguridad privada.</p>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/rfJQ1bVuTKk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-
-			<div class="video-container">
-                <iframe src="https://www.youtube.com/embed/P7Pwxs5LjaY?si=I0Zb_409RM9DIbUx" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-			<div class="video-container">
-                <iframe src="https://www.youtube.com/embed/M_epPITSCSw?si=RhnC4w4qseW-IxWA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="video-grid">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/rfJQ1bVuTKk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/P7Pwxs5LjaY?si=I0Zb_409RM9DIbUx" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/M_epPITSCSw?si=RhnC4w4qseW-IxWA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
             </div>
         </section>
 
